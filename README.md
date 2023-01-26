@@ -1,5 +1,5 @@
 # POS
-[Home](Home.md)
+[Home](https://gitlab.cci.drexel.edu/fds23/60/team-2/pos/-/wikis/home)
 
 
 ## Getting started
