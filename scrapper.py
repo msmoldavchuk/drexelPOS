@@ -16,71 +16,66 @@ from sequence import Sequence as s
 
 #global variable
 course_list_all = []
-
+course_dictionary = {}
 
 # This function takes in a course html and prints out the course id and name
 def process_course_html(html_course):
     spacing_clauses = html_course.find('strong')
-   
-   # for child in spacing_clauses:
-    #    x+=1
-     #   print(""+child.text.strip())
-    
-    course_id = spacing_clauses.contents[0].text.strip()
-   # course_name = spacing_clauses[1].contents.text.strip()
-    course_credits = spacing_clauses.contents[2].text.strip()
 
-    #for tag in html_course:
-    #    print(tag,": ", tag.name, "--->  ", tag.next_element)
-    #print(course_id, ": " , course_name)
+    
+    course_id = spacing_clauses.contents[0].text.strip() #Obtains A Course ID In ABC 123 format 
+    #course_name = spacing_clauses[1].contents.text.strip() #Does nothing temporarily
+    course_credits = spacing_clauses.contents[2].text.strip() # Obtains a credit value range 0 to 4
+
+   
     title = html_course.find_all("b", string = "Prerequisites:")
     temp = False
     prereqString = ""
-    #print(course_id, ": " , course_name)
     for child in html_course:
         if(temp): 
-            prereqString = child
+            prereqString = child #gets the pre requisetes in an unformated string
             break
         if child.text == "Prerequisites:":
             temp = True
 
-    course_list_all.append(c(course_id, course_credits, prereqString))
 
-    #seq.getFormatedSeqeuence()
-
-
-    #for h in title:
-    #    if(h == None):
-    #        n = ""
-    #    else:
-    #        n = h.next_element
-    #    print(h, ": " , n)
-    #try a get text then remove all before
-    #try iterating over element in course block
+# Create a course object w/ Course Id, Credits and UNFORMATED prereqstring
+# Adds course object to dictonatiy w/ the key value being the course id
+# i.e CS 172 maps to course object for CS 172 
+    course_dictionary[course_id] = c(course_id, course_credits, prereqString)
+   
 
 if __name__ == '__main__':
+    
     while True:
         try:
             #course_catalog = requests.get(input("Enter the course catalog: ")).text
-            course_catalog = requests.get("https://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").text
+            course_catalog = requests.get("https://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").text #gets website for cs
             if course_catalog == "":
                 print("Empty URL try again")
                 continue
             break
         except:
             print("Invalid URL try again")
-    seq = s("BIO 131 & BIO 134 & BIO 132& BIO 135& BIO 133& BIO 136 ^ CHEM 101 & CHEM 102 & CHEM 103 ^ PHYS 101 & PHYS 102 & PHYS 201")
-    seq.getFormatedSeqeuence()
-    """parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+
+    #html things
+    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
     course_list = parsed_course_catalog.find_all('div', class_='courseblock')
 
+    # processes each entry
     for course in course_list:
         process_course_html(course)
 
-    for course in course_list_all:
-        print(str(course))
-    """
-    #print(parsed_course_catalog.prettify())
+    # ---------TESTING LINE-------------
+        #prints the key pointing to a temp tostring for a course
+        #below "prints" what pre reqs look like
+    for key in course_dictionary:
+       print(key + "->" + str(course_dictionary[key]))
+       course_dictionary[key].printPreqs()
+
+    
+    
+#------------------------------- EVERYTHING BELLOW IS TEMPORARLIY UNUSED PLEASE IGNORE----------------------------------------------
 
 
 ## paramater string to check and the indenitifier for the strong

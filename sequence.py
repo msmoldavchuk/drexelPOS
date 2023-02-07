@@ -1,21 +1,3 @@
-
-"""
-class Tree():
-    def __init__(self,root):
-        self.root = root
-        self.children = []
-    def addNode(self,obj):
-        self.children.append(obj)
-
-class Node():
-    def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
-        self.children = []
-    def addNode(self,obj):
-        self.children.append(obj) 
-""" 
 class LinkedList:
     def __init__(self,head=None):
         self.head = head    
@@ -37,9 +19,9 @@ class LinkedList:
                 break
             
             if(cur.internalBool):
-                print(" and ")
+                print(" and ", end = "")
             else:
-                print(" or ")
+                print(" or ", end = "")
             cur = cur.next #update cur so we move on in the next iteration
 
     def delete(self, value):
@@ -74,8 +56,8 @@ class LinkedList:
 class Node:    
     def __init__(self,data, internalBool = True):
         self.data = data
-        #internal bool can be three values 0 for end, 1 for or, 2 for true
-        #internal bool other idea false = or, true = and
+        """internal bool can be three values 0 for end, 1 for or, 2 for true
+        internal bool other idea false = or, true =  and""" #<- current execution
         self.internalBool = internalBool    
         self.next = None
         
@@ -83,21 +65,18 @@ class Node:
 class Sequence:
 
 
-    courseArray = []
     
-    ## string not preformated
-    # 1. Format string
-    # 2. Make array
     def __init__(self, courses):
-        
+        self.courseArray = []
         if len(courses) < 10 and self.has_identifier(courses, "Digit"):
             l = LinkedList(Node(courses))
             self.courseArray.append(l)
         else:
             self.formatCourses(courses)
         
-
     
+    # recursivly formats courses
+    # splits by sequence and assumes sequence is or as positons in courseArray
     def formatCourses(self, courses):
         tempArray = []
 
@@ -124,7 +103,7 @@ class Sequence:
             self.courseArray.append(seq)
     
         
-
+    # helper metheod
     def has_identifier(self, inputString, identifier):
         if(identifier == "Digit"):
             return any(char.isdigit() for char in inputString)
@@ -146,9 +125,11 @@ class Sequence:
         else:
             return False
 
+    # returns an array of linked list where all indicies of array are ors
     def getSequence(self):
         return self.courseArray
 
+# prints a formated version of the sequence
     def getFormatedSeqeuence(self):
         for course in self.courseArray:
             course.iterateThroughPrint()
