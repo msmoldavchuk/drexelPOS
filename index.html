@@ -3,14 +3,18 @@
 <head>
     <meta name="viewport"  content="with=device-width, initial-scale=1.0">
     <title> Drexel University's Plan of Study</title>
+        <!--css file link-->
     <link rel="stylesheet" href="style.css">
+    <!--scrapping link-->
 <script type="text/Python" src="scrapper.py"></script>
 
 </head>
 <body>
+<!---header section starts right here-->
      <section class="header">
         <nav>
-        <div class="nav-links">
+        <div class="nav-links" id = "navLinks">
+            <i class = "fa fa-times" onclick="hideMenu()"></i>
             <div style = "text-align:left;"><img src="mainlogo.png" class="logo"></div>
             <ul>
                <li><a href=''>Home</a></li> 
@@ -20,6 +24,7 @@
                <li><a href=''>About us</a></li>   
             </ul>
         </div>
+        <i class = "fa fa-times" onclick= "showMenu()"></i>
         <div class="degreework">
             <h1>CHECK OUT YOUR PLAN OF STUDY</h1>
             <p>We honored to introduction you to the newest version of Drexel's sample plan of study.</p>
@@ -30,6 +35,24 @@
         </nav>
      </section>
 
+<!---------POS------------>
+<section class="pos">
+   <h1> What is POS?</h1>
+   <p>A plan of study generator is a valuable tool for students, especially for CCI students. </p>
+</section>
+
+<!--Javascript for the menu-->
+<script>
+    var navlinks = document.getElementById("navlinks");
+    function showMenu(){
+        navlinks.style.right = "0";
+    }
+    function hideMenu(){
+        navlinks.style.right  = "-200px";
+    }
+
+
+</script>
 
 
 </body>
