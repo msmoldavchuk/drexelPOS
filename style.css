@@ -98,3 +98,27 @@ span{
       bottom: 0;
       z-index:-1;
 }
+
+
+
+ /*-------pos--------*/
+.pos{
+      width: 80%;
+      margin: auto;
+      text-align: center;
+      padding-top: 100px;
+}
+/*--- the title of pos' section-----*/
+h1{
+   font-size: 36px;
+   font-weight: 600;
+}
+
+p{
+  color:rgba(52, 96, 217, 0.75)
+  font-size: 14px;
+  font-weight: 300;
+  line-weight: 22px;
+  padding: 10px;
+
+}
