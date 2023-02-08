@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from course import Course as c
-from sequence import Sequence as s
+from sequence import Sequence as s, LinkedList, Node
 from degree import Degree as d
 # todo
 # Get prequisite courses from the course catalog
@@ -85,10 +85,11 @@ def parseThroughClasses(df):
     descriptorRequired = ""
     inc = 1
     myiter = iter(range(0, len(courses)))
+    strlength = 12 #temp value
 
     # use iter for sequence case
     for i in myiter:
-        descriptorRequired = keyWordSearcher(courses[i], descriptorRequired, credits[i]) #step 1 check the type of course i.e cs or se
+        descriptorRequired = keyWordSearcher(courses[i], descriptorRequired) #step 1 check the type of course i.e cs or se
 
         if checkForNoCredits(credits[i]) and i >= 1:   #step 2 check if the credits exist if not then get previous
             credits[i] = credits[i-inc]
@@ -109,7 +110,7 @@ def parseThroughClasses(df):
                 coursesParsed[len(coursesParsed)-1] = coursesParsed[len(coursesParsed)-1] + " | " + courses[i][3:len(courses[i])]
                 descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
                 flagParsed[len(flagParsed)-1] = 4 #adds 4 for or flag
-            elif len(courses[i]) <= 10 and has_identifier(courses[i], "Digit"): #step 5 check if the course is type ABC123
+            elif len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"): #step 5 check if the course is type ABC123
                 coursesParsed.append(courses[i])
                 creditsParsed.append(credits[i])
                 descriptionsParsed.append(descriptorRequired)
@@ -127,7 +128,7 @@ def parseThroughClasses(df):
             elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
                     seqFlag = True  # if yes change modes
         else: #step 4 sequence procedure activated 
-            if ((len(courses[i]) <= 10 and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
+            if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
                 coursesParsed.append(courses[i])
                 creditsParsed.append(credits[i])
                 flagParsed.append(0)
@@ -191,7 +192,7 @@ def checkForNoCredits(credit):
 
 # searchers for a keyword
 # returns descirptor based on key word
-def keyWordSearcher(course, initialDescription, credits):
+def keyWordSearcher(course, initialDescription):
     descriptor = initialDescription
 
     keyword_descriptor = {
@@ -214,7 +215,12 @@ def keyWordSearcher(course, initialDescription, credits):
                 
     return descriptor
 
+def convertPrereqsIntoCourses(course):
+    tempArray = course.getPrereqArray()
+    for tempP in tempArray:
+        course_dictionary[str(tempP)]
     
+
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
 

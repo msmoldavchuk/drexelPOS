@@ -1,4 +1,5 @@
 from sequence import LinkedList, Node
+
 class Course:
 
     assigned = False
@@ -26,6 +27,13 @@ class Course:
                 
    
             #self.avail = avail
+
+    def getPrereqArray(self):
+        return self.prereqArray
+
+    def setPrereqClassArray(self, prereqClassArray):
+        pass
+
 
 #---------------------------------------GETTERS/SETTERS-----------------------------------
 

@@ -14,8 +14,8 @@ class LinkedList:
     def iterateThroughPrint(self):
         cur = self.head
         while(True):
-            print(cur.data) #print the data
-            if(cur.next is None): #this is our do-while loop emulation, checking if this is the last Node
+            print(str(cur.data)) #print the data
+            if(cur.next is None): 
                 break
             
             if(cur.internalBool):
@@ -28,8 +28,8 @@ class LinkedList:
         cur = self.head
         string = ""
         while(True):
-            string += cur.data #print the data
-            if(cur.next is None): #this is our do-while loop emulation, checking if this is the last Node
+            string += str(cur.data) #print the data
+            if(cur.next is None): 
                 break
             
             if(cur.internalBool):
@@ -75,6 +75,9 @@ class Node:
         internal bool other idea false = or, true =  and""" #<- current execution
         self.internalBool = internalBool    
         self.next = None
+
+    def __str__(self):
+        return str(self.data)
         
 
 class Sequence:
