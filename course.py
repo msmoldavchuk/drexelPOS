@@ -27,6 +27,8 @@ class Course:
    
             #self.avail = avail
 
+#---------------------------------------GETTERS/SETTERS-----------------------------------
+
     # getter for course name
     def getCourseName(self):
         return self.courseName
@@ -58,19 +60,55 @@ class Course:
     # setter for availibility
     def setAvial(self, avail):
         self.avail = avail
+
     
-    #temp toString
-    def __str__(self):
-        return "Course: " + self.courseName
+#-------------------------------------------------CONVERTS PREREQS--------------------------------------
+    # cleans a prequiste string and converts it into an array of linked lists
+    def cleanPreqs(self, string):
+        if self.inversalCheck(string): # step 1 check for (x and y) OR (a and b)
+            self.orBoolean = True #makes it so that every index of array means or not and
+            if (self.has_identifier(string, "or")):  # step 2 splits on or
+                tempArray = string.split("or")
+                for temp in tempArray:
+                    if self.has_identifier(temp, "(") and self.has_identifier(temp, ")"): #step 3 look for ()
+                        orArray = temp[temp.index("(")+1:temp.index(")")].split("and") #step 4 split () on "AND" after removing ()
+                        linkedListArray =  LinkedList(Node(orArray[0], True))
+                        del(orArray[0])
+                        for orTemp in orArray:
+                            linkedListArray.append(Node(orTemp, True)) # step 6 add to linked list w/ and internal
+                        self.prereqArray.append(linkedListArray)
+                    else:
+                        self.prereqArray.append(LinkedList(Node(temp)))
+            else:        
+                tempArray = string.split("and") #indiv seperate on and
+                linkedListArray =  LinkedList(Node(tempArray[0]))
+                del(tempArray[0])
+                for temp in tempArray:
+                    linkedListArray.append(Node(temp, True))
+                self.prereqArray.append(linkedListArray)
+        else: # step 1.5 go w/ (x or y) AND (a or b)
+            if (self.has_identifier(string, "and")): # step 2 splits on and
+                tempArray = string.split("and") 
+                for temp in tempArray:
+                    if self.has_identifier(temp, "(") and self.has_identifier(temp, ")"):  #step 3 look for ()
+                        orArray = temp[temp.index("(")+1:temp.index(")")].split("or") #step 4 split () on "OR" after removing ()
+                        linkedListArray =  LinkedList(Node(orArray[0], False))
+                        del(orArray[0])
+                        for orTemp in orArray:
+                            linkedListArray.append(Node(orTemp, False)) # step 6 add to linked list w/ or internal
+                        self.prereqArray.append(linkedListArray)
+                    else:
+                        self.prereqArray.append(LinkedList(Node(temp)))
+            else:        
+                tempArray = string.split("or")
+                linkedListArray =  LinkedList(Node(tempArray[0]))
+                del(tempArray[0])
+                for temp in tempArray:
+                    linkedListArray.append(Node(temp, False))
+                self.prereqArray.append(linkedListArray)
 
-    def printPreqs(self):
-        for prereq in self.prereqArray:
-            prereq.iterateThroughPrint()
-            if self.orBoolean:
-                print(" or ", end = "")
-            else:
-                print(" and ", end = "")
-
+#-----------------------------------------CLEANS PREREQS(HELPER METHODS)------------------------------
+    
     # checks if a preq sequence has [(x and y) OR (a and b)] OR [(x or y) AND (a or b)]
     def inversalCheck(self, string):
         tempString = string
@@ -84,50 +122,6 @@ class Course:
                     return False
         return False
 
-    # cleans a prequiste string and converts it into an array of linked lists
-    def cleanPreqs(self, string):
-        if self.inversalCheck(string): # (x and y) OR (a and b)
-            self.orBoolean = True
-            if (self.has_identifier(string, "or")):
-                tempArray = string.split("or")
-                for temp in tempArray:
-                    if self.has_identifier(temp, "(") and self.has_identifier(temp, ")"): #linked list
-                        orArray = temp[temp.index("(")+1:temp.index(")")].split("and")
-                        linkedListArray =  LinkedList(Node(orArray[0], True))
-                        del(orArray[0])
-                        for orTemp in orArray:
-                            linkedListArray.append(Node(orTemp, True))
-                        self.prereqArray.append(linkedListArray)
-                    else:
-                        self.prereqArray.append(LinkedList(Node(temp)))
-            else:        
-                tempArray = string.split("and")
-                linkedListArray =  LinkedList(Node(tempArray[0]))
-                del(tempArray[0])
-                for temp in tempArray:
-                    linkedListArray.append(Node(temp, True))
-                self.prereqArray.append(linkedListArray)
-        else: # (x or y) AND (a or b)
-            if (self.has_identifier(string, "and")):
-                tempArray = string.split("and")
-                for temp in tempArray:
-                    if self.has_identifier(temp, "(") and self.has_identifier(temp, ")"): #linked list
-                        orArray = temp[temp.index("(")+1:temp.index(")")].split("or")
-                        linkedListArray =  LinkedList(Node(orArray[0], False))
-                        del(orArray[0])
-                        for orTemp in orArray:
-                            linkedListArray.append(Node(orTemp, False))
-                        self.prereqArray.append(linkedListArray)
-                    else:
-                        self.prereqArray.append(LinkedList(Node(temp)))
-            else:        
-                tempArray = string.split("or")
-                linkedListArray =  LinkedList(Node(tempArray[0]))
-                del(tempArray[0])
-                for temp in tempArray:
-                    linkedListArray.append(Node(temp, False))
-                self.prereqArray.append(linkedListArray)
-    
     # checks for x,y and if that exists replaces it w/ x and y
     def cleanCommas(self, string):
         if self.has_identifier(string, ","):
@@ -146,52 +140,24 @@ class Course:
             x = string[string.index('['):string.index(']')+1]
             string = string.replace(x,"")    
         return string
-        
+    
 
     #helper method that looks for a paramter keyword
     def has_identifier(self, inputString, identifier):
         if(identifier == "Digit"):
             return any(char.isdigit() for char in inputString)
-        elif(identifier == "["):
-            if identifier in inputString:
-                return True
-        elif(identifier == "]"):
-            if identifier in inputString:
-                return True
-        elif(identifier == "&"):
-            if identifier in inputString:
-                return True
-        elif(identifier == "|"):
-            if identifier in inputString:
-                return True
-        elif(identifier == ","):
-            if identifier in inputString:
-                return True
-        elif(identifier == "^"):
-            if identifier in inputString:
-                return True
-        elif(identifier == "("):
-            if identifier in inputString:
-                return True
-        elif(identifier == ")"):
-            if identifier in inputString:
-                return True
-        elif(identifier == "and"):
-             if identifier in inputString:
-                return True
-        elif(identifier == "or"):
-            if identifier in inputString:
-                return True
-        elif(identifier == "(Can be taken Concurrently)"):
-            if identifier in inputString:
-                return True
-        elif(identifier == "Elective"):
-            if "elective" in inputString:
-                return True
-        else:
-            return False
+        return (identifier in inputString)
 
+#--------------------------------------------PRINTING------------------------------------
 
-        
+     #temp toString
+    def __str__(self):
+        return "Course: " + self.courseName
 
-    
+    def printPreqs(self):
+        for prereq in self.prereqArray:
+            prereq.iterateThroughPrint()
+            if self.orBoolean:
+                print(" or ", end = "")
+            else:
+                print(" and ", end = "")

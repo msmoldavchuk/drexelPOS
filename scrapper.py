@@ -19,6 +19,7 @@ from degree import Degree as d
 course_dictionary = {}
 #creditsInWrongPlaceBoolean = False
 
+#---------------------------------------METHODS TO SCRAPE DATA----------------------------------------
 # This function takes in a course html and prints out the course id and name
 def process_course_html(html_course):
     spacing_clauses = html_course.find('strong')
@@ -43,39 +44,144 @@ def process_course_html(html_course):
 # i.e CS 172 maps to course object for CS 172 
     course_dictionary[course_id] = c(course_id, course_credits, prereqString)
    
+def parseDegreeRequiremnts(degreename):
+    degreelinks = {
+        "CS": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computerscience/#requirementsbstext", 
+        "SE": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/softwareengineering/#degreerequirementstext", 
+        "DS": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/datascience/#degreerequirementstext",
+        "EDS": "https://catalog.drexel.edu/undergraduate/schoolofeconomics/economicsanddatascience/#degreerequirementstext",
+        "CST": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computingandsecuritytechnology/#degreerequirementstext",
+        "IS": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/informationsystems/#degreerequirementstext"
+    }
+    
+    degreelink = degreelinks[degreename]
 
+    course_catalog = requests.get(degreelink).text
+    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+    course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
 
+    degree_frame = pd.DataFrame()
+    degree_frame = pd.read_html(str(course_list))[0]
+    degree_frame.columns = ['Courses', 'Label', 'Credits']
+
+    return degree_frame
+
+#------------------------------------------METHODS TO CLEAN SCRAPPED DATA--------------------------------------
+
+def parseThroughClasses(df):
+
+    # turn columns of data frame into arrays
+    courses = df.loc[:,'Courses']
+    credits = df.loc[:,'Credits']
+
+    #empty arrays to be filled during process and then turned into Dataframe
+    coursesParsed = []
+    creditsParsed = []
+    descriptionsParsed = []
+    flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
+
+    # support vars for looping
+    seqFlag = False
+    descriptorRequired = ""
+    inc = 1
+    myiter = iter(range(0, len(courses)))
+
+    # use iter for sequence case
+    for i in myiter:
+        descriptorRequired = keyWordSearcher(courses[i], descriptorRequired, credits[i]) #step 1 check the type of course i.e cs or se
+
+        if checkForNoCredits(credits[i]) and i >= 1:   #step 2 check if the credits exist if not then get previous
+            credits[i] = credits[i-inc]
+       
+        if not seqFlag: # step 3 check if sequence mode
+            # NOT A SEQUENCE
+
+            if courses[i][0:2] == "or": # step 4 check if the course contains or
+                # if it does then take the course previously added and then add current course
+                """
+                    EX:
+                        CS 171
+                        or CS 175
+                        Replace "or" w/ "|"
+                        Turn into one
+                        CS 171 | CS 175
+                """
+                coursesParsed[len(coursesParsed)-1] = coursesParsed[len(coursesParsed)-1] + " | " + courses[i][3:len(courses[i])]
+                descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                flagParsed[len(flagParsed)-1] = 4 #adds 4 for or flag
+            elif len(courses[i]) <= 10 and has_identifier(courses[i], "Digit"): #step 5 check if the course is type ABC123
+                coursesParsed.append(courses[i])
+                creditsParsed.append(credits[i])
+                descriptionsParsed.append(descriptorRequired)
+                flagParsed.append(0)
+            elif has_identifier(courses[i], "elective"): #step 6 check if the course has elective in it
+                    flagParsed.append(1) #elective flag
+                    if(has_identifier(courses[i], "Free")): #free electives = end of program
+                        coursesParsed.append("Elective")
+                        creditsParsed.append(credits[i]) 
+                        descriptionsParsed.append("Special") #special internal descriptor
+                    else: #not free elective then continue
+                        coursesParsed.append("Elective") 
+                        creditsParsed.append(credits[i])
+                        descriptionsParsed.append(descriptorRequired)
+            elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
+                    seqFlag = True  # if yes change modes
+        else: #step 4 sequence procedure activated 
+            if ((len(courses[i]) <= 10 and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
+                coursesParsed.append(courses[i])
+                creditsParsed.append(credits[i])
+                flagParsed.append(0)
+                descriptionsParsed.append(descriptorRequired)
+            elif courses[i][0:2].lower() == "or": #step 6 look for or keyword *different than prior
+                #Sequence ors get their own line
+                i += 1 #skip current line and go to next one
+                inc = 2  # ancounts for skip in line                                                    
+                ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
+                coursesParsed[len(coursesParsed)-1] = ns
+                descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                flagParsed[len(flagParsed)-1] = 3                                        
+                next(myiter, None) #iterates loop   
+                """
+                Sample
+                Phys 101
+                or
+                Chem 101
+                get to or and skip to chem 101
+                Take phys 101 and combine w/ "^" in between
+                """                                            
+            elif has_identifier(courses[i], "elective"): #step 7 looks for electives
+                coursesParsed.append("Elective")
+                creditsParsed.append(credits[i])
+                descriptionsParsed.append(descriptorRequired)
+                flagParsed.append(1)
+                seqFlag = False       # elective marks end of sequence         
+            else:
+                inc = 1
+                seqFlag = False #emergancy way to end sequence
+    # final step
+    seqArray = []
+    for course in coursesParsed:
+        seqArray.append(s(course)) #convert filtered courses into array of sequence objects
+    
+    # make and return degree object
+    return d(seqArray, creditsParsed, descriptionsParsed, flagParsed)    
+
+#---------------------------------------------------HELPER METHODS FOR CLEANING DATA---------------------------------------
 
 ## paramater string to check and the indenitifier for the strong
 ## returns boolean value for if identifier is in string
 def has_identifier(inputString, identifier):
     if(identifier == "Digit"):
         return any(char.isdigit() for char in inputString)
-    elif(identifier == "&"):
-        if identifier in inputString:
-            return True
-    elif(identifier == "|"):
-        if identifier in inputString:
-            return True
-    elif(identifier == "^"):
-        if identifier in inputString:
-            return True
-    elif(identifier == "Free"):
-        if identifier in inputString:
-            return True
-    elif(identifier == "Elective"):
-        if "elective" in inputString:
-            return True
+    elif identifier in inputString:
+        return True
     else:
         return False
 
 # displays data frame
 # no return 
-def displayDF(df):
-     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-        print(df)
-        print("printed")
 
+# Checks if a value has credits or is a pandas "nan" float
 def checkForNoCredits(credit):
     if pd.notna(credit):
         return False
@@ -83,192 +189,43 @@ def checkForNoCredits(credit):
         return True
 
 
-def parseThroughClasses(df):
-    courses = df.loc[:,'Courses']
-    credits = df.loc[:,'Credits']
-    coursesParsed = []
-    creditsParsed = []
-    descriptionsParsed = []
-    flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
-    seqFlag = False
-    descriptorRequired = ""
-    inc = 1
-    myiter = iter(range(0, len(courses)))
-    for i in myiter:
-        descriptorRequired = keyWordSearcher(courses[i], descriptorRequired, credits[i])
-
-        if checkForNoCredits(credits[i]) and i >= 1:   
-            credits[i] = credits[i-inc]
-       
-
-        if not seqFlag:
-            if courses[i][0:2] == "or":
-                coursesParsed[len(coursesParsed)-1] = coursesParsed[len(coursesParsed)-1] + " | " + courses[i][3:len(courses[i])]
-                descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
-                flagParsed[len(flagParsed)-1] = 4
-            elif len(courses[i]) <= 10 and has_identifier(courses[i], "Digit"):
-                coursesParsed.append(courses[i])
-                creditsParsed.append(credits[i])
-                descriptionsParsed.append(descriptorRequired)
-                flagParsed.append(0)
-            elif has_identifier(courses[i], "Elective"):
-                    flagParsed.append(1)
-                    if(has_identifier(courses[i], "Free")):
-                        coursesParsed.append("Elective")
-                        creditsParsed.append(credits[i]) 
-                        descriptionsParsed.append("Special")
-                    else:
-                        coursesParsed.append("Elective")
-                        creditsParsed.append(credits[i])
-                        descriptionsParsed.append(descriptorRequired)
-            elif "sequences:" in courses[i]:
-                    seqFlag = True  
-        else:
-            if ((len(courses[i]) <= 10 and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")):
-                coursesParsed.append(courses[i])
-                creditsParsed.append(credits[i])
-                flagParsed.append(0)
-                descriptionsParsed.append(descriptorRequired)
-            elif courses[i][0:2].lower() == "or":
-                i += 1
-                inc = 2
-                ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])
-                coursesParsed[len(coursesParsed)-1] = ns
-                descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
-                flagParsed[len(flagParsed)-1] = 3
-                next(myiter, None)
-            elif has_identifier(courses[i], "Elective"):
-                coursesParsed.append("Elective")
-                creditsParsed.append(credits[i])
-                descriptionsParsed.append(descriptorRequired)
-                flagParsed.append(1)
-                seqFlag = False                
-            else:
-                inc = 1
-                seqFlag = False 
-    
-    tempDF = pd.DataFrame({"Courses": coursesParsed,"Credits": creditsParsed, "Type": descriptionsParsed, "Assigned": False, "Flag": flagParsed})
-    return tempDF    
-
-
-# displays a degree
-# paramaters are parsedDataFrame and name of degree
-def displayDegree(df, degreeName):
-    type = ""
-    print(degreeName + " Degree:")
-    for i in range(len(df.index)):
-        if not(df.loc[i, "Type"] == type):
-            type = df.loc[i, "Type"]
-            print(type + " Requirements") 
-            if df.loc[i, "Type"] == "Special":
-                print("\tFree Elective: " + str(df.loc[i, "Credits"]) + " Credits Needed")
-                break
-                
-        if  df.loc[i, "Courses"] == "Elective":
-            print("\t" + df.loc[i, "Type"] + " Elective: " + str(df.loc[i, "Credits"]) + " Credits Needed")
-        else:
-            if df.loc[i, "Flag"] == 0:
-                print("\tCourse: " + df.loc[i, "Courses"]+"\tCredits: " + df.loc[i, "Credits"])
-            elif df.loc[i, "Flag"] == 4:
-                print("\tCourse: " + splicerPrintPrep(df.loc[i, "Courses"]))
-            elif df.loc[i, "Flag"] == 3:
-                sequencePrint(df.loc[i, "Courses"])
-
-# returns a modified string for printing
-def splicerPrintPrep(word):
-    if has_identifier(word, "|"):
-        return word.replace("|", " or ")
-    elif has_identifier(word, "&"):
-        return word.replace("&", " and ")
-    else:
-        return ""
-    
-        
-# printing method for sequences
-def sequencePrint(word):
-    i = 1
-    if has_identifier(word, "^"):
-        seqs = word.split("^")
-        print("Sequence Choose 1: ")
-        for seq in seqs:
-            print("\t"+str(i)+"."+splicerPrintPrep(seq).strip())
-            i += 1
-
-
 # searchers for a keyword
 # returns descirptor based on key word
 def keyWordSearcher(course, initialDescription, credits):
     descriptor = initialDescription
+
+    keyword_descriptor = {
+        "Computer" : "CS",
+        "Data": "DS", 
+        "Software": "SE", 
+        "Computing": "CI", 
+        "Information": "IS", 
+        "Science": "SCI", 
+        "Mathematics":"MTH",
+        "Arts & Humanities": "ArH", 
+        "University": "Unv" 
+    }
+
     if "Requirements" in course:
-        #checkForNoCredits(credits)
-        if "Computer" in course:
-            #descriptor = "Computer Science"
-            descriptor = "CS"
-        elif "Data" in course:
-            #descriptor = "Data Science"
-            descriptor = "DS"
-        elif "Software" in course:
-            #descriptor = "Software Enginner"
-            descriptor = "SE"
-        elif "Computing" in course:
-            #descriptor = "Computing & Informatics"
-            descriptor = "CI"
-        elif "Information" in course:
-            #descriptor = Information Systems"
-            descriptor = "IS"
-        elif "Science" in course:
-            #descriptor = "Science"
-            descriptor = "SCI"
-        elif "Mathematics" in course:
-            #descriptor = "Mathematics"
-            descriptor = "MTH"
-        elif "Arts & Humanities" in course:
-            #descriptor = "Arts & Humanities"
-            descriptor = "ArH"
-        elif "University" in course:
-            #descriptor = "University"
-            descriptor = "Unv"
-        else:
-            descriptor = "None?"
+        for keyword in keyword_descriptor.keys():
+            if keyword in course:
+                return keyword_descriptor[keyword]
+        descriptor = "None?"
+                
     return descriptor
+
     
-def parseDegreeRequiremnts(degreeName):
-    
-    if degreeName == "CS":
-        course_catalog = requests.get("https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computerscience/#requirementsbstext").text
-        parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
-        course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
-    
-        degree_frame = pd.DataFrame()
-        degree_frame = pd.read_html(str(course_list))[0]
-        degree_frame.columns = ['Courses', 'Label', 'Credits']
-    elif degreeName == "SE":
-        course_catalog = requests.get("https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/softwareengineering/#degreerequirementstext").text
-        parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
-        course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
-    
-        degree_frame = pd.DataFrame()
-        degree_frame = pd.read_html(str(course_list))[0]
-        degree_frame.columns = ['Courses', 'Label', 'Credits']
-    elif degreeName == "DS":
-        course_catalog = requests.get("https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/datascience/#degreerequirementstext").text
-        parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
-        course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
-    
-        degree_frame = pd.DataFrame()
-        degree_frame = pd.read_html(str(course_list))[0]
-        degree_frame.columns = ['Courses', 'Label', 'Credits']
-    
-    return degree_frame
+#-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
 
-          
+def displayDF(df):
+     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+        print(df)
+        print("printed")          
 
 def printList(list):
     for item in list:
         print(item)
-
-
 
 
 
@@ -300,62 +257,16 @@ if __name__ == '__main__':
        print(key + "->" + str(course_dictionary[key]))
        course_dictionary[key].printPreqs()
 
+    NAME = "CS" # temp var
     
     ## modification ends
-    cs_degree_frame = parseDegreeRequiremnts("CS")
+    cs_degree_frame = parseDegreeRequiremnts(NAME)
     #displayDF(cs_degree_frame)
-    tempDf = parseThroughClasses(cs_degree_frame)
-    displayDegree(tempDf, "Computer Science")
+    degreeReq = parseThroughClasses(cs_degree_frame)
+    degreeReq.setDegreeName(NAME)
+    print(degreeReq)
 
 
     
     
 #------------------------------- EVERYTHING BELLOW IS TEMPORARLIY UNUSED PLEASE IGNORE----------------------------------------------
-
-
-
-"""
-if __name__ == '__main__':
-    ## modified poorly
-    while True:
-        try:
-            course_catalog = requests.get("https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computerscience/#requirementsbstext").text
-            if course_catalog == "":
-                print("Empty URL try again")
-                continue
-            break
-        except:
-            print("Invalid URL try again")
-        
-    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser') 
-    course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
-    
-    ## modification ends
-    cs_degree_frame = parseDegreeRequiremnts("CS")
-
-    #displayDF(cs_degree_frame)
-
-
-    print("Degree Requirements: ")
-   # printList(parseThroughClasses(cs_degree_frame))
-    tempDf = parseThroughClasses(cs_degree_frame)
-    #displayDF(tempDf)
-    #displayDF(cs_degree_frame)
-    displayDegree(tempDf, "Computer Science")
-
-    #se_degree_frame = parseDegreeRequiremnts("DS")
-    #tempDf = parseThroughClasses(se_degree_frame)
-    #displayDegree(tempDf, "Data Science")
-
-
-"""
-
-
-
-    
-  
-        
-
-
-
-    
