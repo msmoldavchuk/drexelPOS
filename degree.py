@@ -2,9 +2,10 @@ from sequence import Sequence
 import pandas as pd
 class Degree:
 
-    degreeFrame = pd.DataFrame({"Sequence": [], "Credits": []})
+    
     def __init__(self, seq, credit):
-        Degree.degreeFrame.loc[len(Degree.degreeFrame.index)] = [seq, credit]
+        self.degreeFrame = pd.DataFrame({"Sequence": [], "Credits": []})
+        self.degreeFrame.loc[len(self.degreeFrame.index)] = [seq, credit]
 
     def getCredit(self, seq):
         self.degreeFrame[self.degreeFrame[Sequence]==[seq].index]
@@ -15,4 +16,4 @@ class Degree:
         return self.degreeFrame[self.degreeFrame[Sequence]==[seq]]
 
     def getDegree(self):
-        return Degree.degreeFrame
+        return self.degreeFrame
