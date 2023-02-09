@@ -42,7 +42,8 @@ def process_course_html(html_course):
 # Create a course object w/ Course Id, Credits and UNFORMATED prereqstring
 # Adds course object to dictonatiy w/ the key value being the course id
 # i.e CS 172 maps to course object for CS 172 
-    course_dictionary[course_id] = c(course_id, course_credits, prereqString)
+
+    course_dictionary[course_id.replace("\xa0", " ")] = c(str(course_id), course_credits, prereqString)
    
 def parseDegreeRequiremnts(degreename):
     degreelinks = {
@@ -261,7 +262,10 @@ if __name__ == '__main__':
         #below "prints" what pre reqs look like
     for key in course_dictionary:
        print(key + "->" + str(course_dictionary[key]))
-       course_dictionary[key].printPreqs()
+       #course_dictionary[key].printPreqs()
+    
+    print(course_dictionary)
+    print(str(course_dictionary["CS 385"]))
 
     NAME = "CS" # temp var
     
