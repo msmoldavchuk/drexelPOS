@@ -23,7 +23,7 @@ class Course:
                 self.prereqArray.append(False) 
             else:
                 # clean and format the prerequiste string
-                self.cleanPreqs(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString))))
+                self.cleanPreqs(self.wrongParanthesesCheck(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString)))))
                 
    
             #self.avail = avail
@@ -149,6 +149,12 @@ class Course:
             string = string.replace(x,"")    
         return string
     
+    def wrongParanthesesCheck(self, string):
+        if self.has_identifier(string, "(") and not self.has_identifier(string, ")"):
+            string = string.replace("(","")
+        elif self.has_identifier(string, ")") and not self.has_identifier(string, "("):
+            string = string.replace(")","")
+        return string
 
     #helper method that looks for a paramter keyword
     def has_identifier(self, inputString, identifier):

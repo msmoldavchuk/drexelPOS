@@ -4,6 +4,9 @@ import pandas as pd
 from course import Course as c
 from sequence import Sequence as s, LinkedList, Node
 from degree import Degree as d
+# pip3 lxml
+
+
 # todo
 # Get prequisite courses from the course catalog
 #add course description to data frame
@@ -66,6 +69,21 @@ def parseDegreeRequiremnts(degreename):
     degree_frame.columns = ['Courses', 'Label', 'Credits']
 
     return degree_frame
+
+def getUrls() -> list:
+    listofUrls = []
+    html = requests.get("https://catalog.drexel.edu/coursedescriptions/quarter/undergrad/").text
+    parsed_course_catalog = BeautifulSoup(html, 'html.parser')
+    parsed_course_catalog = parsed_course_catalog.find_all('div', class_="qugcourses")
+    #the two list
+    for list_courses in parsed_course_catalog:
+        #urls in each list
+        urls = list_courses.find_all('a')
+        for url in urls:
+            #print("https://catalog.drexel.edu" + url.get('href'))
+            listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
+    return listofUrls
+
 
 #------------------------------------------METHODS TO CLEAN SCRAPPED DATA--------------------------------------
 
@@ -216,11 +234,12 @@ def keyWordSearcher(course, initialDescription):
                 
     return descriptor
 
-def convertPrereqsIntoCourses(course):
-    tempArray = course.getPrereqArray()
-    for tempP in tempArray:
-        course_dictionary[str(tempP)]
+
     
+def prereqCycle(course: c): 
+    tempArrayPrereqs = course.getPrereqArray()
+
+
 
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
@@ -238,24 +257,25 @@ def printList(list):
 
 if __name__ == '__main__':
     
-    while True:
+    urls = getUrls()
+    for url in urls:
+        print(url)
         try:
             #course_catalog = requests.get(input("Enter the course catalog: ")).text
-            course_catalog = requests.get("https://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").text #gets website for cs
+            course_catalog = requests.get(url).text #gets website for cs
             if course_catalog == "":
                 print("Empty URL try again")
                 continue
-            break
+          
         except:
             print("Invalid URL try again")
-
-    #html things
-    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
-    course_list = parsed_course_catalog.find_all('div', class_='courseblock')
-
-    # processes each entry
-    for course in course_list:
-        process_course_html(course)
+                #html things
+        parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+        course_list = parsed_course_catalog.find_all('div', class_='courseblock')
+            # processes each entry
+        for course in course_list:
+            #print(course)
+            process_course_html(course)
 
     # ---------TESTING LINE-------------
         #prints the key pointing to a temp tostring for a course
@@ -264,8 +284,9 @@ if __name__ == '__main__':
        print(key + "->" + str(course_dictionary[key]))
        #course_dictionary[key].printPreqs()
     
-    print(course_dictionary)
-    print(str(course_dictionary["CS 385"]))
+    #print(course_dictionary)
+    #print(str(course_dictionary["CS 385"]))
+    course_dictionary_2 = {}
 
     NAME = "CS" # temp var
     
@@ -275,6 +296,8 @@ if __name__ == '__main__':
     degreeReq = parseThroughClasses(cs_degree_frame)
     degreeReq.setDegreeName(NAME)
     print(degreeReq)
+
+    #for i in degreeReq.getLength()
 
 
     
