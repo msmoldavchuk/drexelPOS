@@ -1,0 +1,63 @@
+from sequence import Sequence
+import pandas as pd
+
+class Degree:
+
+    # constructor for degree object
+    # recives arrays and converts them inro a dataframe
+    def __init__(self, seq, credit, descriptor, flag):
+        self.degreeFrame = pd.DataFrame({"Sequence": seq, "Credits": credit, "Type": descriptor, "Flag": flag})
+        self.degreeName = ""
+    
+    # returns credits for a specfic sequence
+    def getCredit(self, seq):
+        self.degreeFrame[self.degreeFrame[Sequence]==[seq].index]
+
+        return self.credit
+
+    # returns a specgic sequence
+    def getSpecficSeq(self, seq):
+        return self.degreeFrame[self.degreeFrame[Sequence]==[seq]]
+    
+    # returns a sequence at a specfic index
+    def getSeqAt(self, index):
+        self.degreeFrame.loc[index, "Credits"]
+
+    # returns dataframe
+    def getDegree(self):
+        return self.degreeFrame
+
+    # gets the length of the data frame
+    def getLength(self):
+        return len(self.degreeFrame.index)
+
+    #gets the name for the degree
+    def getDegreeName(self):
+        return self.degreeName
+
+    # sets the name for the degree
+    def setDegreeName(self, name):
+        self.degreeName = name
+
+    # to string for the degree
+    def __str__(self):
+        type = ""
+        string = ""
+        print(self.getDegreeName() + " Degree: ")
+        for i in range(self.getLength()):
+            if not(self.degreeFrame.loc[i, "Type"] == type): # if the type changes then print the new type i.e if moving from cs to se courses
+                type = self.degreeFrame.loc[i, "Type"]
+                string += type + " Requirements\n"
+                if self.degreeFrame.loc[i, "Type"] == "Special": # condtion for free elctives and degree requiremnts
+                    string += "\tFree Elective: " + str(self.degreeFrame.loc[i, "Credits"]) + " Credits Needed\n"
+                    break
+            
+            if  self.degreeFrame.loc[i, "Flag"] == 1: #if the item is an elective then it gets a special print
+                string += "\t" + self.degreeFrame.loc[i, "Type"] + " Elective: " + str(self.degreeFrame.loc[i, "Credits"]) + " Credits Needed\n"               
+            else: #otherwise prints the sequence
+                #string += "\tCourse: " + str(self.degreeFrame.loc[i, "Sequence"])+"\tCredits: " + str(self.degreeFrame.loc[i, "Credits"]) + "\n" #temp unused cause ugly
+                string += "\tCourse: " + str(self.degreeFrame.loc[i, "Sequence"])+"\n"
+
+        return string
+
+    
