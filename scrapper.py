@@ -20,6 +20,10 @@ from degree import Degree as d
 
 #global variable
 course_dictionary = {}
+# lets go baby more globals
+course_int_dictionary = {}
+
+
 #creditsInWrongPlaceBoolean = False
 
 #---------------------------------------METHODS TO SCRAPE DATA----------------------------------------
@@ -80,14 +84,14 @@ def getUrls() -> list:
         #urls in each list
         urls = list_courses.find_all('a')
         for url in urls:
-            #print("https://catalog.drexel.edu" + url.get('href'))
+            print("https://catalog.drexel.edu" + url.get('href'))
             listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
     return listofUrls
 
 
 #------------------------------------------METHODS TO CLEAN SCRAPPED DATA--------------------------------------
 
-def parseThroughClasses(df):
+def parseThroughClasses(df)-> d: 
 
     # turn columns of data frame into arrays
     courses = df.loc[:,'Courses']
@@ -237,8 +241,19 @@ def keyWordSearcher(course, initialDescription):
 
     
 def prereqCycle(course: c): 
-    tempArrayPrereqs = course.getPrereqArray()
-
+    tempArrayPrereqs = course.getPrereqArray() #gets an array of linked lsits representing pre reqs
+    for prereqs in tempArrayPrereqs: #gets linked lists which represent 1 pre req sequence
+        prereqsArray = prereqs.iterateThroughArray()
+        for prereq in prereqsArray:
+            try:
+                # implement dictinaray
+                course_int_dictionary[str(prereq)] += 1  
+            except KeyError:
+                try:
+                    course_int_dictionary.update({str(prereq): 1})
+                except KeyError:
+                    print(str(prereq))
+                
 
 
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
@@ -280,11 +295,11 @@ if __name__ == '__main__':
     # ---------TESTING LINE-------------
         #prints the key pointing to a temp tostring for a course
         #below "prints" what pre reqs look like
-    for key in course_dictionary:
-       print(key + "->" + str(course_dictionary[key]))
+    #for key in course_dictionary:
+    #  print(key + "->" + str(course_dictionary[key]))
        #course_dictionary[key].printPreqs()
     
-    #print(course_dictionary)
+    print(course_dictionary)
     #print(str(course_dictionary["CS 385"]))
     course_dictionary_2 = {}
 
@@ -297,7 +312,22 @@ if __name__ == '__main__':
     degreeReq.setDegreeName(NAME)
     print(degreeReq)
 
-    #for i in degreeReq.getLength()
+    for i in range(degreeReq.getLength()):
+        seqArray = degreeReq.getSeqAt(i)
+        for seq in seqArray.getSequence():
+           # print("Sequence: " +str(seq))
+            courseArray = seq.iterateThroughArray()
+            for course in courseArray:
+                try:
+                    print("AYO: "+course_dictionary[course.strip()])
+                    prereqCycle(course_dictionary[course.strip()])
+                except KeyError:
+                    print("Error:" + course)
+                   # pass #electives
+
+    for key in course_int_dictionary:
+       print(key + "->" + str(course_int_dictionary[key]))
+
 
 
     

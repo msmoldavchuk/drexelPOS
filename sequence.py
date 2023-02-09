@@ -23,6 +23,16 @@ class LinkedList:
             else:
                 print(" or ", end = "")
             cur = cur.next #update cur so we move on in the next iteration
+
+    def iterateThroughArray(self):
+        cur = self.head
+        array = []
+        while(True):
+            array.append(cur.data) #appends data to an array
+            if(cur.next is None): 
+                break    
+            cur = cur.next
+        return array
     
     def iterateThroughSTR(self):
         cur = self.head

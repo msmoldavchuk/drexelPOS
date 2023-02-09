@@ -21,7 +21,7 @@ class Degree:
     
     # returns a sequence at a specfic index
     def getSeqAt(self, index):
-        self.degreeFrame.loc[index, "Credits"]
+        return self.degreeFrame.loc[index, "Sequence"]
 
     # returns dataframe
     def getDegree(self):
