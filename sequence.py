@@ -32,6 +32,7 @@ class LinkedList:
             if(cur.next is None): 
                 break    
             cur = cur.next
+       
         return array
     
     def iterateThroughSTR(self):

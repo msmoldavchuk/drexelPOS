@@ -46,13 +46,15 @@ def process_course_html(html_course):
             break
         if child.text == "Prerequisites:":
             temp = True
-# Create a course object w/ Course Id, Credits and UNFORMATED prereqstring
-# Adds course object to dictonatiy w/ the key value being the course id
-# i.e CS 172 maps to course object for CS 172 
+    # Create a course object w/ Course Id, Credits and UNFORMATED prereqstring
+    # Adds course object to dictonatiy w/ the key value being the course id
+    # i.e CS 172 maps to course object for CS 172 
 
-    course_dictionary[course_id.replace("\xa0", " ")] = c(str(course_id), course_credits, prereqString)
+    course_dictionary[course_id.replace("\xa0", " ")] = c(course_id.replace("\xa0", " "), course_credits, prereqString)
    
-def parseDegreeRequiremnts(degreename):
+
+
+def parseDegreeRequiremnts(degreename)->pd.DataFrame:
     degreelinks = {
         "CS": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computerscience/#requirementsbstext", 
         "SE": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/softwareengineering/#degreerequirementstext", 
@@ -94,8 +96,12 @@ def getUrls() -> list:
 def parseThroughClasses(df)-> d: 
 
     # turn columns of data frame into arrays
-    courses = df.loc[:,'Courses']
+    coursesNotPrimary = df.loc[:,'Courses']
     credits = df.loc[:,'Credits']
+    courses = []
+    for course in coursesNotPrimary:
+        courses.append(course.replace("\xa0", " "))
+    
 
     #empty arrays to be filled during process and then turned into Dataframe
     coursesParsed = []
@@ -116,7 +122,7 @@ def parseThroughClasses(df)-> d:
 
         if checkForNoCredits(credits[i]) and i >= 1:   #step 2 check if the credits exist if not then get previous
             credits[i] = credits[i-inc]
-       
+        #courses[i] = cleanBrackets(courses[i])
         if not seqFlag: # step 3 check if sequence mode
             # NOT A SEQUENCE
 
@@ -202,6 +208,12 @@ def has_identifier(inputString, identifier):
     else:
         return False
 
+def cleanBrackets(string)->str:
+    while(has_identifier(string, "[") or has_identifier(string, "]")):
+        x = string[string.index('['):string.index(']')+1]
+        string = string.replace(x,"")    
+    return string
+
 # displays data frame
 # no return 
 
@@ -238,24 +250,30 @@ def keyWordSearcher(course, initialDescription):
                 
     return descriptor
 
-
+#-----------------------------------------------------------------------------------------------------
     
 def prereqCycle(course: c): 
     tempArrayPrereqs = course.getPrereqArray() #gets an array of linked lsits representing pre reqs
     for prereqs in tempArrayPrereqs: #gets linked lists which represent 1 pre req sequence
         prereqsArray = prereqs.iterateThroughArray()
         for prereq in prereqsArray:
+            if prereq != "":
+                appendToDictonaray(prereq)
+
+                prereqCourse = course_dictionary[prereq.strip()]
+                if prereqCourse.getPrereqArray() != "":
+                    prereqCycle(prereqCourse)
+          
+def appendToDictonaray(item):
+        try:
+            # implement dictinaray
+            course_int_dictionary[str(item).strip()] += 1  
+        except KeyError:
+            #print(item)
             try:
-                # implement dictinaray
-                course_int_dictionary[str(prereq)] += 1  
+                course_int_dictionary.update({str(item).strip(): 1})
             except KeyError:
-                try:
-                    course_int_dictionary.update({str(prereq): 1})
-                except KeyError:
-                    print(str(prereq))
-                
-
-
+                print("Never seen this might as well put text? " + str(item))
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
 
@@ -299,7 +317,6 @@ if __name__ == '__main__':
     #  print(key + "->" + str(course_dictionary[key]))
        #course_dictionary[key].printPreqs()
     
-    print(course_dictionary)
     #print(str(course_dictionary["CS 385"]))
     course_dictionary_2 = {}
 
@@ -319,14 +336,23 @@ if __name__ == '__main__':
             courseArray = seq.iterateThroughArray()
             for course in courseArray:
                 try:
-                    print("AYO: "+course_dictionary[course.strip()])
-                    prereqCycle(course_dictionary[course.strip()])
+                    if course != "Elective":
+                        appendToDictonaray(str(course).strip())
+                        prereqCycle(course_dictionary[str(course).strip()])
                 except KeyError:
-                    print("Error:" + course)
+                    pass
+                    #print("Error:" + course + "!")
                    # pass #electives
 
+# no pre reqs shows up as ""
     for key in course_int_dictionary:
        print(key + "->" + str(course_int_dictionary[key]))
+
+    array = course_dictionary["CHEM 103"].getPrereqArray()    
+    for a in array:
+        b= a.iterateThroughArray()
+        for f in b:
+            print(str(f))
 
 
 
