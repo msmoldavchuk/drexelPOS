@@ -254,6 +254,7 @@ def keyWordSearcher(course, initialDescription):
     
 def prereqCycle(course: c): 
     tempArrayPrereqs = course.getPrereqArray() #gets an array of linked lsits representing pre reqs
+    antiRecurrsionArray = []
     for prereqs in tempArrayPrereqs: #gets linked lists which represent 1 pre req sequence
         prereqsArray = prereqs.iterateThroughArray()
         for prereq in prereqsArray:
@@ -262,7 +263,13 @@ def prereqCycle(course: c):
 
                 prereqCourse = course_dictionary[prereq.strip()]
                 if prereqCourse.getPrereqArray() != "":
-                    prereqCycle(prereqCourse)
+                    #prereqCycle(prereqCourse)
+                    antiRecurrsionArray.append(prereqCourse)
+    recurssionIsTrash(antiRecurrsionArray)
+
+def recurssionIsTrash(array):
+    for a in array:
+        prereqCycle(a)
           
 def appendToDictonaray(item):
         try:
@@ -348,11 +355,7 @@ if __name__ == '__main__':
     for key in course_int_dictionary:
        print(key + "->" + str(course_int_dictionary[key]))
 
-    array = course_dictionary["CHEM 103"].getPrereqArray()    
-    for a in array:
-        b= a.iterateThroughArray()
-        for f in b:
-            print(str(f))
+  
 
 
 
