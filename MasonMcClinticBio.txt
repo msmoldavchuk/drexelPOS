@@ -1,0 +1,1 @@
+ Mason McClintic is a first year Computer Science student at Drexel University. His current focus is on web scrapping and website backend intergration.
