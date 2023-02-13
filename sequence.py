@@ -97,7 +97,7 @@ class Sequence:
     # CONSTRUCTOR
     def __init__(self, courses):
         self.courseArray = []
-        if len(courses) < 10 and self.has_identifier(courses, "Digit"):
+        if len(courses) < 12 and self.has_identifier(courses, "Digit"):
             l = LinkedList(Node(courses))
             self.courseArray.append(l)
         else:

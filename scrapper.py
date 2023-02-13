@@ -54,7 +54,7 @@ def process_course_html(html_course):
    
 
 
-def parseDegreeRequiremnts(degreename)->pd.DataFrame:
+def parseDegreeRequiremnts(degreename)->list:
     degreelinks = {
         "CS": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computerscience/#requirementsbstext", 
         "SE": "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/softwareengineering/#degreerequirementstext", 
@@ -70,11 +70,16 @@ def parseDegreeRequiremnts(degreename)->pd.DataFrame:
     parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
     course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
 
+    degreeReq = pd.read_html(str(course_list))
+    degreeReqArray = []
     degree_frame = pd.DataFrame()
-    degree_frame = pd.read_html(str(course_list))[0]
-    degree_frame.columns = ['Courses', 'Label', 'Credits']
+    
+    for degree in degreeReq:
+        degree_frame = degree
+        degree_frame.columns = ['Courses', 'Label', 'Credits']
+        degreeReqArray.append(degree_frame)
 
-    return degree_frame
+    return degreeReqArray
 
 def getUrls() -> list:
     listofUrls = []
@@ -90,24 +95,112 @@ def getUrls() -> list:
             listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
     return listofUrls
 
+def getConcentration(dfList):
+    newDfParts = []
+    for df in dfList:
+        coursesNotPrimary = df.loc[:,'Courses']
+        credits = df.loc[:,'Credits']
+        courses = []
+        for course in coursesNotPrimary:
+            courses.append(course.replace("\xa0", " "))
+
+        coursesParsed = []
+        creditsParsed = []
+        descriptionsParsed = []
+        flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
+
+        seqArray = []
+
+        descriptorRequired = filterDescription(courses[0])
+        strlength = 12
+        seqFlag = False
+
+        for i in range(1, len(courses)):
+
+            if seqFlag:
+                if not seqArray and (len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")):
+                    seqArray.append(courses[i])
+                elif (len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")):
+                    seqArray[0] += " | " + courses[i]
+                else:
+                    seqFlag = False
+                    creditsParsed.append(credits[i])
+                    descriptionsParsed.append(descriptorRequired)
+                    flagParsed.append(2)
+            elif len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"):
+                coursesParsed.append(courses[i])
+                creditsParsed.append(credits[i])
+                descriptionsParsed.append(descriptorRequired)
+                flagParsed.append(0)
+
+            if has_identifier(courses[i], "Electives"):
+                """
+                if not checkForNoCredits(credits[i]):
+                    coursesParsed.append("Elective")
+                    creditsParsed.append(credits[i])
+                    descriptionsParsed.append(descriptorRequired)
+                    flagParsed.append(1)         
+                """
+                pass  
+            elif has_identifier(courses[i], "Sequence"):
+                """
+                if not checkForNoCredits(credits[i]):
+                    coursesParsed.append("Elective")
+                    creditsParsed.append(credits[i])
+                    descriptionsParsed.append(descriptorRequired)
+                    flagParsed.append(1)   
+                """   
+                seqFlag = True     
+            else:
+                dfPart = [coursesParsed, creditsParsed, descriptionsParsed, flagParsed]
+                coursesParsed = []
+                creditsParsed = []
+                descriptionsParsed = []
+                flagParsed = []
+                newDfParts.append(dfPart)
+                descriptorRequired = filterDescription(courses[i])
+
+
+    
+        dfPart = [coursesParsed, creditsParsed, descriptionsParsed, flagParsed]
+        newDfParts.append(dfPart)
+        
+    return newDfParts
+
+
+def filterDescription(string):
+    if has_identifier(string, "Concentration"):
+        string = string[:string.index("Concentration")-1]
+    return string
+
+    
+
+
+
+
+        
+
 
 #------------------------------------------METHODS TO CLEAN SCRAPPED DATA--------------------------------------
 
-def parseThroughClasses(df)-> d: 
+def parseThroughClasses(dfList)-> d: 
 
     # turn columns of data frame into arrays
-    coursesNotPrimary = df.loc[:,'Courses']
-    credits = df.loc[:,'Credits']
+    coursesNotPrimary = dfList[0].loc[:,'Courses']
+    credits = dfList[0].loc[:,'Credits']
     courses = []
+
+
     for course in coursesNotPrimary:
         courses.append(course.replace("\xa0", " "))
-    
+        
+    dfList.pop(0)
 
     #empty arrays to be filled during process and then turned into Dataframe
     coursesParsed = []
     creditsParsed = []
     descriptionsParsed = []
-    flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
+    flagParsed = [] # 0 = no problem, 1 = elective, 2 = mandatory
 
     # support vars for looping
     seqFlag = False
@@ -115,6 +208,11 @@ def parseThroughClasses(df)-> d:
     inc = 1
     myiter = iter(range(0, len(courses)))
     strlength = 12 #temp value
+
+    # concentration vars
+    concList = []
+    concBoolean = False
+    concCredits = 0
 
     # use iter for sequence case
     for i in myiter:
@@ -140,22 +238,32 @@ def parseThroughClasses(df)-> d:
                 descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
                 flagParsed[len(flagParsed)-1] = 4 #adds 4 for or flag
             elif len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"): #step 5 check if the course is type ABC123
-                coursesParsed.append(courses[i])
-                creditsParsed.append(credits[i])
-                descriptionsParsed.append(descriptorRequired)
-                flagParsed.append(0)
+                if has_identifier(courses[i],"*"):
+                    coursesParsed.append(courses[i][:len(courses[i])])
+                    creditsParsed.append(credits[i])
+                    descriptionsParsed.append(descriptorRequired)
+                    flagParsed.append(2)
+                else:
+                    coursesParsed.append(courses[i])
+                    creditsParsed.append(credits[i])
+                    descriptionsParsed.append(descriptorRequired)
+                    flagParsed.append(0)
             elif has_identifier(courses[i], "elective"): #step 6 check if the course has elective in it
                     flagParsed.append(1) #elective flag
                     if(has_identifier(courses[i], "Free")): #free electives = end of program
                         coursesParsed.append("Elective")
                         creditsParsed.append(credits[i]) 
-                        descriptionsParsed.append("Special") #special internal descriptor
+                        descriptionsParsed.append("Special") #special internal descriptor                   
                     else: #not free elective then continue
                         coursesParsed.append("Elective") 
                         creditsParsed.append(credits[i])
                         descriptionsParsed.append(descriptorRequired)
+            elif "concentration" in courses[i]:
+                concBoolean = True
+                concCredits = credits[i]
+                concList = getConcentration(dfList)
             elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
-                    seqFlag = True  # if yes change modes
+                seqFlag = True  # if yes change modes
         else: #step 4 sequence procedure activated 
             if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
                 coursesParsed.append(courses[i])
@@ -189,9 +297,21 @@ def parseThroughClasses(df)-> d:
                 inc = 1
                 seqFlag = False #emergancy way to end sequence
     # final step
+
+    
     seqArray = []
     for course in coursesParsed:
         seqArray.append(s(course)) #convert filtered courses into array of sequence objects
+    
+    
+    if concBoolean:
+        for i in range(len(concList)):
+            for j in range(len(concList[i][1])):
+                if checkForNoCredits(concList[i][1][j]):
+                    concList[i][1][j] = course_dictionary[concList[i][0][j]].getCredits()
+                print("C:"+concList[i][0][j] + " Cr:" + str(concList[i][1][j]) + " D:" + concList[i][2][j] + " F:" + str(concList[i][3][j]) )
+                concList[i][0][j] = s(concList[i][0][j])
+        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concList, concCredits)
     
     # make and return degree object
     return d(seqArray, creditsParsed, descriptionsParsed, flagParsed)    
@@ -330,12 +450,13 @@ if __name__ == '__main__':
     NAME = "CS" # temp var
     
     ## modification ends
-    cs_degree_frame = parseDegreeRequiremnts(NAME)
+    list_degree_frame = parseDegreeRequiremnts(NAME)
     #displayDF(cs_degree_frame)
-    degreeReq = parseThroughClasses(cs_degree_frame)
+    degreeReq = parseThroughClasses(list_degree_frame)
     degreeReq.setDegreeName(NAME)
     print(degreeReq)
-
+    degreeReq.printConcentrations()
+"""
     for i in range(degreeReq.getLength()):
         seqArray = degreeReq.getSeqAt(i)
         for seq in seqArray.getSequence():
@@ -354,6 +475,9 @@ if __name__ == '__main__':
 # no pre reqs shows up as ""
     for key in course_int_dictionary:
        print(key + "->" + str(course_int_dictionary[key]))
+
+
+"""
 
   
 
