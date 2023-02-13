@@ -1,0 +1,1 @@
+Michael Moldavchuk is a first year Data Science student at Drexel University. His current focus is on cleaning data and implemanting data into algorithms.
