@@ -95,8 +95,8 @@ def getUrls() -> list:
             listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
     return listofUrls
 
-def getConcentration(dfList):
-    newDfParts = []
+def getConcentration(dfList)->pd.DataFrame:
+    concentrationDF = pd.DataFrame({'Concentration':[], "Name":[]})
     for df in dfList:
         coursesNotPrimary = df.loc[:,'Courses']
         credits = df.loc[:,'Credits']
@@ -132,8 +132,7 @@ def getConcentration(dfList):
                 creditsParsed.append(credits[i])
                 descriptionsParsed.append(descriptorRequired)
                 flagParsed.append(0)
-
-            if has_identifier(courses[i], "Electives"):
+            elif has_identifier(courses[i], "Electives"):
                 """
                 if not checkForNoCredits(credits[i]):
                     coursesParsed.append("Elective")
@@ -151,21 +150,22 @@ def getConcentration(dfList):
                     flagParsed.append(1)   
                 """   
                 seqFlag = True     
-            else:
-                dfPart = [coursesParsed, creditsParsed, descriptionsParsed, flagParsed]
+            else:               
+                dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed})
                 coursesParsed = []
                 creditsParsed = []
                 descriptionsParsed = []
                 flagParsed = []
-                newDfParts.append(dfPart)
+                
+                concentrationDF.loc[len(concentrationDF.index)] = [dfPart, descriptorRequired] 
                 descriptorRequired = filterDescription(courses[i])
 
 
     
-        dfPart = [coursesParsed, creditsParsed, descriptionsParsed, flagParsed]
-        newDfParts.append(dfPart)
+        dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed})
+        concentrationDF.loc[len(concentrationDF.index)] = [dfPart, descriptorRequired] 
         
-    return newDfParts
+    return concentrationDF
 
 
 def filterDescription(string):
@@ -174,11 +174,6 @@ def filterDescription(string):
     return string
 
     
-
-
-
-
-        
 
 
 #------------------------------------------METHODS TO CLEAN SCRAPPED DATA--------------------------------------
@@ -210,7 +205,7 @@ def parseThroughClasses(dfList)-> d:
     strlength = 12 #temp value
 
     # concentration vars
-    concList = []
+    concDF = pd.DataFrame()
     concBoolean = False
     concCredits = 0
 
@@ -261,7 +256,7 @@ def parseThroughClasses(dfList)-> d:
             elif "concentration" in courses[i]:
                 concBoolean = True
                 concCredits = credits[i]
-                concList = getConcentration(dfList)
+                concDF = getConcentration(dfList)
             elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
                 seqFlag = True  # if yes change modes
         else: #step 4 sequence procedure activated 
@@ -302,14 +297,22 @@ def parseThroughClasses(dfList)-> d:
     seqArray = []
     for course in coursesParsed:
         seqArray.append(s(course)) #convert filtered courses into array of sequence objects
-    
-    
+    # concentrations
+    displayDF(concDF)
+
     if concBoolean:
+        for i in range(len(concDF.index)):
+            for j in range(len(concDF.loc[i, "Concentration"].loc[:,"Sequence"].index)):
+                if checkForNoCredits(concDF.loc[i, "Concentration"].loc[j, "Credits"]):
+                    concDF.loc[i, "Concentration"].loc[j, "Credits"] = course_dictionary[concDF.loc[i, "Concentration"].loc[j, "Sequence"]].getCredits()
+                concDF.loc[i, "Concentration"].loc[j, "Sequence"] = s(concDF.loc[i, "Concentration"].loc[j, "Sequence"])
+        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concDF, concCredits)
+        # unused code
         for i in range(len(concList)):
             for j in range(len(concList[i][1])):
                 if checkForNoCredits(concList[i][1][j]):
                     concList[i][1][j] = course_dictionary[concList[i][0][j]].getCredits()
-                print("C:"+concList[i][0][j] + " Cr:" + str(concList[i][1][j]) + " D:" + concList[i][2][j] + " F:" + str(concList[i][3][j]) )
+                #print("C:"+concList[i][0][j] + " Cr:" + str(concList[i][1][j]) + " D:" + concList[i][2][j] + " F:" + str(concList[i][3][j]) )
                 concList[i][0][j] = s(concList[i][0][j])
         return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concList, concCredits)
     

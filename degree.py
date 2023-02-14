@@ -5,23 +5,21 @@ class Degree:
 
     # constructor for degree object
     # recives arrays and converts them inro a dataframe
-    def __init__(self, seq, credit, descriptor, flag, concList = [], concCredits = 0):
+    def __init__(self, seq, credit, descriptor, flag, concDF = [], concCredits:float = 0):
         self.degreeFrame = pd.DataFrame({"Sequence": seq, "Credits": credit, "Type": descriptor, "Flag": flag})
         self.degreeName = ""
 
-        if concList:
-            self.concentrations = concList
-            for i in range(len(self.concentrations)):
-                #for c in self.concentrations[i][1]:
-                   # print("String: " + str(c))
-                self.concentrations = pd.DataFrame({"Sequence": self.concentrations[i][0], "Credits": self.concentrations[i][1], "Type": self.concentrations[i][2], "Flag": self.concentrations[i][3]})
-            self.concentrationCredits = concCredits
+        
+            
+        self.concentrationsDF = concDF
+        self.concentrationCredits = concCredits
         
 
     def printConcentrations(self):
-        for concentration in self.concentrations:
-            print(concentration.loc[0,"Type"] + " concentration")
-            self.displayDF(concentration)
+        for i in range(len(self.concentrationsDF.loc[:,"Concentration"])):
+            desc = self.concentrationsDF.loc[i,"Name"] 
+            print(str(desc)+ " Concentration")
+            self.displayDF(self.concentrationsDF.loc[i,"Concentration"])
 
     def displayDF(self, df):
      with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
