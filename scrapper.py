@@ -494,17 +494,24 @@ if __name__ == '__main__':
     #
     prereqDictionaryFill(degreeReq.getDegree())
 
-    #concDf = degreeReq.selectConcentration("Algorithms and Theory")
+    concDf = degreeReq.selectConcentration("Algorithms and Theory")
 
-    #displayDF(concDf)
-    #prereqDictionaryFill(concDf)
+    displayDF(concDf)
+    prereqDictionaryFill(concDf)
 
     filterPrereqDictionary(degreeReq.getDegree())
-    #filterPrereqDictionary(concDf)
+    filterPrereqDictionary(concDf)
 
 
     for key in filtered_prerequiste_ditctionary:
        print(key + "->" + str(filtered_prerequiste_ditctionary[key]))
+
+    # TEMP VARs
+    numberOfQuarters = 12
+    springSummerCoop = True
+
+    for i in range(numberOfQuarters):
+        pass
     #
 """
     for i in range(degreeReq.getLength()):

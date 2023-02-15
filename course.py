@@ -4,7 +4,7 @@ class Course:
 
     assigned = False
     
-    avial = []
+    
     #prereqArray = [] #index = and
 
     # constructor
@@ -17,7 +17,7 @@ class Course:
             self.prereqArray = []
             self.orBoolean = False
 
-
+            self.avialabilityArray = []
             #makes sure prereq string is not none type
             if isinstance(prereqString, type(None)) or prereqString == "empty":
                 self.prereqArray.append("") 
@@ -51,9 +51,21 @@ class Course:
         return self.prereqs
     
     # getter for availibility
-    def getAvail(self):
-        return self.avail
+    def getAvaililityArray(self):
+        return self.avialabilityArray
     
+    def getFallAvail(self)->bool:
+        return self.avialabilityArray[0]
+
+    def getWinterAvail(self)->bool:
+        return self.avialabilityArray[1]
+
+    def getSpringAvail(self)->bool:
+        return self.avialabilityArray[2]
+
+    def getSummerAvail(self)->bool:
+        return self.avialabilityArray[3]  
+        
      # setter for courseName
     def setCourseName(self, courseName):
         self.courseName = courseName
