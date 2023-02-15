@@ -11,7 +11,7 @@ class Degree:
 
         
             
-        self.concentrationsDF = concDF
+        self.concentrationsDF:pd.DataFrame = concDF
         self.concentrationCredits = concCredits
         
 
@@ -39,7 +39,21 @@ class Degree:
                 pastDescription = descriptions[i]
             finalArray.append([concentration[0][changeIndex:], concentration[1][changeIndex:], concentration[2][changeIndex:], concentration[3][changeIndex:]])
         return finalArray
-    
+    #CLEAN LATER
+    def selectConcentration(self, choice):
+        # (df[df[‘Name’]==’Donna’].index
+        #self.displayDF(self.concentrationsDF.loc[1,"Concentration"])
+        pos = 0
+        for i in range(len(self.concentrationsDF.loc[:,"Name"])):
+            if self.concentrationsDF.loc[i,"Name"] == choice:
+                pos = i
+                break
+
+        #print("ooooooofffffff " + str(self.concentrationsDF['Name']==choice))
+        x =self.concentrationsDF.loc[pos, "Concentration"]
+        #self.displayDF(x)
+        return x
+        
     # returns credits for a specfic sequence
     def getCredit(self, seq):
         self.degreeFrame[self.degreeFrame[Sequence]==[seq].index]

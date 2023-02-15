@@ -22,7 +22,8 @@ from degree import Degree as d
 course_dictionary = {}
 # lets go baby more globals
 course_int_dictionary = {}
-
+# i mean might as well make more globals
+filtered_prerequiste_ditctionary = {}
 
 #creditsInWrongPlaceBoolean = False
 
@@ -109,7 +110,7 @@ def getConcentration(dfList)->pd.DataFrame:
         descriptionsParsed = []
         flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
 
-        seqArray = []
+        seqString = ""
 
         descriptorRequired = filterDescription(courses[0])
         strlength = 12
@@ -118,12 +119,13 @@ def getConcentration(dfList)->pd.DataFrame:
         for i in range(1, len(courses)):
 
             if seqFlag:
-                if not seqArray and (len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")):
-                    seqArray.append(courses[i])
+                if seqString == "" and (len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")):
+                    seqString = courses[i]
                 elif (len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")):
-                    seqArray[0] += " | " + courses[i]
+                    seqString += " | " + courses[i]
                 else:
                     seqFlag = False
+                    coursesParsed.append(seqString)
                     creditsParsed.append(credits[i])
                     descriptionsParsed.append(descriptorRequired)
                     flagParsed.append(2)
@@ -141,7 +143,7 @@ def getConcentration(dfList)->pd.DataFrame:
                     flagParsed.append(1)         
                 """
                 pass  
-            elif has_identifier(courses[i], "Sequence"):
+            elif has_identifier(courses[i], "Select"):
                 """
                 if not checkForNoCredits(credits[i]):
                     coursesParsed.append("Elective")
@@ -304,7 +306,7 @@ def parseThroughClasses(dfList)-> d:
         for i in range(len(concDF.index)):
             for j in range(len(concDF.loc[i, "Concentration"].loc[:,"Sequence"].index)):
                 if checkForNoCredits(concDF.loc[i, "Concentration"].loc[j, "Credits"]):
-                    concDF.loc[i, "Concentration"].loc[j, "Credits"] = course_dictionary[concDF.loc[i, "Concentration"].loc[j, "Sequence"]].getCredits()
+                    concDF.loc[i, "Concentration"].loc[j, "Credits"] = course_dictionary[concDF.loc[i, "Concentration"].loc[j, "Sequence"]].getCredits()       
                 concDF.loc[i, "Concentration"].loc[j, "Sequence"] = s(concDF.loc[i, "Concentration"].loc[j, "Sequence"])
         return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concDF, concCredits)
         # unused code
@@ -404,6 +406,35 @@ def appendToDictonaray(item):
                 course_int_dictionary.update({str(item).strip(): 1})
             except KeyError:
                 print("Never seen this might as well put text? " + str(item))
+
+def prereqDictionaryFill(df: pd.DataFrame):
+    for i in range(len(df.index)):
+        seqArray = df.loc[i,"Sequence"]
+        for seq in seqArray.getSequence():
+           # print("Sequence: " +str(seq))
+            courseArray = seq.iterateThroughArray()
+            for course in courseArray:
+                try:
+                    if course != "Elective":
+                        appendToDictonaray(str(course).strip())
+                        prereqCycle(course_dictionary[str(course).strip()])
+                except KeyError:
+                    pass
+
+# changew by adding 10 and use 1 less global
+def filterPrereqDictionary(df: pd.DataFrame):
+    for i in range(len(df.index)):
+        seqArray = df.loc[i,"Sequence"]
+        for seq in seqArray.getSequence():
+            courseArray = seq.iterateThroughArray()
+            for course in courseArray:
+                try:
+                    if course != "Elective":
+                        filtered_prerequiste_ditctionary[str(course).strip()] = course_int_dictionary[str(course).strip()]
+                except KeyError:
+                    pass
+
+    
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
 
@@ -449,7 +480,7 @@ if __name__ == '__main__':
     
     #print(str(course_dictionary["CS 385"]))
     course_dictionary_2 = {}
-
+    
     NAME = "CS" # temp var
     
     ## modification ends
@@ -459,6 +490,22 @@ if __name__ == '__main__':
     degreeReq.setDegreeName(NAME)
     print(degreeReq)
     degreeReq.printConcentrations()
+
+    #
+    prereqDictionaryFill(degreeReq.getDegree())
+
+    #concDf = degreeReq.selectConcentration("Algorithms and Theory")
+
+    #displayDF(concDf)
+    #prereqDictionaryFill(concDf)
+
+    filterPrereqDictionary(degreeReq.getDegree())
+    #filterPrereqDictionary(concDf)
+
+
+    for key in filtered_prerequiste_ditctionary:
+       print(key + "->" + str(filtered_prerequiste_ditctionary[key]))
+    #
 """
     for i in range(degreeReq.getLength()):
         seqArray = degreeReq.getSeqAt(i)
@@ -475,12 +522,18 @@ if __name__ == '__main__':
                     #print("Error:" + course + "!")
                    # pass #electives
 
-# no pre reqs shows up as ""
-    for key in course_int_dictionary:
-       print(key + "->" + str(course_int_dictionary[key]))
-
-
+    for i in range(len(concDf)):
+        seqArray = concDf.loc["Sequence", i]
+        for seq in seqArray.getSequence():
+            
 """
+
+
+# no pre reqs shows up as ""
+    
+
+
+
 
   
 

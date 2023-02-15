@@ -24,7 +24,7 @@ class Course:
                 #print("Does this ever happen")
             else:
                 # clean and format the prerequiste string
-                self.cleanPreqs(self.wrongParanthesesCheck(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString)))))
+                (self.cleanPreqs(self.wrongParanthesesCheck(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString))))))
                 
    
             #self.avail = avail
