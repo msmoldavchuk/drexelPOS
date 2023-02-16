@@ -1,13 +1,16 @@
 import requests, html5lib
 from bs4 import BeautifulSoup
 import pandas as pd
+import time
+import sys
+from selenium import webdriver
 
 def traverseQuater(soup):
     lsitOfQuaters = []
     listUrlQ = []
     terms = soup.find_all("div", {"class": "term"})
     for term in terms:
-        if len(lsitOfQuaters) == 4:
+        if len(lsitOfQuaters) == 1:
             break
         quater = term.find('a')
         lsitOfQuaters.append(quater)
@@ -15,24 +18,61 @@ def traverseQuater(soup):
         listUrlQ.append("https://termmasterschedule.drexel.edu" + quater.get('href'))
     return listUrlQ
 
+def getListofDeparements(session):
+    depList = []
+    soup = BeautifulSoup(session.get('https://termmasterschedule.drexel.edu/webtms_du/').text, 'html.parser')
 
 def traverseDeparement(quarter,session : requests.Session):
+    listOfEndings = ["A" , "AS", "B","CV","C","CI", "E","PH","GC","GD","X","NH", "PE","R","T","L"]
     depList = []
-    soup = BeautifulSoup(s.get(quarter).text, 'html.parser')
-    depPannel = soup.find("table", {"class": "collegePanel"})
-    departments = depPannel.find_all("class" == "odd")
-    departments.append(depPannel.find_all("class" == "even"))
-    for dep in departments:
+    for ending in listOfEndings:
+        soup = BeautifulSoup(s.get(quarter + ending).text, 'html.parser')
+        time.sleep(.3)
+        print(quarter + str(ending))
+        depPannel = soup.find("table", {"class": "collegePanel"})
         try:
-            depList.append("https://termmasterschedule.drexel.edu" + dep.find('a').get('href'))
+            departments = depPannel.find_all("class" == "odd")
+            departments.append(depPannel.find_all("class" == "even"))
         except:
-            continue
+            print(quarter + str(ending) + " is empty")
+            print(soup)
+            sys.exit()
+        for dep in departments:
+            try:
+                depList.append("https://termmasterschedule.drexel.edu" + dep.find('a').get('href'))
+            except:
+                continue
     return depList
 
 def get_aval(dep, session : requests.Session):
-    soup = BeautifulSoup(session.get(dep).text, 'html.parser')
-    table = soup.find_all("table")
-    return pd.read_html(str(table))[0]
+    #headers = {'User-Agent': 'Mozilla/5.0'}
+    #soup = BeautifulSoup(session.get(dep, timeout = 5, headers=headers).text, 'html.parser')
+    #time.sleep(.5)
+    #precursor = soup.find("td", {"align": "center"})
+    #table = precursor.find_all("table","id"=="sortableTable")
+    #while True:
+        #soup = BeautifulSoup(session.get(dep, timeout = 5).text, 'html.parser')
+        #time.sleep(.5)
+        #precursor = soup.find("td", {"align": "center"})
+        #table = precursor.find_all("table","id"=="sortableTable")
+        
+    driver = webdriver.Edge()
+    #driver.add_cookie({"name": "JSESSIONID", "value": s.cookies.get_dict()["JSESSIONID"]})
+    # Navigate to url
+    driver.get(dep)
+
+    # Adds the cookie into current browser context
+    
+    try:
+        pdTemp = pd.read_html(str(table))[0]
+        #if(not pd.notna(pdTemp.loc[0, "Course No."])):
+            #continue
+        #else:
+        return pdTemp
+    except:
+        print("error in " + dep)
+        
+    
 #--------main-----------------
 if __name__ == "__main__":
     s = requests.Session()
@@ -43,16 +83,25 @@ if __name__ == "__main__":
     print(listQ)
     listOfDep = []
     for dep in listQ:
-        listOfDep.append(traverseDeparement(dep,s))
+        try:
+            listOfDep.append(traverseDeparement(dep,s))
+        except:
+            print(dep)
+            continue
     print(listOfDep)
     listOfCourseTables = []
+    print(s.cookies.get_dict())
     for table in listOfDep:
         for dep in table:
-            listOfCourseTables.append(get_aval(dep,s))
+            print(dep)
+            print(get_aval(dep, s))
+            #listOfCourseTables.append(get_aval(dep,s))
+            
+    print(s.cookies.get_dict())
     #q1 = s.get(listQ[0]).content
     #soup_Q1 = BeautifulSoup(q1, 'html.parser')
     #print(soup_Q1.prettify())
-    print(listOfCourseTables[0])
+    print(listOfCourseTables)
 
 
 
