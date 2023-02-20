@@ -49,7 +49,6 @@ class Degree:
                 pos = i
                 break
 
-        #print("ooooooofffffff " + str(self.concentrationsDF['Name']==choice))
         x =self.concentrationsDF.loc[pos, "Concentration"]
         #self.displayDF(x)
         return x
@@ -83,6 +82,11 @@ class Degree:
     # sets the name for the degree
     def setDegreeName(self, name):
         self.degreeName = name
+
+    def getMegaDegreeRequirments(self):
+        #tempDataFrame = self.degreeFrame.append(self.concentrationsDF)
+        tempDataFrame = pd.concat([self.degreeFrame, self.concentrationsDF],axis = 1)
+        return tempDataFrame
 
     # to string for the degree
     def __str__(self):

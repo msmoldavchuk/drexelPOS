@@ -423,6 +423,7 @@ def prereqDictionaryFill(df: pd.DataFrame):
 
 # changew by adding 10 and use 1 less global
 def filterPrereqDictionary(df: pd.DataFrame):
+    filteredPrequistes = pd.DataFrame({'Courses':[], 'Credits':[]})
     for i in range(len(df.index)):
         seqArray = df.loc[i,"Sequence"]
         for seq in seqArray.getSequence():
@@ -430,10 +431,16 @@ def filterPrereqDictionary(df: pd.DataFrame):
             for course in courseArray:
                 try:
                     if course != "Elective":
-                        filtered_prerequiste_ditctionary[str(course).strip()] = course_int_dictionary[str(course).strip()]
+                        filteredPrequistes.loc[len(filteredPrequistes.index)] = [str(course).strip() , course_int_dictionary[str(course).strip()]]
                 except KeyError:
                     pass
+    #filteredPrequistes.columns = ['Courses', 'Credits']
+    return filteredPrequistes
 
+def intergrateAviability(df: pd.DataFrame, quarter):
+    for i in range(len(df.index)):
+        courseName = df.loc[i,"TEMP FOR COURSE"] + " " + df.loc[i, "TEMP FOR NUMBER"]
+        course_dictionary[courseName].setAviabilityTrue(quarter)
     
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
@@ -499,8 +506,9 @@ if __name__ == '__main__':
     displayDF(concDf)
     prereqDictionaryFill(concDf)
 
-    filterPrereqDictionary(degreeReq.getDegree())
-    filterPrereqDictionary(concDf)
+    displayDF(filterPrereqDictionary(degreeReq.getMegaDegreeRequirments()))
+    #filterPrereqDictionary(degreeReq.getDegree())
+    #filterPrereqDictionary(concDf)
 
 
     for key in filtered_prerequiste_ditctionary:
@@ -509,6 +517,20 @@ if __name__ == '__main__':
     # TEMP VARs
     numberOfQuarters = 12
     springSummerCoop = True
+    numberOfFalls = 5
+    numberOfWinters = 5
+    numberOfSprings = 5
+    numberOfSummers = 5
+
+    if springSummerCoop:
+        numberOfSprings = 2
+        numberOfSummers = 0
+    else:
+        numberOfFalls = 2
+        numberOfWinters = 2
+        numberOfSummers = 3
+
+    numberOfArray = [numberOfFalls, numberOfWinters, numberOfSprings, numberOfSummers]
 
     for i in range(numberOfQuarters):
         pass

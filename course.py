@@ -17,7 +17,7 @@ class Course:
             self.prereqArray = []
             self.orBoolean = False
 
-            self.avialabilityArray = []
+            self.avialabilityArray = [False, False, False, False]
             #makes sure prereq string is not none type
             if isinstance(prereqString, type(None)) or prereqString == "empty":
                 self.prereqArray.append("") 
@@ -32,10 +32,8 @@ class Course:
     def getPrereqArray(self):
         return self.prereqArray
 
-    def setPrereqClassArray(self, prereqClassArray):
-        pass
-
-
+    def setAviabilityTrue(self, index):
+        self.avialabilityArray[index] = True
 #---------------------------------------GETTERS/SETTERS-----------------------------------
 
     # getter for course name
