@@ -4,6 +4,15 @@ import pandas as pd
 from course import Course as c
 from sequence import Sequence as s, LinkedList, Node
 from degree import Degree as d
+import selenium
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+import time
+import random # test line
 # pip3 lxml
 
 
@@ -26,6 +35,9 @@ course_int_dictionary = {}
 filtered_prerequiste_ditctionary = {}
 
 #creditsInWrongPlaceBoolean = False
+LOC = ["Arts and Sciences","Bennett S. LeBow Coll. of Bus.","Center for Civic Engagement","Close Sch of Entrepreneurship","Col of Computing & Informatics","College of Engineering","Dornsife Sch of Public Health","Goodwin Coll of Prof Studies","Graduate College", "Miscellaneous","Nursing & Health Professions","Pennoni Honors College","Sch.of Biomed Engr,Sci & Hlth","School of Education","Thomas R. Kline School of Law"]
+
+
 
 #---------------------------------------METHODS TO SCRAPE DATA----------------------------------------
 # This function takes in a course html and prints out the course id and name
@@ -81,6 +93,20 @@ def parseDegreeRequiremnts(degreename)->list:
         degreeReqArray.append(degree_frame)
 
     return degreeReqArray
+def getTable(driver, intQuarter = 0):
+    table = driver.find_element(By.ID, "sortableTable")
+    intergrateAviability(pd.read_html(table.get_attribute('outerHTML'))[0], intQuarter)
+    return pd.read_html(table.get_attribute('outerHTML'))[0]
+
+def goThroughCollege(driver, textlink,tables, intQuarter = 0):
+    try:
+        driver.find_element(By.LINK_TEXT, textlink).click()
+        tables.append(getTable(driver, intQuarter))
+        driver.find_element(By.LINK_TEXT, "Colleges / Subjects").click()
+        return tables
+    except:
+        print("error")
+        return "error"
 
 def getUrls() -> list:
     listofUrls = []
@@ -438,9 +464,13 @@ def filterPrereqDictionary(df: pd.DataFrame):
     return filteredPrequistes
 
 def intergrateAviability(df: pd.DataFrame, quarter):
+    
     for i in range(len(df.index)):
-        courseName = df.loc[i,"TEMP FOR COURSE"] + " " + df.loc[i, "TEMP FOR NUMBER"]
-        course_dictionary[courseName].setAviabilityTrue(quarter)
+        try:
+            courseName = str(df.loc[i,"Subject Code"]) + " " + str(df.loc[i, "Course No."])
+            course_dictionary[courseName.replace("\xa0", " ")].setAviabilityTrue(quarter)
+        except KeyError:
+            pass
     
 #-----------------------------------------METHODS FOR DEBUGGING--------------------------------------------
 
@@ -477,7 +507,64 @@ if __name__ == '__main__':
         for course in course_list:
             #print(course)
             process_course_html(course)
-
+    listofQuaters = ["Fall Quarter 22-23","Winter Quarter 22-23","Spring Quarter 22-23","Summer Quarter 22-23"]
+    driver = webdriver.Edge()
+    driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
+    #print(goingthroughacollege(driver))
+    intQuarter = 0
+    tables = []
+    counterQ = 0
+    driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
+    #driver.find_element(By.LINK_TEXT, Q).click()
+    file = open("C:\\Users\\micha\\ci102\\pos\\tempStorage", "r")
+    for line in file:
+        if("Fall Quarter 22-23" == str(line).replace("\n", "")):
+            intQuarter = 0
+            driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
+            driver.find_element(By.LINK_TEXT, "Fall Quarter 22-23").click()
+            time.sleep(.1)
+            counterQ = 0
+            continue
+        if("Winter Quarter 22-23" == str(line).replace("\n", "")):
+            intQuarter = 1
+            driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
+            driver.find_element(By.LINK_TEXT, "Winter Quarter 22-23").click()
+            print("Winter Quarter 22-23")
+            time.sleep(.1)
+            counterQ = 0
+            continue
+        if("Spring Quarter 22-23" == str(line).replace("\n", "")):
+            intQuarter = 2
+            driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
+            driver.find_element(By.LINK_TEXT, "Spring Quarter 22-23").click()
+            print("Spring Quarter 22-23")
+            time.sleep(.1)
+            counterQ = 0
+            continue
+        if("Summer Quarter 22-23" == str(line).replace("\n", "")):
+            intQuarter = 3
+            driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
+            driver.find_element(By.LINK_TEXT, "Summer Quarter 22-23").click()
+            print("Summer Quarter 22-23")
+            time.sleep(.1)
+            counterQ = 0
+            continue
+        print(line.encode("utf-8"))
+        try:
+            if(goThroughCollege(driver, str(line).replace("\n", ""), tables, intQuarter) == "error"):
+                raise Exception("error")
+        except:
+            try:
+                print(line.encode("utf-8"))
+                driver.find_element(By.LINK_TEXT, LOC[counterQ]).click()
+                counterQ += 1
+                goThroughCollege(driver, str(line).replace("\n", ""), tables, intQuarter)
+            except:
+                counterQ += 1
+                print(line.encode("utf-8"))
+                goThroughCollege(driver, str(line).replace("\n", ""), tables, intQuarter)
+    #print(tables)
+    #print(len(tables))
     # ---------TESTING LINE-------------
         #prints the key pointing to a temp tostring for a course
         #below "prints" what pre reqs look like
@@ -513,6 +600,39 @@ if __name__ == '__main__':
 
     for key in filtered_prerequiste_ditctionary:
        print(key + "->" + str(filtered_prerequiste_ditctionary[key]))
+    
+    fallCounter = 0
+    winterCounter = 0
+    springCounter = 0
+    summerCounter = 0
+    for key in course_dictionary:
+
+        if course_dictionary[key].getFallAvail():
+            fallCounter += 1
+
+        if course_dictionary[key].getWinterAvail():
+            winterCounter += 1
+
+        if course_dictionary[key].getSpringAvail():
+            springCounter += 1
+
+        if course_dictionary[key].getSummerAvail():
+            summerCounter += 1
+
+        rand = random.randint(0,100)
+
+        if rand == 50:
+            print(key + ": ")
+            for a in course_dictionary[key].getAvial():
+                if a == True:
+                    print("T ", end = "")
+                else:
+                    print("F ", end = "")
+
+    print("Fall Classes: " + str(fallCounter))
+    print("Winter Classes: " + str(winterCounter))
+    print("Spring Classes: " + str(springCounter))
+    print("Summer Classes: " + str(summerCounter))
 
     # TEMP VARs
     numberOfQuarters = 12

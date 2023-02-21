@@ -21,6 +21,7 @@ def goThroughCollege(driver, textlink,tables):
     try:
         driver.find_element(By.LINK_TEXT, textlink).click()
         tables.append(getTable(driver))
+        #print(tables)
         driver.find_element(By.LINK_TEXT, "Colleges / Subjects").click()
         return tables
     except:
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     counterQ = 0
     driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
     #driver.find_element(By.LINK_TEXT, Q).click()
-    file = open("C:\\Users\\bigbu\\CI102\pos\pos\\tempStorage", "r")
+    file = open("C:\\Users\\micha\\ci102\\pos\\tempStorage", "r")
     for line in file:
         if("Fall Quarter 22-23" == str(line).replace("\n", "")):
             driver.get("https://termmasterschedule.drexel.edu/webtms_du/")

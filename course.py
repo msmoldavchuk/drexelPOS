@@ -77,8 +77,8 @@ class Course:
         self.prereqs = prereqs
 
     # setter for availibility
-    def setAvial(self, avail):
-        self.avail = avail
+    def getAvial(self):
+        return self.avialabilityArray
 
     
 #-------------------------------------------------CONVERTS PREREQS--------------------------------------
