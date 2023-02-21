@@ -2,25 +2,28 @@ from sequence import LinkedList, Node
 
 class Course:
 
-    assigned = False
     
     
     #prereqArray = [] #index = and
 
     # constructor
-    def __init__(self, courseName, credits, prereqString = "empty"):
+    def __init__(self, courseName, credits, prereqString = "empty", avialabilityArray = [False, False, False, False]):
             self.courseName = courseName.strip()
             self.credits = credits
+            self.prereqString = prereqString
+
+            #self.avialabilityArray = [False, False, False, False]
+            self.avialabilityArray = avialabilityArray
 
             #normal assumption is that every index in prereq array is AND
             #if orboolean is true then every index in array is OR
             self.prereqArray = []
             self.orBoolean = False
 
-            self.avialabilityArray = [False, False, False, False]
+            
             #makes sure prereq string is not none type
             if isinstance(prereqString, type(None)) or prereqString == "empty":
-                self.prereqArray.append("") 
+                self.prereqArray.append(LinkedList(Node(""))) 
                 #print("Does this ever happen")
             else:
                 # clean and format the prerequiste string
@@ -44,14 +47,10 @@ class Course:
     def getCredits(self):
         return self.credits
     
-    # getter pre reqs
-    def getPrereqs(self):
-        return self.prereqs
     
-    # getter for availibility
-    def getAvaililityArray(self):
-        return self.avialabilityArray
-    
+    def getPrereqString(self):
+        return self.prereqString
+
     def getFallAvail(self)->bool:
         return self.avialabilityArray[0]
 
@@ -72,9 +71,7 @@ class Course:
     def setCredits(self, credits):
         self.credits = credits
 
-    # setter for prereqs
-    def setPrereqs(self, prereqs):
-        self.prereqs = prereqs
+    
 
     # setter for availibility
     def getAvial(self):

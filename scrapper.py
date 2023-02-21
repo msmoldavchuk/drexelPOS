@@ -13,6 +13,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time
 import random # test line
+import csv 
+from ast import literal_eval
+import io 
+
 # pip3 lxml
 
 
@@ -484,10 +488,34 @@ def printList(list):
     for item in list:
         print(item)
 
-
-
-if __name__ == '__main__':
+def convertCSVToCourseObject():
+   #df = pd.read_csv("in.csv",converters={"Col3": literal_eval})
     
+    df = pd.read_csv("courseObjects.csv",converters={3:literal_eval})
+
+    #df = pd.read_csv("courseObjects.csv") 
+    df.columns = ['Courses', 'Credits', 'Prereqs', "Avail"]
+    for i in range(len(df.index)):
+        if pd.notna(df.loc[i,"Prereqs"]):
+            course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], df.loc[i, "Prereqs"], df.loc[i, "Avail"])
+        else:
+            course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], "", df.loc[i, "Avail"])
+
+def convertCourseObjectToCSV():
+    filename = 'courseObjects.csv'
+    try:
+        with open(filename, 'w', newline='') as f:
+            writer = csv.writer(f)
+            for key in course_dictionary:
+                courseObj = course_dictionary[key]
+                if isinstance(courseObj.getPrereqString(), type(None)) or courseObj.getPrereqString() == "":
+                    writer.writerow([courseObj.getCourseName(), courseObj.getCredits(), "", courseObj.getAvial()])
+                else:
+                    writer.writerow([courseObj.getCourseName(), courseObj.getCredits(), courseObj.getPrereqString(), courseObj.getAvial()])
+
+    except BaseException as e:
+        print('BaseException:', filename)
+def scrapeCourseCatalog():
     urls = getUrls()
     for url in urls:
         print(url)
@@ -507,6 +535,8 @@ if __name__ == '__main__':
         for course in course_list:
             #print(course)
             process_course_html(course)
+
+def scrapeTermMaster():
     listofQuaters = ["Fall Quarter 22-23","Winter Quarter 22-23","Spring Quarter 22-23","Summer Quarter 22-23"]
     driver = webdriver.Edge()
     driver.get("https://termmasterschedule.drexel.edu/webtms_du/")
@@ -563,8 +593,17 @@ if __name__ == '__main__':
                 counterQ += 1
                 print(line.encode("utf-8"))
                 goThroughCollege(driver, str(line).replace("\n", ""), tables, intQuarter)
-    #print(tables)
-    #print(len(tables))
+
+if __name__ == '__main__':
+    
+    # -------SCRAPING----------
+    #scrapeCourseCatalog()
+    #scrapeTermMaster()
+    #convertCourseObjectToCSV()
+
+    convertCSVToCourseObject()
+    
+
     # ---------TESTING LINE-------------
         #prints the key pointing to a temp tostring for a course
         #below "prints" what pre reqs look like
@@ -597,9 +636,15 @@ if __name__ == '__main__':
     #filterPrereqDictionary(degreeReq.getDegree())
     #filterPrereqDictionary(concDf)
 
+    for key in course_dictionary:
+        rand = random.randint(1,100)
+        if rand == 25:
+            #print("Course : " + str(df.loc[i, "Courses"]) + "\nCredits: " + str(df.loc[i, "Credits"]) + "\n" + str(df.loc[i, "Avail"]) )
+            print(key + ": " + str(course_dictionary[key].getAvial()))
 
     for key in filtered_prerequiste_ditctionary:
        print(key + "->" + str(filtered_prerequiste_ditctionary[key]))
+    
     
     fallCounter = 0
     winterCounter = 0
@@ -628,11 +673,14 @@ if __name__ == '__main__':
                     print("T ", end = "")
                 else:
                     print("F ", end = "")
+            print(str(course_dictionary[key].getAvial()))
 
     print("Fall Classes: " + str(fallCounter))
     print("Winter Classes: " + str(winterCounter))
     print("Spring Classes: " + str(springCounter))
     print("Summer Classes: " + str(summerCounter))
+
+
 
     # TEMP VARs
     numberOfQuarters = 12
