@@ -18,8 +18,10 @@ class Course:
             #normal assumption is that every index in prereq array is AND
             #if orboolean is true then every index in array is OR
             self.prereqArray = []
+            
             self.orBoolean = False
-
+            boolean = True
+            self.andBoolean = boolean
             
             #makes sure prereq string is not none type
             if isinstance(prereqString, type(None)) or prereqString == "empty":
@@ -27,7 +29,9 @@ class Course:
                 #print("Does this ever happen")
             else:
                 # clean and format the prerequiste string
-                (self.cleanPreqs(self.wrongParanthesesCheck(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString))))))
+                self.cleanPreqs(self.wrongParanthesesCheck(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString)))))
+
+            print(self.andBoolean)
                 
    
             #self.avail = avail
@@ -46,7 +50,8 @@ class Course:
     # getter for credits
     def getCredits(self):
         return self.credits
-    
+    def getAndBoolean(self):
+        return self.andBoolean
     
     def getPrereqString(self):
         return self.prereqString
@@ -71,7 +76,8 @@ class Course:
     def setCredits(self, credits):
         self.credits = credits
 
-    
+    def setAndBoolean(self, paramater):
+        self.andBoolean = paramater
 
     # setter for availibility
     def getAvial(self):
@@ -82,7 +88,9 @@ class Course:
     # cleans a prequiste string and converts it into an array of linked lists
     def cleanPreqs(self, string):
         if self.inversalCheck(string): # step 1 check for (x and y) OR (a and b)
-            self.orBoolean = True #makes it so that every index of array means or not and
+            #print("1")
+            self.setAndBoolean(False) #makes it so that every index of array means or not and
+            print("1" + self.getCourseName())
             if (self.has_identifier(string, "or")):  # step 2 splits on or
                 tempArray = string.split("or")
                 for temp in tempArray:
@@ -103,6 +111,8 @@ class Course:
                     linkedListArray.append(Node(temp.strip(), True))
                 self.prereqArray.append(linkedListArray)
         else: # step 1.5 go w/ (x or y) AND (a or b)
+            self.setAndBoolean(True) #makes it so that every index of array means or not and
+            print(self.getCourseName() + " " + str(self.andBoolean), end = "")
             if (self.has_identifier(string, "and")): # step 2 splits on and
                 tempArray = string.split("and") 
                 for temp in tempArray:
@@ -179,18 +189,24 @@ class Course:
         return (identifier in inputString)
 
     def havePreqs(self, df: pd.DataFrame):
-        if not self.orBoolean:
+        if self.prereqArray[0].checkForNull():
+            return True
+        elif self.andBoolean:
             for prereqSequence in self.prereqArray:
-                andBoolean = False
+                andBooleanInternal = False
                 if prereqSequence.checkDataFrame(df):
-                    andBoolean = True
-                if andBoolean == False:
+                    andBooleanInternal = True
+                if andBooleanInternal == False:
                     return False
             return True
         else:
+            print("Here???")
             for prereqSequence in self.prereqArray:
-                if prereqSequence(df):
-                    return True    
+                if prereqSequence.checkDataFrame(df):
+                    return True  
+        print(str(self.andBoolean))
+            
+        print("Is this happening")  
         return False
 #--------------------------------------------PRINTING------------------------------------
 

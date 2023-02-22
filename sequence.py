@@ -35,11 +35,15 @@ class LinkedList:
             cur = cur.next
        
         return array
-    
+
+    def checkForNull(self):
+        if self.head == "":
+            return True
+            
     def checkIfContains(self, item):
         cur = self.head
         while(True):
-            if cur.data == item:
+            if cur.data.split() == item.split():
                 return True
             if(cur.next is None): 
                     break  

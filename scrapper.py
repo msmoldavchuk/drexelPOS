@@ -713,6 +713,15 @@ def printPlanOfStudy(posArray):
             miniCounter += 1     
         counter+= 1
 
+def filterOnCurrent(df: pd.DataFrame, coursesAssigned):
+    for course in coursesAssigned:
+        for i in range(len(df.index)):
+            if df.loc[i, "Courses"] == course:
+                df.loc[i, "Taken"] = False
+    return df
+        
+    
+
 if __name__ == '__main__':
     
     # -------SCRAPING----------
@@ -824,25 +833,7 @@ if __name__ == '__main__':
                     posArray[i-1].append("COOP 201")
                 else:
                     pass
-                    while(creditMin > credits):
-                        course = "Temp Empty"
-                        max = 0
-                        pos = 1
-                        for j in range(len(filteredDataFrame.index)):
-                            if not filteredDataFrame.loc[j, "Taken"]:
-                                if not degreeReq.getTaken(filteredDataFrame.loc[j, "Courses"]):
-                                    tempMax = filteredDataFrame.loc[j, "Value"]
-                                    if tempMax > max:
-                                        course = filteredDataFrame.loc[j, "Courses"]
-                                        pos = j
-                                        max = tempMax
-                                    
-
-                        posArray[i].append(course)
-                        filteredDataFrame.loc[pos, "Taken"] = True
-                        credits += float(course_dictionary[course].getCredits())
-                        degreeReq.checkCompletion(filteredDataFrame)
-
+                    
             elif term == 1:
                 #print("Winter") # winter
                 if coopBoolean:
@@ -858,7 +849,35 @@ if __name__ == '__main__':
                 if coopBoolean:
                  #   print("\tCO-OP")
                     posArray[i-1].append("COOP 201")
+        
+        # temp for testing
+        credits = 0
+        course = "First Class"
+        while(creditMin > credits):
+            max = 0
+            pos = 1
+            addedThisTerm = [] # for pre req checking
+            for j in range(len(filteredDataFrame.index)):
+                if not filteredDataFrame.loc[j, "Taken"]:
+                    if not degreeReq.checkIfTaken(filteredDataFrame.loc[j, "Courses"]):
+                        tempMax = filteredDataFrame.loc[j, "Value"]
+                        if tempMax > max:
+                            
+                            #print("!" + filteredDataFrame.loc[j , "Courses"])
+                            if course == "First Class" or course_dictionary[filteredDataFrame.loc[i, "Courses"]].havePreqs(filterOnCurrent(filteredDataFrame, addedThisTerm)): #modify dataframe to make sure it address courses in the term
+                                #print("!!!" + filteredDataFrame.loc[j , "Courses"])
+                                course = filteredDataFrame.loc[j, "Courses"]
+                                pos = j
+                                max = tempMax
+                                addedThisTerm.append(course)
+                        
+            posArray[4].append(course)
+            filteredDataFrame.loc[pos, "Taken"] = True
+            credits += float(course_dictionary[course].getCredits())
+            degreeReq.checkCompletion(filteredDataFrame)
 
+        for key in course_dictionary:
+            print(key+" "+str(course_dictionary[key].getAndBoolean()))
         printPlanOfStudy(posArray)
         
        

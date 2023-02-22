@@ -45,6 +45,9 @@ class Degree():
         print(df)
         print("printed")        
 
+    def displayDFMain(self):
+        self.displayDF(self.degreeFrame)
+
     def seperateConcentrations(self, concList):
         finalArray = []
         changeIndex = 0
@@ -121,7 +124,7 @@ class Degree():
             sequence = self.degreeFrame.loc[i, "Sequence"]
             seqArray = sequence.getSequence()
             for seq in seqArray:
-                if seq.checkIfContains(course):
+                if seq.checkIfContains(course.split()):
                     return self.degreeFrame.loc[i, "Taken"]
 
     # sets the name for the degree
