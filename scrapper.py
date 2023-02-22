@@ -15,7 +15,6 @@ import time
 import random # test line
 import csv 
 from ast import literal_eval
-import io 
 
 # pip3 lxml
 
@@ -280,11 +279,20 @@ def parseThroughClasses(dfList)-> d:
                     if(has_identifier(courses[i], "Free")): #free electives = end of program
                         coursesParsed.append("Elective")
                         creditsParsed.append(credits[i]) 
-                        descriptionsParsed.append("Special") #special internal descriptor                   
+                        descriptionsParsed.append("Special") #special internal descriptor 
+
+                        flagParsed.append(1)
+                        coursesParsed.append("Total")
+                        creditsParsed.append(credits[i+1]) 
+                        descriptionsParsed.append("Special")
+
                     else: #not free elective then continue
+
+                        specialString = courses[i][:courses[i].find("elective")-1]
+
                         coursesParsed.append("Elective") 
                         creditsParsed.append(credits[i])
-                        descriptionsParsed.append(descriptorRequired)
+                        descriptionsParsed.append(specialString)
             elif "concentration" in courses[i]:
                 concBoolean = True
                 concCredits = credits[i]
@@ -304,7 +312,7 @@ def parseThroughClasses(dfList)-> d:
                 ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
                 coursesParsed[len(coursesParsed)-1] = ns
                 descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
-                flagParsed[len(flagParsed)-1] = 3                                        
+                flagParsed[len(flagParsed)-1] = 3 # 3 = sequence flag                                        
                 next(myiter, None) #iterates loop   
                 """
                 Sample
@@ -315,9 +323,10 @@ def parseThroughClasses(dfList)-> d:
                 Take phys 101 and combine w/ "^" in between
                 """                                            
             elif has_identifier(courses[i], "elective"): #step 7 looks for electives
+                specialString = courses[i][:courses[i].find("elective")-1]
                 coursesParsed.append("Elective")
                 creditsParsed.append(credits[i])
-                descriptionsParsed.append(descriptorRequired)
+                descriptionsParsed.append(specialString)
                 flagParsed.append(1)
                 seqFlag = False       # elective marks end of sequence         
             else:
@@ -340,13 +349,7 @@ def parseThroughClasses(dfList)-> d:
                 concDF.loc[i, "Concentration"].loc[j, "Sequence"] = s(concDF.loc[i, "Concentration"].loc[j, "Sequence"])
         return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concDF, concCredits)
         # unused code
-        for i in range(len(concList)):
-            for j in range(len(concList[i][1])):
-                if checkForNoCredits(concList[i][1][j]):
-                    concList[i][1][j] = course_dictionary[concList[i][0][j]].getCredits()
-                #print("C:"+concList[i][0][j] + " Cr:" + str(concList[i][1][j]) + " D:" + concList[i][2][j] + " F:" + str(concList[i][3][j]) )
-                concList[i][0][j] = s(concList[i][0][j])
-        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concList, concCredits)
+        
     
     # make and return degree object
     return d(seqArray, creditsParsed, descriptionsParsed, flagParsed)    
@@ -406,7 +409,8 @@ def keyWordSearcher(course, initialDescription):
     return descriptor
 
 #-----------------------------------------------------------------------------------------------------
-    
+
+
 def prereqCycle(course: c): 
     tempArrayPrereqs = course.getPrereqArray() #gets an array of linked lsits representing pre reqs
     antiRecurrsionArray = []
@@ -414,7 +418,16 @@ def prereqCycle(course: c):
         prereqsArray = prereqs.iterateThroughArray()
         for prereq in prereqsArray:
             if prereq != "":
-                appendToDictonaray(prereq)
+                try:
+                    course_dictionary[prereq.strip()]
+                    appendToDictonaray(prereq)
+                except KeyError:
+                    try:
+                        prereq += " [WI]"
+                        course_dictionary[prereq.strip()]
+                        appendToDictonaray(prereq)
+                    except:
+                        pass # class doesn't exist so its gonna be ignored
 
                 prereqCourse = course_dictionary[prereq.strip()]
                 if prereqCourse.getPrereqArray() != "":
@@ -445,7 +458,9 @@ def prereqDictionaryFill(df: pd.DataFrame):
             courseArray = seq.iterateThroughArray()
             for course in courseArray:
                 try:
-                    if course != "Elective":
+                    if course == "Elective" or course == "Total":
+                        pass
+                    else:
                         appendToDictonaray(str(course).strip())
                         prereqCycle(course_dictionary[str(course).strip()])
                 except KeyError:
@@ -453,7 +468,7 @@ def prereqDictionaryFill(df: pd.DataFrame):
 
 # changew by adding 10 and use 1 less global
 def filterPrereqDictionary(df: pd.DataFrame):
-    filteredPrequistes = pd.DataFrame({'Courses':[], 'Credits':[]})
+    filteredPrequistes = pd.DataFrame({'Courses':[], 'Value':[], 'Taken':[]})
     for i in range(len(df.index)):
         seqArray = df.loc[i,"Sequence"]
         for seq in seqArray.getSequence():
@@ -461,7 +476,7 @@ def filterPrereqDictionary(df: pd.DataFrame):
             for course in courseArray:
                 try:
                     if course != "Elective":
-                        filteredPrequistes.loc[len(filteredPrequistes.index)] = [str(course).strip() , course_int_dictionary[str(course).strip()]]
+                        filteredPrequistes.loc[len(filteredPrequistes.index)] = [str(course).strip() , course_int_dictionary[str(course).strip()], False]
                 except KeyError:
                     pass
     #filteredPrequistes.columns = ['Courses', 'Credits']
@@ -491,7 +506,7 @@ def printList(list):
 def convertCSVToCourseObject():
    #df = pd.read_csv("in.csv",converters={"Col3": literal_eval})
     
-    df = pd.read_csv("courseObjects.csv",converters={3:literal_eval})
+    df = pd.read_csv("courseObjects2.csv",converters={3:literal_eval})
 
     #df = pd.read_csv("courseObjects.csv") 
     df.columns = ['Courses', 'Credits', 'Prereqs', "Avail"]
@@ -502,19 +517,26 @@ def convertCSVToCourseObject():
             course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], "", df.loc[i, "Avail"])
 
 def convertCourseObjectToCSV():
-    filename = 'courseObjects.csv'
+    filename = 'courseObjects2.csv'
     try:
         with open(filename, 'w', newline='') as f:
             writer = csv.writer(f)
             for key in course_dictionary:
                 courseObj = course_dictionary[key]
                 if isinstance(courseObj.getPrereqString(), type(None)) or courseObj.getPrereqString() == "":
-                    writer.writerow([courseObj.getCourseName(), courseObj.getCredits(), "", courseObj.getAvial()])
+                    writer.writerow([cleanWIFormating(courseObj.getCourseName()), courseObj.getCredits(), "", courseObj.getAvial()])
                 else:
-                    writer.writerow([courseObj.getCourseName(), courseObj.getCredits(), courseObj.getPrereqString(), courseObj.getAvial()])
+                    writer.writerow([cleanWIFormating(courseObj.getCourseName()), courseObj.getCredits(), courseObj.getPrereqString(), courseObj.getAvial()])
 
     except BaseException as e:
         print('BaseException:', filename)
+
+def cleanWIFormating(string)->str:
+        # CS 26   [WI]
+        while(has_identifier(string, "  ")):
+            string = string.replace("  "," ")    
+        return string
+
 def scrapeCourseCatalog():
     urls = getUrls()
     for url in urls:
@@ -594,6 +616,103 @@ def scrapeTermMaster():
                 print(line.encode("utf-8"))
                 goThroughCollege(driver, str(line).replace("\n", ""), tables, intQuarter)
 
+def coopBooleanFinder(springSummerCoop, term):
+    coopBoolean = False
+    if springSummerCoop:
+        if term == 2 or term == 3:
+            #print("COOP") # coop
+            coopBoolean = True
+        else:
+            coopBoolean = False
+    else:
+        if term == 0 or term == 1:
+        # print("COOP") # coop
+            coopBoolean = True
+        else:
+            coopBoolean = False
+    return coopBoolean
+
+def calculateQuarterlyAvail(df):
+    fallCounter = 0
+    winterCounter = 0
+    springCounter = 0
+    summerCounter = 0
+    for i in range(len(df.index)):
+        try:
+            if course_dictionary[df.loc[i,"Courses"]].getFallAvail():
+                fallCounter += 1
+
+            if course_dictionary[df.loc[i,"Courses"]].getWinterAvail():
+                winterCounter += 1
+
+            if course_dictionary[df.loc[i,"Courses"]].getSpringAvail():
+                springCounter += 1
+
+            if course_dictionary[df.loc[i,"Courses"]].getSummerAvail():
+                summerCounter += 1
+        except KeyError:
+            pass
+        
+    return [fallCounter, winterCounter, springCounter, summerCounter]
+
+def calculateQuarterlySingularAvail(df):
+    fallCounter = 0
+    winterCounter = 0
+    springCounter = 0
+    summerCounter = 0
+    for i in range(len(df.index)):
+        try:
+            if course_dictionary[df.loc[i,"Courses"]].getFallAvail() and not (course_dictionary[df.loc[i,"Courses"]].getWinterAvail() or course_dictionary[df.loc[i,"Courses"]].getSpringAvail() or course_dictionary[df.loc[i,"Courses"]].getSummerAvail()):
+                fallCounter += 1
+
+            if course_dictionary[df.loc[i,"Courses"]].getWinterAvail() and not (course_dictionary[df.loc[i,"Courses"]].getFallAvail() or course_dictionary[df.loc[i,"Courses"]].getSpringAvail() or course_dictionary[df.loc[i,"Courses"]].getSummerAvail()):
+                winterCounter += 1
+
+            if course_dictionary[df.loc[i,"Courses"]].getSpringAvail() and not (course_dictionary[df.loc[i,"Courses"]].getWinterAvail() or course_dictionary[df.loc[i,"Courses"]].getFallAvail() or course_dictionary[df.loc[i,"Courses"]].getSummerAvail()):
+                springCounter += 1
+
+            if course_dictionary[df.loc[i,"Courses"]].getSummerAvail() and not (course_dictionary[df.loc[i,"Courses"]].getWinterAvail() or course_dictionary[df.loc[i,"Courses"]].getSpringAvail() or course_dictionary[df.loc[i,"Courses"]].getFallAvail()):
+                summerCounter += 1
+        except KeyError:
+            pass
+        
+    return [fallCounter, winterCounter, springCounter, summerCounter]
+
+def assignPredeterminedCourse(course: str, df: pd.DataFrame)->pd.DataFrame:
+    for i in range(len(df.index)):
+        if df.loc[i, "Courses"] == course:
+            df.loc[i, "Taken"] = True
+            return df
+    # if it makes it here the course is not in the dataframe so add it
+
+    df.loc[len(df.index)] = [str(course).strip(), 0, True]
+    return df
+
+def printPlanOfStudy(posArray):
+    print("Plan of Study")
+    counter = 0
+    firstYear = True
+    year = 2022
+    for quarter in posArray:
+        if counter == 0:
+            print(str(year) + str(15))
+        elif counter == 1:
+            print(str(year) + str(25))
+        elif counter == 2:
+            print(str(year) + str(35))
+        elif counter == 3 and not firstYear:
+            print(str(year) + str(45))
+        else:
+            firstYear = False
+            counter *= 0
+            year+=1
+            print(str(year) + str(15))
+        miniCounter = 1
+        for classes in quarter:
+            print(str(miniCounter)+"." + classes)  
+            miniCounter += 1     
+        counter+= 1
+
 if __name__ == '__main__':
     
     # -------SCRAPING----------
@@ -601,129 +720,149 @@ if __name__ == '__main__':
     #scrapeTermMaster()
     #convertCourseObjectToCSV()
 
+    #-----Not Scraping-----
     convertCSVToCourseObject()
     
-
-    # ---------TESTING LINE-------------
-        #prints the key pointing to a temp tostring for a course
-        #below "prints" what pre reqs look like
-    #for key in course_dictionary:
-    #  print(key + "->" + str(course_dictionary[key]))
-       #course_dictionary[key].printPreqs()
-    
-    #print(str(course_dictionary["CS 385"]))
     course_dictionary_2 = {}
     
     NAME = "CS" # temp var
-    
+    COLLEGE = "CCI"
     ## modification ends
+
     list_degree_frame = parseDegreeRequiremnts(NAME)
-    #displayDF(cs_degree_frame)
     degreeReq = parseThroughClasses(list_degree_frame)
     degreeReq.setDegreeName(NAME)
+    degreeReq.setDegreeCollege(COLLEGE)
     print(degreeReq)
-    degreeReq.printConcentrations()
 
-    #
+    # TEMP HARD CODED DETERIMENES SCIENCE SEQUENCE
+    SEQUENCELOCK = "PHYS"
+    degreeReq.selectScienceSequence(SEQUENCELOCK)
+
     prereqDictionaryFill(degreeReq.getDegree())
-
     concDf = degreeReq.selectConcentration("Algorithms and Theory")
-
-    displayDF(concDf)
     prereqDictionaryFill(concDf)
 
-    displayDF(filterPrereqDictionary(degreeReq.getMegaDegreeRequirments()))
-    #filterPrereqDictionary(degreeReq.getDegree())
-    #filterPrereqDictionary(concDf)
-
-    for key in course_dictionary:
-        rand = random.randint(1,100)
-        if rand == 25:
-            #print("Course : " + str(df.loc[i, "Courses"]) + "\nCredits: " + str(df.loc[i, "Credits"]) + "\n" + str(df.loc[i, "Avail"]) )
-            print(key + ": " + str(course_dictionary[key].getAvial()))
-
-    for key in filtered_prerequiste_ditctionary:
-       print(key + "->" + str(filtered_prerequiste_ditctionary[key]))
-    
-    
-    fallCounter = 0
-    winterCounter = 0
-    springCounter = 0
-    summerCounter = 0
-    for key in course_dictionary:
-
-        if course_dictionary[key].getFallAvail():
-            fallCounter += 1
-
-        if course_dictionary[key].getWinterAvail():
-            winterCounter += 1
-
-        if course_dictionary[key].getSpringAvail():
-            springCounter += 1
-
-        if course_dictionary[key].getSummerAvail():
-            summerCounter += 1
-
-        rand = random.randint(0,100)
-
-        if rand == 50:
-            print(key + ": ")
-            for a in course_dictionary[key].getAvial():
-                if a == True:
-                    print("T ", end = "")
-                else:
-                    print("F ", end = "")
-            print(str(course_dictionary[key].getAvial()))
-
-    print("Fall Classes: " + str(fallCounter))
-    print("Winter Classes: " + str(winterCounter))
-    print("Spring Classes: " + str(springCounter))
-    print("Summer Classes: " + str(summerCounter))
-
-
+    filteredDataFrame = filterPrereqDictionary(degreeReq.getMegaDegreeRequirments())
 
     # TEMP VARs
-    numberOfQuarters = 12
-    springSummerCoop = True
-    numberOfFalls = 5
-    numberOfWinters = 5
-    numberOfSprings = 5
-    numberOfSummers = 5
 
-    if springSummerCoop:
-        numberOfSprings = 2
-        numberOfSummers = 0
-    else:
-        numberOfFalls = 2
-        numberOfWinters = 2
-        numberOfSummers = 3
+    if degreeReq.getDegreeCollege() == "CCI":
+        numberOfQuarters = 18
+        springSummerCoop = True
+        coopNumber = 3
+        numTermsPremade = 1
+        creditMin = 15
+        creditMax = 17
 
-    numberOfArray = [numberOfFalls, numberOfWinters, numberOfSprings, numberOfSummers]
+        numberOfFalls = 5
+        numberOfWinters = 5
+        numberOfSprings = 5
+        numberOfSummers = 5
+        
 
-    for i in range(numberOfQuarters):
-        pass
-    #
-"""
-    for i in range(degreeReq.getLength()):
-        seqArray = degreeReq.getSeqAt(i)
-        for seq in seqArray.getSequence():
-           # print("Sequence: " +str(seq))
-            courseArray = seq.iterateThroughArray()
-            for course in courseArray:
-                try:
-                    if course != "Elective":
-                        appendToDictonaray(str(course).strip())
-                        prereqCycle(course_dictionary[str(course).strip()])
-                except KeyError:
+        if springSummerCoop:
+            numberOfSprings = 2
+            numberOfSummers = 0
+        else:
+            numberOfFalls = 2
+            numberOfWinters = 2
+            numberOfSummers = 3
+
+        posArray = [] #array that contains the plan of study
+        for i in range(numberOfQuarters):
+            posArray.append([])
+        numberOfArray = [numberOfFalls, numberOfWinters, numberOfSprings, numberOfSummers]
+        coopBoolean = False
+        firstYear = True
+        
+        
+      
+
+        # -------- pre decided terms -----------------
+        firstTermPremade = True
+        predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        for i in range(numTermsPremade):
+            if i == 0 and firstTermPremade:
+                posArray[i].append("UNIV CI101")
+
+                for course in predetiermendCourses:
+                    posArray[i].append(course)
+                    filteredDataFrame = assignPredeterminedCourse(course, filteredDataFrame)
+            degreeReq.checkCompletion(filteredDataFrame)
+
+
+
+
+        displayDF(filteredDataFrame)
+        for i in range(numTermsPremade, numberOfQuarters):
+            year = 1
+            totalQuarterAvail = calculateQuarterlyAvail(filteredDataFrame)
+            #totalQuarterSingularAvail = calculateQuarterlySingularAvail(filteredDataFrame)
+            term = i
+            credits = 0.0
+            #for QuarterAvail in totalQuarterAvail:
+            #   print("A "+str(QuarterAvail))
+            #   print("S "+str(totalQuarterSingularAvail))
+            if term > 3:
+                firstYear = False
+                while term > 3:
+                    term -= 4
+                    year += 1
+
+                if coopNumber == 1 and year == 3:
+                    coopBoolean = coopBooleanFinder(springSummerCoop, term)
+                elif coopNumber == 3 and (year == 2 or year == 3 or year == 4):
+                    coopBoolean = coopBooleanFinder(springSummerCoop, term)
+                else:
+                    coopBoolean = False
+
+            if term == 0:
+                #print("Fall") # fall
+                if coopBoolean:
+                 #   print("\tCO-OP")
+                    posArray[i-1].append("COOP 201")
+                else:
                     pass
-                    #print("Error:" + course + "!")
-                   # pass #electives
+                    while(creditMin > credits):
+                        course = "Temp Empty"
+                        max = 0
+                        pos = 1
+                        for j in range(len(filteredDataFrame.index)):
+                            if not filteredDataFrame.loc[j, "Taken"]:
+                                if not degreeReq.getTaken(filteredDataFrame.loc[j, "Courses"]):
+                                    tempMax = filteredDataFrame.loc[j, "Value"]
+                                    if tempMax > max:
+                                        course = filteredDataFrame.loc[j, "Courses"]
+                                        pos = j
+                                        max = tempMax
+                                    
 
-    for i in range(len(concDf)):
-        seqArray = concDf.loc["Sequence", i]
-        for seq in seqArray.getSequence():
-            
-"""
+                        posArray[i].append(course)
+                        filteredDataFrame.loc[pos, "Taken"] = True
+                        credits += float(course_dictionary[course].getCredits())
+                        degreeReq.checkCompletion(filteredDataFrame)
+
+            elif term == 1:
+                #print("Winter") # winter
+                if coopBoolean:
+                 #   print("\tCO-OP")
+                    posArray[i-1].append("COOP 201")
+            elif term == 2:
+                #print("Spring") # spring
+                if coopBoolean:
+                 #   print("\tCO-OP")
+                    posArray[i-1].append("COOP 201")
+            elif term == 3 and not firstYear:
+                #print("Summer") # summer
+                if coopBoolean:
+                 #   print("\tCO-OP")
+                    posArray[i-1].append("COOP 201")
+
+        printPlanOfStudy(posArray)
+        
+       
+
 
 
 # no pre reqs shows up as ""

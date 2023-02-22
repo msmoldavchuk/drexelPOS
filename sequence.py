@@ -1,3 +1,4 @@
+import pandas as pd
 class LinkedList:
     def __init__(self,head=None):
         self.head = head    
@@ -35,6 +36,41 @@ class LinkedList:
        
         return array
     
+    def checkIfContains(self, item):
+        cur = self.head
+        while(True):
+            if cur.data == item:
+                return True
+            if(cur.next is None): 
+                    break  
+            cur = cur.next
+        return False
+
+    def checkDataFrame(self, df: pd.DataFrame):
+        cur = self.head
+        if (cur.internalBool == False): # OR
+            # only one class has to match
+            while(True):       
+                for i in range(len(df.index)):
+                    if(df.loc[i,"Courses"].split() == cur.data.split() and df.loc[i,"Taken"]):
+                        return True
+                if(cur.next is None): 
+                    break  
+                cur = cur.next
+        else:
+            while(True):
+                andClassTaken = False # intially class for and sequence is not taken
+                for i in range(len(df.index)):
+                    if(df.loc[i,"Courses"].split() == cur.data.split() and df.loc[i,"Taken"]):
+                        andClassTaken = True # if it is taken set it to true                
+                if not andClassTaken: # if an and class was ever not taken return false always
+                    return False
+                if(cur.next is None): 
+                    return True # only gets here if all and classes are taken
+                    break                    
+                cur = cur.next
+        return False
+
     def iterateThroughSTR(self):
         cur = self.head
         string = ""
@@ -80,7 +116,7 @@ class LinkedList:
                     count+=1
                     current = current.next
 class Node:    
-    def __init__(self,data, internalBool = True):
+    def __init__(self,data, internalBool = False):
         self.data = data
         """internal bool can be three values 0 for end, 1 for or, 2 for true
         internal bool other idea false = or, true =  and""" #<- current execution
@@ -97,7 +133,9 @@ class Sequence:
     # CONSTRUCTOR
     def __init__(self, courses):
         self.courseArray = []
-        if len(courses) < 12 and self.has_identifier(courses, "Digit"):
+        if isinstance(courses, LinkedList):
+            self.courseArray = [courses]
+        elif len(courses) < 12 and self.has_identifier(courses, "Digit"):
             l = LinkedList(Node(courses))
             self.courseArray.append(l)
         else:

@@ -1,4 +1,3 @@
-ADGD I199,0.0-12.0,,"[False, False, False, False]"
 ADGD I299,0.0-12.0,,"[False, False, False, False]"
 ADGD I399,0.0-12.0,,"[False, False, False, False]"
 ADGD I499,0.0-12.0,,"[False, False, False, False]"
@@ -152,17 +151,17 @@ ARCH 336,3.0," ARCH 335 [Min Grade: C-]
 ","[False, True, False, False]"
 ARCH 340,3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, False, False]"
-ARCH 341   [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
+ARCH 341 [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, False, False]"
-ARCH 342   [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
+ARCH 342 [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, False, False]"
 ARCH 343,3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, True, False]"
-ARCH 346   [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
+ARCH 346 [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, False, False]"
-ARCH 347   [WI],1.0-6.0," ARCH 143 [Min Grade: C-] or INTR 200 [Min Grade: C-] or ARTH 103 [Min Grade: C-]
+ARCH 347 [WI],1.0-6.0," ARCH 143 [Min Grade: C-] or INTR 200 [Min Grade: C-] or ARTH 103 [Min Grade: C-]
 ","[False, False, False, False]"
-ARCH 348   [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
+ARCH 348 [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, False, False]"
 ARCH 350,3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[True, False, False, False]"
@@ -196,9 +195,9 @@ ARCH 395,1.5," ARCH 394 [Min Grade: C-]
 ","[False, True, False, False]"
 ARCH 396,1.5," ARCH 293 [Min Grade: C-]
 ","[False, False, True, False]"
-ARCH 421   [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
+ARCH 421 [WI],3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
 ","[False, False, False, False]"
-ARCH 431   [WI],3.0," ARCH 353 [Min Grade: C-] or ARCH 483 [Min Grade: C-]
+ARCH 431 [WI],3.0," ARCH 353 [Min Grade: C-] or ARCH 483 [Min Grade: C-]
 ","[False, False, False, False]"
 ARCH 432,3.0,,"[False, False, False, True]"
 ARCH 441,3.0," ARCH 143 [Min Grade: C-] or ARCH 144 [Min Grade: C-]
@@ -258,7 +257,7 @@ ARTH 102,3.0,,"[True, True, True, True]"
 ARTH 103,3.0,,"[True, True, True, True]"
 ARTH 150,3.0,,"[False, False, True, False]"
 ARTH 200,3.0,,"[False, True, False, False]"
-ARTH 300   [WI],3.0,,"[False, False, False, False]"
+ARTH 300 [WI],3.0,,"[False, False, False, False]"
 ARTH 301,3.0,,"[True, False, False, False]"
 ARTH 302,3.0,,"[False, True, False, False]"
 ARTH 303,3.0,,"[False, True, False, False]"
@@ -274,9 +273,9 @@ ARTH 325,3.0,,"[False, False, False, False]"
 ARTH 326,3.0,,"[False, False, False, False]"
 ARTH 327,3.0,,"[False, False, True, False]"
 ARTH 328,3.0,,"[False, False, False, False]"
-ARTH 331   [WI],3.0,,"[False, False, False, False]"
-ARTH 335   [WI],3.0,,"[False, False, False, False]"
-ARTH 336   [WI],3.0,,"[False, False, False, False]"
+ARTH 331 [WI],3.0,,"[False, False, False, False]"
+ARTH 335 [WI],3.0,,"[False, False, False, False]"
+ARTH 336 [WI],3.0,,"[False, False, False, False]"
 ARTH 337,3.0,,"[True, False, False, False]"
 ARTH 340,3.0,,"[False, False, True, False]"
 ARTH 400,3.0,,"[False, False, False, False]"
@@ -360,7 +359,7 @@ DSMR 230,3.0,,"[False, True, False, False]"
 DSMR 231,3.0,,"[True, True, False, False]"
 DSMR 232,4.0," DSMR 231 [Min Grade: D]
 ","[False, True, True, False]"
-DSMR 233   [WI],3.0,,"[False, False, False, False]"
+DSMR 233 [WI],3.0,,"[False, False, False, False]"
 DSMR 300,3.0,,"[False, True, False, False]"
 DSMR 310,3.0," DSMR 232 [Min Grade: D]
 ","[True, False, True, False]"
@@ -368,11 +367,11 @@ DSMR 311,3.0," DSMR 232 [Min Grade: D]
 ","[True, False, True, False]"
 DSMR 313,3.0," DSMR 231 [Min Grade: D]
 ","[False, False, False, False]"
-DSMR 315   [WI],3.0," VSST 103 [Min Grade: D] and DSMR 210 [Min Grade: D] and DSMR 211 [Min Grade: D] and ENGL 103 [Min Grade: D]
+DSMR 315 [WI],3.0," VSST 103 [Min Grade: D] and DSMR 210 [Min Grade: D] and DSMR 211 [Min Grade: D] and ENGL 103 [Min Grade: D]
 ","[False, False, False, False]"
 DSMR 316,3.0," DSMR 315 [Min Grade: D]
 ","[False, True, False, False]"
-DSMR 321   [WI],3.0,,"[False, False, False, False]"
+DSMR 321 [WI],3.0,,"[False, False, False, False]"
 DSMR 324,3.0," DSMR 231 [Min Grade: D]
 ","[False, True, False, False]"
 DSMR 330,3.0, DSMR 310 [Min Grade: C] (Can be taken Concurrently),"[False, True, True, False]"
@@ -382,8 +381,8 @@ DSMR 410,3.0,,"[False, False, False, False]"
 DSMR 464,3.0," DSMR 310 [Min Grade: D]
 ","[True, True, True, False]"
 DSMR 475,3.0,,"[False, False, False, False]"
-DSMR 477   [WI],3.0,,"[False, False, False, False]"
-DSMR 496   [WI],3.0," PROD 215 [Min Grade: D]
+DSMR 477 [WI],3.0,,"[False, False, False, False]"
+DSMR 496 [WI],3.0," PROD 215 [Min Grade: D]
 ","[False, False, False, False]"
 DSMR I199,0.0-12.0,,"[False, False, False, False]"
 DSMR I299,0.0-12.0,,"[False, False, False, False]"
@@ -396,16 +395,16 @@ DSMR T480,0.5-12.0,,"[False, False, False, False]"
 DIGM 100,3.0,,"[False, False, False, False]"
 DIGM 105,3.0,,"[True, False, False, False]"
 DIGM 250,3.0,,"[False, False, False, False]"
-DIGM 308   [WI],3.0,,"[False, False, False, False]"
-DIGM 350   [WI],3.0,,"[False, False, False, False]"
+DIGM 308 [WI],3.0,,"[False, False, False, False]"
+DIGM 350 [WI],3.0,,"[False, False, False, False]"
 DIGM 355,3.0," ANIM 211 [Min Grade: D]
 ","[False, False, False, False]"
 DIGM 359,3.0," DIGM 355 [Min Grade: D]
 ","[False, False, False, False]"
 DIGM 365,3.0," DIGM 355 [Min Grade: D]
 ","[False, False, False, False]"
-DIGM 451   [WI],3.0,,"[False, False, False, False]"
-DIGM 475   [WI],3.0," IDM 371 [Min Grade: D] (Can be taken Concurrently)DIGM 451 [Min Grade: D]
+DIGM 451 [WI],3.0,,"[False, False, False, False]"
+DIGM 475 [WI],3.0," IDM 371 [Min Grade: D] (Can be taken Concurrently)DIGM 451 [Min Grade: D]
 ","[False, False, False, False]"
 DIGM 490,3.0," (ANIM 214 [Min Grade: D] or GMAP 377 [Min Grade: D] or IDM 372 [Min Grade: D] or VRIM 320 [Min Grade: D]) and (DIGM 451 [Min Grade: D] or DIGM 475 [Min Grade: D])
 ","[True, True, True, False]"
@@ -427,7 +426,7 @@ EAM 130,3.0,,"[True, False, True, False]"
 EAM 200,3.0," EAM 130 [Min Grade: D]
 ","[False, True, False, False]"
 EAM 211,3.0,,"[True, False, True, False]"
-EAM 215   [WI],3.0," EAM 130 [Min Grade: D] and EAM 211 [Min Grade: D]
+EAM 215 [WI],3.0," EAM 130 [Min Grade: D] and EAM 211 [Min Grade: D]
 ","[False, False, False, False]"
 EAM 220,3.0," EAM 211 [Min Grade: D]
 ","[False, True, False, False]"
@@ -758,7 +757,7 @@ VSCM 333,4.0," VSCM 332 [Min Grade: D] or VSCM 331 [Min Grade: D]
 VSCM 340,3.0," VSCM 242 [Min Grade: D]
 ","[True, False, True, False]"
 VSCM 345,3.0,,"[False, False, False, False]"
-VSCM 350   [WI],3.0,,"[False, False, False, False]"
+VSCM 350 [WI],3.0,,"[False, False, False, False]"
 VSCM 360,3.0," VSCM 232 [Min Grade: D]
 ","[False, False, False, True]"
 VSCM 370,3.0," VSCM 232 [Min Grade: D] and VSCM 242 [Min Grade: D]
@@ -859,8 +858,8 @@ INTR 241,3.0," INTR 232 [Min Grade: C-]
 INTR 245,3.0," INTR 241 [Min Grade: D]
 ","[False, False, False, True]"
 INTR 250,3.0,,"[True, False, False, False]"
-INTR 300   [WI],3.0,,"[False, False, False, False]"
-INTR 305   [WI],3.0,,"[False, False, False, False]"
+INTR 300 [WI],3.0,,"[False, False, False, False]"
+INTR 305 [WI],3.0,,"[False, False, False, False]"
 INTR 310,3.0,,"[False, True, False, False]"
 INTR 331,4.0," INTR 233 [Min Grade: C-]
 ","[False, False, True, False]"
@@ -882,7 +881,7 @@ INTR 442,4.0," INTR 430 [Min Grade: C-]
 ","[True, False, False, True]"
 INTR 445,3.0," INTR 245 [Min Grade: D] and INTR 430 [Min Grade: C-]
 ","[False, True, False, False]"
-INTR 450   [WI],3.0," INTR 331 [Min Grade: C-]
+INTR 450 [WI],3.0," INTR 331 [Min Grade: C-]
 ","[False, False, False, False]"
 INTR 451,3.0," INTR 350 [Min Grade: D]
 ","[True, False, True, False]"
@@ -962,7 +961,7 @@ MUSC 323,3.0," MUSC 121 [Min Grade: D]
 MUSC 331,3.0,,"[True, True, True, True]"
 MUSC 333,3.0,,"[True, False, False, False]"
 MUSC 336,3.0,,"[False, True, False, False]"
-MUSC 338   [WI],3.0,,"[False, False, False, False]"
+MUSC 338 [WI],3.0,,"[False, False, False, False]"
 MUSC 342,2.0," MUSC 241 [Min Grade: D]
 ","[False, True, True, False]"
 MUSC I199,0.0-12.0,,"[False, False, False, False]"
@@ -988,7 +987,7 @@ MIP 276,3.0," MIP 179 [Min Grade: C]
 ","[False, False, True, False]"
 MIP 279,3.0," MIP 233 [Min Grade: D]
 ","[True, True, True, False]"
-MIP 293   [WI],3.0,,"[False, False, False, False]"
+MIP 293 [WI],3.0,,"[False, False, False, False]"
 MIP 318,3.0,,"[False, False, False, False]"
 MIP 331,3.0,,"[False, False, False, False]"
 MIP 333,3.0," MIP 233 [Min Grade: D]
@@ -1006,7 +1005,7 @@ MIP 365,3.0,,"[False, False, False, False]"
 MIP 366,3.0," MIP 161 [Min Grade: D] or MIP 361 [Min Grade: D]
 ","[False, False, False, False]"
 MIP 374,3.0,,"[False, True, False, False]"
-MIP 375   [WI],3.0," MIP 132 [Min Grade: D]
+MIP 375 [WI],3.0," MIP 132 [Min Grade: D]
 ","[False, False, False, False]"
 MIP 376,3.0," MIP 132 [Min Grade: C]
 ","[True, True, True, False]"
@@ -1083,8 +1082,8 @@ PHTO 240,3.0," PHTO 210 [Min Grade: D] and PHTO 141 [Min Grade: D]
 ","[False, True, False, False]"
 PHTO 253,3.0," PHTO 210 [Min Grade: D]
 ","[True, False, False, False]"
-PHTO 275   [WI],3.0,,"[False, False, False, False]"
-PHTO 276   [WI],3.0," PHTO 275 [Min Grade: D]
+PHTO 275 [WI],3.0,,"[False, False, False, False]"
+PHTO 276 [WI],3.0," PHTO 275 [Min Grade: D]
 ","[False, False, False, False]"
 PHTO 291,0.5-12.0,,"[False, False, False, False]"
 PHTO 334,4.0," PHTO 234 [Min Grade: D]
@@ -1101,7 +1100,7 @@ PHTO 392,3.0," PHTO 234 [Min Grade: D] and PHTO 233 [Min Grade: D] and PHTO 236 
 ","[False, False, True, False]"
 PHTO 451,3.0," PHTO 233 [Min Grade: D] and PHTO 234 [Min Grade: D] and PHTO 240 [Min Grade: D]
 ","[False, False, False, True]"
-PHTO 452   [WI],3.0," PHTO 275 [Min Grade: D] and PHTO 276 [Min Grade: D]
+PHTO 452 [WI],3.0," PHTO 275 [Min Grade: D] and PHTO 276 [Min Grade: D]
 ","[False, False, False, False]"
 PHTO 453,3.0," PHTO 451 [Min Grade: D]
 ","[False, True, False, False]"
@@ -1203,11 +1202,11 @@ SCRP 263,3.0," SCRP 260 [Min Grade: C]
 ","[False, False, False, False]"
 SCRP 266,3.0," SCRP 260 [Min Grade: C]
 ","[False, False, False, False]"
-SCRP 270   [WI],3.0," ENGL 101 [Min Grade: D] or ENGL 105 [Min Grade: D]
+SCRP 270 [WI],3.0," ENGL 101 [Min Grade: D] or ENGL 105 [Min Grade: D]
 ","[False, False, False, False]"
-SCRP 275   [WI],3.0," SCRP 270 [Min Grade: D]
+SCRP 275 [WI],3.0," SCRP 270 [Min Grade: D]
 ","[False, False, False, False]"
-SCRP 280   [WI],3.0," SCRP 270 [Min Grade: D]
+SCRP 280 [WI],3.0," SCRP 270 [Min Grade: D]
 ","[False, False, False, False]"
 SCRP 281,3.0," SCRP 270 [Min Grade: D]
 ","[False, False, True, False]"
@@ -1327,7 +1326,7 @@ TVST T480,0.0-12.0,,"[False, False, False, False]"
 THTR 110,3.0,,"[True, False, True, False]"
 THTR 115,3.0,,"[True, True, True, False]"
 THTR 116,3.0,,"[True, True, True, False]"
-THTR 121   [WI],3.0,,"[False, False, False, False]"
+THTR 121 [WI],3.0,,"[False, False, False, False]"
 THTR 130,0-1,,"[True, True, True, False]"
 THTR 131,1.0,,"[True, True, True, False]"
 THTR 132,1.0," THTR 130 [Min Grade: D]
@@ -1344,9 +1343,9 @@ THTR 210,3.0,,"[True, True, True, True]"
 THTR 211,2.0," THTR 210 [Min Grade: D]
 ","[False, False, True, False]"
 THTR 212,3.0,,"[False, False, True, False]"
-THTR 221   [WI],3.0," THTR 121 [Min Grade: D] or HUM 103 [Min Grade: D] or HUM 105 [Min Grade: A] or HUM 108 [Min Grade: D] or ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A] or ENGL 103 [Min Grade: D]
+THTR 221 [WI],3.0," THTR 121 [Min Grade: D] or HUM 103 [Min Grade: D] or HUM 105 [Min Grade: A] or HUM 108 [Min Grade: D] or ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A] or ENGL 103 [Min Grade: D]
 ","[False, False, False, False]"
-THTR 222   [WI],3.0,,"[False, False, False, False]"
+THTR 222 [WI],3.0,,"[False, False, False, False]"
 THTR 231,3.0,,"[False, False, True, False]"
 THTR 232,3.0,,"[False, False, False, True]"
 THTR 240,3.0,,"[True, False, True, False]"
@@ -1510,7 +1509,7 @@ ANTH 101,3.0,,"[True, True, True, False]"
 ANTH 112,3.0,,"[False, False, False, False]"
 ANTH 117,3.0,,"[False, False, False, False]"
 ANTH 205,3.0,,"[False, False, False, False]"
-ANTH 212   [WI],3.0,,"[False, False, False, False]"
+ANTH 212 [WI],3.0,,"[False, False, False, False]"
 ANTH 217,3.0,,"[False, False, False, False]"
 ANTH 240,3.0,,"[False, False, False, False]"
 ANTH 250,3.0,,"[True, False, False, False]"
@@ -1628,7 +1627,7 @@ BIO 215,3.0,"  or BIO 122 [Min Grade: D] or BIO 141 [Min Grade: D] or BIO 131 [M
 ","[False, True, False, False]"
 BIO 218,4.0," BIO 122 [Min Grade: D] or BIO 141 [Min Grade: D] or BIO 131 [Min Grade: D]
 ","[False, True, False, True]"
-BIO 219   [WI],3.0," BIO 122 [Min Grade: D] or BIO 141 [Min Grade: D] or BIO 131 [Min Grade: D]
+BIO 219 [WI],3.0," BIO 122 [Min Grade: D] or BIO 141 [Min Grade: D] or BIO 131 [Min Grade: D]
 ","[False, False, False, False]"
 BIO 220,3.0," BIO 122 [Min Grade: D] or BIO 141 [Min Grade: D] or BIO 131 [Min Grade: D]
 ","[True, True, False, True]"
@@ -1750,7 +1749,7 @@ BIO 471,2.0," BIO 218 [Min Grade: D] or BIO 211 [Min Grade: D]
 ","[True, False, False, False]"
 BIO 472,2.0," BIO 471 [Min Grade: D]
 ","[False, True, False, False]"
-BIO 473   [WI],2.0," BIO 472 [Min Grade: D]
+BIO 473 [WI],2.0," BIO 472 [Min Grade: D]
 ","[False, False, False, False]"
 BIO 474,2.0, BIO 473 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
 BIO 497,0.5-12.0,,"[True, True, True, False]"
@@ -1806,7 +1805,7 @@ CHEM 165,2.5, CHEM 163 [Min Grade: D] (Can be taken Concurrently),"[False, False
 CHEM 201,3.0,,"[False, False, True, False]"
 CHEM 230,4.0," CHEM 102 [Min Grade: D] or CHEM 122 [Min Grade: D] or (CHEM 162 [Min Grade: D] and CHEM 164 [Min Grade: D])
 ","[True, False, True, True]"
-CHEM 231   [WI],2.0, CHEM 230 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
+CHEM 231 [WI],2.0, CHEM 230 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
 CHEM 241,4.0," CHEM 102 [Min Grade: D] or CHEM 122 [Min Grade: D] or (CHEM 162 [Min Grade: D] and CHEM 164 [Min Grade: D])
 ","[True, True, True, True]"
 CHEM 242,4.0," CHEM 241 [Min Grade: D]
@@ -1836,7 +1835,7 @@ CHEM 346,5.5," CHEM 249 [Min Grade: D] or (CHEM 243 [Min Grade: D] and CHEM 245 
 CHEM 355,3.0," (CHEM 253 [Min Grade: D] or CHEC 352 [Min Grade: D]) and (CHEM 270 [Min Grade: D] or PHYS 160 [Min Grade: D]) and (MATH 201 [Min Grade: D] or MATH 210 [Min Grade: D])
 ","[True, False, False, False]"
 CHEM 356,2.0, CHEM 241 [Min Grade: D] (Can be taken Concurrently),"[True, False, True, False]"
-CHEM 357   [WI],2.5," CHEM 253 [Min Grade: D] and (PHYS 211 [Min Grade: D] or PHYS 201 [Min Grade: D]) or CHEC 352 [Min Grade: D]
+CHEM 357 [WI],2.5," CHEM 253 [Min Grade: D] and (PHYS 211 [Min Grade: D] or PHYS 201 [Min Grade: D]) or CHEC 352 [Min Grade: D]
 ","[False, False, False, False]"
 CHEM 358,2.5," CHEM 357 [Min Grade: D] and (CHEM 253 [Min Grade: D] or CHEC 352 [Min Grade: D])
 ","[True, False, True, False]"
@@ -1861,7 +1860,7 @@ CHEM 424,0.5-12.0,,"[False, False, False, False]"
 CHEM 425,4.0, CHEM 422 [Min Grade: D] (Can be taken Concurrently),"[False, False, True, False]"
 CHEM 430,3.0," CHEM 253 [Min Grade: D] (Can be taken Concurrently)CHEM 230 [Min Grade: D] and (CHEM 248 [Min Grade: D] or CHEM 242 [Min Grade: D]) or CHEC 352 [Min Grade: D])
 ","[True, False, False, False]"
-CHEM 431   [WI],4.0," CHEM 430 [Min Grade: D] or ENGR 210 [Min Grade: D]
+CHEM 431 [WI],4.0," CHEM 430 [Min Grade: D] or ENGR 210 [Min Grade: D]
 ","[False, False, False, False]"
 CHEM 465,3.0," CHEM 242 [Min Grade: D] or CHEM 248 [Min Grade: D]
 ","[True, False, False, False]"
@@ -1914,12 +1913,12 @@ CHIN T480,0.0-12.0,,"[False, False, False, False]"
 COM 101,3.0,,"[True, False, False, False]"
 COM 111,3.0,,"[True, True, True, True]"
 COM 150,3.0,,"[True, True, True, True]"
-COM 160   [WI],3.0,,"[False, False, False, False]"
+COM 160 [WI],3.0,,"[False, False, False, False]"
 COM 181,3.0,,"[True, True, True, True]"
 COM 200,3.0,,"[True, False, True, False]"
 COM 210,3.0,,"[True, True, True, True]"
 COM 211,3.0,,"[False, False, False, False]"
-COM 215   [WI],3.0,,"[False, False, False, False]"
+COM 215 [WI],3.0,,"[False, False, False, False]"
 COM 216,3.0," COM 160 [Min Grade: D]
 ","[False, False, True, False]"
 COM 220,3.0,,"[True, True, True, False]"
@@ -1935,7 +1934,7 @@ COM 248,3.0,,"[True, False, False, False]"
 COM 250,3.0,,"[False, True, False, False]"
 COM 251,3.0,,"[False, False, False, False]"
 COM 255,3.0,,"[True, False, False, False]"
-COM 261   [WI],3.0," COM 160 [Min Grade: D]
+COM 261 [WI],3.0," COM 160 [Min Grade: D]
 ","[False, False, False, False]"
 COM 263,3.0," COM 160 [Min Grade: D]
 ","[False, False, False, False]"
@@ -1943,9 +1942,9 @@ COM 265,3.0," COM 160 [Min Grade: D] or COM 260 [Min Grade: D]
 ","[False, False, False, False]"
 COM 266,3.0," COM 160 [Min Grade: D] or COM 260 [Min Grade: D]
 ","[False, True, False, False]"
-COM 270   [WI],3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
+COM 270 [WI],3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
 ","[False, False, False, False]"
-COM 282   [WI],3.0," COM 181 [Min Grade: D]
+COM 282 [WI],3.0," COM 181 [Min Grade: D]
 ","[False, False, False, False]"
 COM 284,3.0," COM 181 [Min Grade: D]
 ","[False, True, True, True]"
@@ -1955,20 +1954,20 @@ COM 290,3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
 ","[True, False, True, False]"
 COM 305,3.0," COM 260 [Min Grade: D] or COM 160 [Min Grade: D]
 ","[False, False, False, False]"
-COM 310   [WI],3.0," ENGL 102 [Min Grade: C] or ENGL 112 [Min Grade: C]
+COM 310 [WI],3.0," ENGL 102 [Min Grade: C] or ENGL 112 [Min Grade: C]
 ","[False, False, False, False]"
-COM 315   [WI],3.0," COM 260 [Min Grade: D] or COM 261 [Min Grade: D]
+COM 315 [WI],3.0," COM 260 [Min Grade: D] or COM 261 [Min Grade: D]
 ","[False, False, False, False]"
 COM 316,3.0,,"[False, True, False, False]"
-COM 317   [WI],3.0,,"[False, False, False, False]"
+COM 317 [WI],3.0,,"[False, False, False, False]"
 COM 318,3.0,,"[False, True, False, False]"
-COM 320   [WI],3.0," HUM 103 [Min Grade: D] or HUM 105 [Min Grade: A] or HUM 108 [Min Grade: D] or ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
+COM 320 [WI],3.0," HUM 103 [Min Grade: D] or HUM 105 [Min Grade: A] or HUM 108 [Min Grade: D] or ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 COM 325,3.0,,"[False, False, False, False]"
 COM 326,3.0,,"[False, False, False, False]"
 COM 330,3.0," COM 230 [Min Grade: D]
 ","[False, False, False, False]"
-COM 335   [WI],3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
+COM 335 [WI],3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
 ","[False, False, False, False]"
 COM 340,3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
 ","[False, True, True, False]"
@@ -1976,7 +1975,7 @@ COM 341,3.0,,"[False, False, False, False]"
 COM 342,3.0," ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D]
 ","[False, False, False, False]"
 COM 345,3.0,,"[False, True, False, False]"
-COM 350   [WI],3.0,,"[False, False, False, False]"
+COM 350 [WI],3.0,,"[False, False, False, False]"
 COM 351,3.0," COM 220 [Min Grade: D]
 ","[False, False, False, False]"
 COM 355,3.0," HUM 103 [Min Grade: D] or HUM 105 [Min Grade: A] or HUM 108 [Min Grade: D] or ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
@@ -1986,7 +1985,7 @@ COM 362,3.0,,"[False, False, False, False]"
 COM 363,3.0,,"[True, True, True, False]"
 COM 365,3.0," COM 260 [Min Grade: D] or COM 160 [Min Grade: D]
 ","[False, True, False, False]"
-COM 375   [WI],3.0," COM 270 [Min Grade: D] or COM 310 [Min Grade: D] or SOC 260 [Min Grade: D] or SOC 355 [Min Grade: D]
+COM 375 [WI],3.0," COM 270 [Min Grade: D] or COM 310 [Min Grade: D] or SOC 260 [Min Grade: D] or SOC 355 [Min Grade: D]
 ","[False, False, False, False]"
 COM 376,3.0,,"[True, False, False, False]"
 COM 377,3.0,,"[False, True, False, False]"
@@ -2087,35 +2086,35 @@ ENGL 112,3.0," ENGL 111 [Min Grade: D]
 ENGL 113,3.0," ENGL 112
 ","[False, True, True, True]"
 ENGL 195,3.0,,"[True, False, False, False]"
-ENGL 200   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 200 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 201,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, True, False]"
-ENGL 202   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 202 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 203   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 203 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 204,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[True, False, False, False]"
-ENGL 205   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 205 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 206   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 206 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 207   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 207 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 211   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 211 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 212,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[True, True, False, True]"
 ENGL 214,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[True, True, True, True]"
-ENGL 215   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 215 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 216   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 216 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 220,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 300   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 300 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 301,1.0,,"[True, True, True, False]"
 ENGL 302,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
@@ -2124,21 +2123,21 @@ ENGL 303,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [M
 ","[False, True, False, True]"
 ENGL 304,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[True, False, True, True]"
-ENGL 305   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 305 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 306,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[True, False, False, False]"
 ENGL 307,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, True, False]"
-ENGL 308   [WI],3.0," (ENGL 101 [Min Grade: D] and ENGL 102 [Min Grade: D] and ENGL 103 [Min Grade: D]) or ENGL 105 [Min Grade: A]
+ENGL 308 [WI],3.0," (ENGL 101 [Min Grade: D] and ENGL 102 [Min Grade: D] and ENGL 103 [Min Grade: D]) or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 310   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 310 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 312,1.0-3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[False, False, False, False]"
-ENGL 315   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 315 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 320   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 320 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 323,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: D]
 ","[True, True, True, False]"
@@ -2148,22 +2147,22 @@ ENGL 330,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [M
 ","[False, False, False, False]"
 ENGL 335,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, True, False, True]"
-ENGL 340   [WI],3.0," ENGL 101 [Min Grade: D] and ENGL 102 [Min Grade: D]
+ENGL 340 [WI],3.0," ENGL 101 [Min Grade: D] and ENGL 102 [Min Grade: D]
 ","[False, False, False, False]"
 ENGL 345,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 350,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 355   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 355 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-ENGL 360   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 360 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 365,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, True, False, False]"
 ENGL 370,3.0,,"[True, False, False, False]"
 ENGL 380,3.0," (ENGL 101 [Min Grade: C] or ENGL 111 [Min Grade: C]) and (ENGL 102 [Min Grade: C] or ENGL 112 [Min Grade: C]) and (ENGL 202 [Min Grade: C] or ENGL 203 [Min Grade: C] or ENGL 204 [Min Grade: C] or ENGL 205 [Min Grade: C] or ENGL 206 [Min Grade: C] or ENGL 211 [Min Grade: C] or ENGL 212 [Min Grade: C] or ENGL 214 [Min Grade: C])
 ","[False, False, False, False]"
-ENGL 395   [WI],0.0-3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+ENGL 395 [WI],0.0-3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 ENGL 470,3.0," (ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: D]) and HUM 315 [Min Grade: B]
 ","[False, False, True, False]"
@@ -2344,7 +2343,7 @@ ENVS 418,3.0," CHEM 101 [Min Grade: D]
 ","[False, False, False, False]"
 ENVS 438,3.0," BIO 124 [Min Grade: D] or ENVS 230 [Min Grade: D] or BIO 132 [Min Grade: D]
 ","[False, False, False, False]"
-ENVS 441   [WI],2.0,,"[False, False, False, False]"
+ENVS 441 [WI],2.0,,"[False, False, False, False]"
 ENVS 442,2.0," ENVS 441 [Min Grade: D]
 ","[False, True, False, False]"
 ENVS 443,2.0," ENVS 442 [Min Grade: D]
@@ -2387,7 +2386,7 @@ FREN 201,4.0," FREN 103 [Min Grade: D]
 ","[True, False, True, False]"
 FREN 202,4.0," FREN 201 [Min Grade: D]
 ","[True, True, False, False]"
-FREN 310   [WI],4.0," FREN 202 [Min Grade: D]
+FREN 310 [WI],4.0," FREN 202 [Min Grade: D]
 ","[False, False, False, False]"
 FREN 320,4.0," FREN 310 [Min Grade: D]
 ","[False, False, True, False]"
@@ -2397,7 +2396,7 @@ FREN 340,4.0," FREN 310 [Min Grade: D]
 ","[False, False, False, False]"
 FREN 350,4.0," FREN 310 [Min Grade: D]
 ","[True, False, False, False]"
-FREN 410   [WI],4.0," FREN 310 [Min Grade: D]
+FREN 410 [WI],4.0," FREN 310 [Min Grade: D]
 ","[False, False, False, False]"
 FREN 420,4.0," FREN 310 [Min Grade: D]
 ","[False, False, False, False]"
@@ -2419,7 +2418,7 @@ GEO 101,4.0,,"[True, False, True, False]"
 GEO 102,4.0,,"[False, True, False, False]"
 GEO 103,2.0,,"[False, False, True, False]"
 GEO 111,3.0,,"[False, True, False, False]"
-GEO 201   [WI],3.0,,"[False, False, False, False]"
+GEO 201 [WI],3.0,,"[False, False, False, False]"
 GEO 205,3.0,,"[False, False, True, False]"
 GEO 207,3.0,,"[False, False, True, False]"
 GEO 215,4.0," CHEM 101 [Min Grade: D]
@@ -2474,7 +2473,7 @@ GER 201,4.0," GER 103 [Min Grade: D]
 ","[True, False, False, False]"
 GER 202,4.0," GER 201 [Min Grade: D]
 ","[False, True, False, False]"
-GER 310   [WI],4.0," GER 202 [Min Grade: C]
+GER 310 [WI],4.0," GER 202 [Min Grade: C]
 ","[False, False, False, False]"
 GER 320,3.0,,"[False, False, False, False]"
 GER 330,3.0," GER 310 [Min Grade: C]
@@ -2483,7 +2482,7 @@ GER 340,3.0," GER 310 [Min Grade: C]
 ","[False, False, False, False]"
 GER 350,3.0," GER 310 [Min Grade: C]
 ","[False, False, False, False]"
-GER 410   [WI],3.0," GER 310 [Min Grade: C] and (GER 320 [Min Grade: C] or GER 330 [Min Grade: C] or GER 340 [Min Grade: C] or GER 350 [Min Grade: C])
+GER 410 [WI],3.0," GER 310 [Min Grade: C] and (GER 320 [Min Grade: C] or GER 330 [Min Grade: C] or GER 340 [Min Grade: C] or GER 350 [Min Grade: C])
 ","[False, False, False, False]"
 GER 420,3.0," GER 310 [Min Grade: D]
 ","[False, False, False, False]"
@@ -2613,10 +2612,10 @@ HIST 320,4.0,,"[False, False, False, False]"
 HIST 321,4.0,,"[False, False, False, False]"
 HIST 322,4.0,,"[False, False, False, False]"
 HIST 323,4.0,,"[False, False, True, False]"
-HIST 331   [WI],4.0,,"[False, False, False, False]"
+HIST 331 [WI],4.0,,"[False, False, False, False]"
 HIST 333,4.0,,"[False, False, False, False]"
 HIST 334,4.0,,"[False, False, False, False]"
-HIST 338   [WI],4.0,,"[False, False, False, False]"
+HIST 338 [WI],4.0,,"[False, False, False, False]"
 HIST 340,4.0,,"[False, False, False, False]"
 HIST 341,4.0,,"[True, False, False, False]"
 HIST 342,4.0,,"[False, True, False, False]"
@@ -2629,9 +2628,9 @@ HIST 380,0.5-12.0,,"[False, True, False, False]"
 HIST 385,4.0,,"[False, False, False, False]"
 HIST 396,4.0," HIST 301 [Min Grade: D]
 ","[False, True, False, False]"
-HIST 490   [WI],4.0," HIST 301 [Min Grade: D] and HIST 396 [Min Grade: D]
+HIST 490 [WI],4.0," HIST 301 [Min Grade: D] and HIST 396 [Min Grade: D]
 ","[False, False, False, False]"
-HIST 491   [WI],4.0," HIST 490 [Min Grade: D]
+HIST 491 [WI],4.0," HIST 490 [Min Grade: D]
 ","[False, False, False, False]"
 HIST I199,0.0-12.0,,"[False, False, False, False]"
 HIST I299,0.0-12.0,,"[False, False, False, False]"
@@ -2673,7 +2672,7 @@ JAPN 201,4.0," JAPN 103 [Min Grade: D]
 ","[True, True, True, False]"
 JAPN 202,4.0," JAPN 201 [Min Grade: D]
 ","[False, True, True, False]"
-JAPN 310   [WI],4.0," JAPN 202 [Min Grade: D]
+JAPN 310 [WI],4.0," JAPN 202 [Min Grade: D]
 ","[False, False, False, False]"
 JAPN 320,4.0," JAPN 310 [Min Grade: D]
 ","[False, False, False, False]"
@@ -2681,7 +2680,7 @@ JAPN 340,4.0," JAPN 310 [Min Grade: D]
 ","[False, False, True, False]"
 JAPN 350,4.0," JAPN 310 [Min Grade: D]
 ","[True, False, False, False]"
-JAPN 410   [WI],4.0," JAPN 310 [Min Grade: D]
+JAPN 410 [WI],4.0," JAPN 310 [Min Grade: D]
 ","[False, False, False, False]"
 JAPN 420,4.0," JAPN 310 [Min Grade: D]
 ","[False, False, False, False]"
@@ -2807,11 +2806,11 @@ MATH 205,3.0," MATH 201 [Min Grade: D] or MATH 261 [Min Grade: D]
 ","[False, False, False, False]"
 MATH 210,4.0," MATH 200 [Min Grade: D] and MATH 201 [Min Grade: D]
 ","[True, True, True, True]"
-MATH 220   [WI],3.0," MATH 123 [Min Grade: C-] or MATH 200 [Min Grade: C-]
+MATH 220 [WI],3.0," MATH 123 [Min Grade: C-] or MATH 200 [Min Grade: C-]
 ","[False, False, False, False]"
 MATH 221,3.0," MATH 220 [Min Grade: C] or CS 270 [Min Grade: D] or ECE 200 [Min Grade: D]
 ","[True, True, True, True]"
-MATH 222   [WI],3.0," MATH 220 [Min Grade: C]
+MATH 222 [WI],3.0," MATH 220 [Min Grade: C]
 ","[False, False, False, False]"
 MATH 235,0.5-4.0," MATH 200 [Min Grade: D]
 ","[True, False, False, False]"
@@ -2844,7 +2843,7 @@ MATH 313,3.0," MATH 312 [Min Grade: D]
 ","[False, False, True, False]"
 MATH 316,3.0," MATH 123 [Min Grade: D] and MATH 200 [Min Grade: D]
 ","[False, False, False, False]"
-MATH 318   [WI],3.0," MATH 310 [Min Grade: D] or MATH 312 [Min Grade: D]
+MATH 318 [WI],3.0," MATH 310 [Min Grade: D] or MATH 312 [Min Grade: D]
 ","[False, False, False, False]"
 MATH 319,4.0," MATH 318 [Min Grade: D]
 ","[False, False, False, False]"
@@ -2930,7 +2929,7 @@ PHIL 341,3.0,,"[False, True, False, False]"
 PHIL 351,3.0,,"[False, False, False, True]"
 PHIL 355,3.0,,"[True, False, False, False]"
 PHIL 361,3.0,,"[False, False, False, False]"
-PHIL 381   [WI],3.0,,"[False, False, False, False]"
+PHIL 381 [WI],3.0,,"[False, False, False, False]"
 PHIL 385,3.0,,"[False, True, False, True]"
 PHIL 391,3.0,,"[False, False, True, False]"
 PHIL 421,3.0," (PHIL 211 [Min Grade: D] or PHIL 212 [Min Grade: D] or PHIL 214 [Min Grade: D] or PHIL 215 [Min Grade: D]) and (PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [Min Grade: D] or PHIL 251 [Min Grade: D])
@@ -2939,14 +2938,14 @@ PHIL 431,3.0," (PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [
 ","[False, False, False, False]"
 PHIL 461,3.0," (PHIL 211 [Min Grade: D] or PHIL 212 [Min Grade: D] or PHIL 214 [Min Grade: D] or PHIL 215 [Min Grade: D]) and (PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [Min Grade: D] or PHIL 251 [Min Grade: D])
 ","[False, False, False, False]"
-PHIL 481   [WI],3.0," (PHIL 121 [Min Grade: D] or PHIL 210 [Min Grade: D] or PHIL 211 [Min Grade: D] or PHIL 212 [Min Grade: D] or PHIL 214 [Min Grade: D] or PHIL 215 [Min Grade: D] or PHIL 216 [Min Grade: D] or PHIL 218 [Min Grade: D] or PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [Min Grade: D] or PHIL 251 [Min Grade: D] or PHIL 255 [Min Grade: D] or PHIL T280 [Min Grade: D] or PHIL 291 [Min Grade: D] or PHIL 301 [Min Grade: D] or PHIL 305 [Min Grade: D] or PHIL 311 [Min Grade: D] or PHIL 315 [Min Grade: D] or PHIL 317 [Min Grade: D] or PHIL 321 [Min Grade: D] or PHIL 323 [Min Grade: D] or PHIL 325 [Min Grade: D] or PHIL 330 [Min Grade: D] or PHIL 335 [Min Grade: D] or PHIL 340 [Min Grade: D] or PHIL 341 [Min Grade: D] or PHIL 351 [Min Grade: D] or PHIL 355 [Min Grade: D] or PHIL 361 [Min Grade: D] or PHIL T380 [Min Grade: D] or PHIL 381 [Min Grade: D] or PHIL 385 [Min Grade: D] or PHIL 391 [Min Grade: D] or PHIL T480 [Min Grade: D] or PHIL 201 [Min Grade: D]) and (PHIL 102 [Min Grade: D] or PHIL 105 [Min Grade: D] or PHIL 110 [Min Grade: D] or PHIL 111 [Min Grade: D] or PHIL 151 [Min Grade: D] or PHIL 101 [Min Grade: D])
+PHIL 481 [WI],3.0," (PHIL 121 [Min Grade: D] or PHIL 210 [Min Grade: D] or PHIL 211 [Min Grade: D] or PHIL 212 [Min Grade: D] or PHIL 214 [Min Grade: D] or PHIL 215 [Min Grade: D] or PHIL 216 [Min Grade: D] or PHIL 218 [Min Grade: D] or PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [Min Grade: D] or PHIL 251 [Min Grade: D] or PHIL 255 [Min Grade: D] or PHIL T280 [Min Grade: D] or PHIL 291 [Min Grade: D] or PHIL 301 [Min Grade: D] or PHIL 305 [Min Grade: D] or PHIL 311 [Min Grade: D] or PHIL 315 [Min Grade: D] or PHIL 317 [Min Grade: D] or PHIL 321 [Min Grade: D] or PHIL 323 [Min Grade: D] or PHIL 325 [Min Grade: D] or PHIL 330 [Min Grade: D] or PHIL 335 [Min Grade: D] or PHIL 340 [Min Grade: D] or PHIL 341 [Min Grade: D] or PHIL 351 [Min Grade: D] or PHIL 355 [Min Grade: D] or PHIL 361 [Min Grade: D] or PHIL T380 [Min Grade: D] or PHIL 381 [Min Grade: D] or PHIL 385 [Min Grade: D] or PHIL 391 [Min Grade: D] or PHIL T480 [Min Grade: D] or PHIL 201 [Min Grade: D]) and (PHIL 102 [Min Grade: D] or PHIL 105 [Min Grade: D] or PHIL 110 [Min Grade: D] or PHIL 111 [Min Grade: D] or PHIL 151 [Min Grade: D] or PHIL 101 [Min Grade: D])
 ","[False, False, False, False]"
-PHIL 485   [WI],3.0," (PHIL 121 [Min Grade: D] or PHIL 210 [Min Grade: D] or PHIL 211 [Min Grade: D] or PHIL 212 [Min Grade: D] or PHIL 214 [Min Grade: D] or PHIL 215 [Min Grade: D] or PHIL 216 [Min Grade: D] or PHIL 218 [Min Grade: D] or PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [Min Grade: D] or PHIL 251 [Min Grade: D] or PHIL 255 [Min Grade: D] or PHIL T280 [Min Grade: D] or PHIL 291 [Min Grade: D] or PHIL 301 [Min Grade: D] or PHIL 305 [Min Grade: D] or PHIL 311 [Min Grade: D] or PHIL 315 [Min Grade: D] or PHIL 317 [Min Grade: D] or PHIL 321 [Min Grade: D] or PHIL 323 [Min Grade: D] or PHIL 325 [Min Grade: D] or PHIL 330 [Min Grade: D] or PHIL 335 [Min Grade: D] or PHIL 340 [Min Grade: D] or PHIL 341 [Min Grade: D] or PHIL 351 [Min Grade: D] or PHIL 355 [Min Grade: D] or PHIL 361 [Min Grade: D] or PHIL T380 [Min Grade: D] or PHIL 385 [Min Grade: D] or PHIL 391 [Min Grade: D] or PHIL T480 [Min Grade: D] or PHIL 381 [Min Grade: D] or PHIL 201 [Min Grade: D]) and (PHIL 101 [Min Grade: D] or PHIL 102 [Min Grade: D] or PHIL 105 [Min Grade: D] or PHIL 110 [Min Grade: D] or PHIL 111 [Min Grade: D] or PHIL 151 [Min Grade: D])
+PHIL 485 [WI],3.0," (PHIL 121 [Min Grade: D] or PHIL 210 [Min Grade: D] or PHIL 211 [Min Grade: D] or PHIL 212 [Min Grade: D] or PHIL 214 [Min Grade: D] or PHIL 215 [Min Grade: D] or PHIL 216 [Min Grade: D] or PHIL 218 [Min Grade: D] or PHIL 221 [Min Grade: D] or PHIL 231 [Min Grade: D] or PHIL 241 [Min Grade: D] or PHIL 251 [Min Grade: D] or PHIL 255 [Min Grade: D] or PHIL T280 [Min Grade: D] or PHIL 291 [Min Grade: D] or PHIL 301 [Min Grade: D] or PHIL 305 [Min Grade: D] or PHIL 311 [Min Grade: D] or PHIL 315 [Min Grade: D] or PHIL 317 [Min Grade: D] or PHIL 321 [Min Grade: D] or PHIL 323 [Min Grade: D] or PHIL 325 [Min Grade: D] or PHIL 330 [Min Grade: D] or PHIL 335 [Min Grade: D] or PHIL 340 [Min Grade: D] or PHIL 341 [Min Grade: D] or PHIL 351 [Min Grade: D] or PHIL 355 [Min Grade: D] or PHIL 361 [Min Grade: D] or PHIL T380 [Min Grade: D] or PHIL 385 [Min Grade: D] or PHIL 391 [Min Grade: D] or PHIL T480 [Min Grade: D] or PHIL 381 [Min Grade: D] or PHIL 201 [Min Grade: D]) and (PHIL 101 [Min Grade: D] or PHIL 102 [Min Grade: D] or PHIL 105 [Min Grade: D] or PHIL 110 [Min Grade: D] or PHIL 111 [Min Grade: D] or PHIL 151 [Min Grade: D])
 ","[False, False, False, False]"
-PHIL 497   [WI],3.0,,"[False, False, False, False]"
-PHIL 498   [WI],3.0," PHIL 497 [Min Grade: D]
+PHIL 497 [WI],3.0,,"[False, False, False, False]"
+PHIL 498 [WI],3.0," PHIL 497 [Min Grade: D]
 ","[False, False, False, False]"
-PHIL 499   [WI],3.0," PHIL 498 [Min Grade: D]
+PHIL 499 [WI],3.0," PHIL 498 [Min Grade: D]
 ","[False, False, False, False]"
 PHIL I199,1.0-12.0,,"[False, False, False, False]"
 PHIL I299,1.0-12.0,,"[False, False, False, False]"
@@ -3043,7 +3042,7 @@ PHYS 326,4.0," PHYS 311 [Min Grade: D] and MATH 210 [Min Grade: D]
 ","[True, False, False, False]"
 PHYS 327,4.0," PHYS 326 [Min Grade: D]
 ","[False, True, False, False]"
-PHYS 328   [WI],3.0," PHYS 223 [Min Grade: D] or PHYS 128 [Min Grade: D]
+PHYS 328 [WI],3.0," PHYS 223 [Min Grade: D] or PHYS 128 [Min Grade: D]
 ","[False, False, False, False]"
 PHYS 330,2.0," (PHYS 115 [Min Grade: D] or PHYS 201 [Min Grade: D]) and (MATH 210 [Min Grade: D] or ENGR 232 [Min Grade: D])
 ","[True, False, True, False]"
@@ -3076,7 +3075,7 @@ PHYS 485,0.0-3.0,,"[False, False, False, False]"
 PHYS 491,3.0,,"[True, False, False, False]"
 PHYS 492,3.0," PHYS 491 [Min Grade: D]
 ","[False, True, False, False]"
-PHYS 493   [WI],3.0," PHYS 492 [Min Grade: D]
+PHYS 493 [WI],3.0," PHYS 492 [Min Grade: D]
 ","[False, False, False, False]"
 PHYS I199,0.0-12.0,,"[False, False, False, False]"
 PHYS I299,0.0-12.0,,"[False, False, False, False]"
@@ -3091,7 +3090,7 @@ PHEV 146,4.0,,"[False, True, False, True]"
 PSCI 100,4.0,,"[True, True, True, True]"
 PSCI 110,4.0,,"[True, True, True, True]"
 PSCI 120,4.0,,"[True, True, True, False]"
-PSCI 131   [WI],4.0,,"[False, False, False, False]"
+PSCI 131 [WI],4.0,,"[False, False, False, False]"
 PSCI 140,4.0,,"[False, True, False, False]"
 PSCI 150,4.0,,"[True, True, True, True]"
 PSCI 210,4.0," PSCI 110 [Min Grade: D]
@@ -3110,7 +3109,7 @@ PSCI 250,4.0," PSCI 150 [Min Grade: D]
 PSCI 252,4.0," PSCI 150 [Min Grade: D] or PSCI 140 [Min Grade: D]
 ","[False, False, False, False]"
 PSCI 255,4.0,,"[False, False, True, False]"
-PSCI 260   [WI],4.0," PSCI 140 [Min Grade: D] or PSCI 150 [Min Grade: D]
+PSCI 260 [WI],4.0," PSCI 140 [Min Grade: D] or PSCI 150 [Min Grade: D]
 ","[False, False, False, False]"
 PSCI 284,4.0,,"[False, True, False, False]"
 PSCI 289,4.0,,"[False, False, False, False]"
@@ -3167,15 +3166,15 @@ PSY 213,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 PSY 222,3.0,,"[True, True, True, True]"
 PSY 225,3.0," (PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]) and PSY 240 [Min Grade: D]
 ","[True, False, True, True]"
-PSY 240   [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
+PSY 240 [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, False, False]"
 PSY 242,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, True, False]"
 PSY 244,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, False, False]"
-PSY 245   [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
+PSY 245 [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, False, False]"
-PSY 250   [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
+PSY 250 [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, False, False]"
 PSY 252,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[True, False, False, True]"
@@ -3196,7 +3195,7 @@ PSY 310,3.0," (PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D])
 ","[True, True, True, False]"
 PSY 312,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, True, False, False]"
-PSY 320   [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
+PSY 320 [WI],3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, False, False]"
 PSY 325,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[True, True, True, True]"
@@ -3219,7 +3218,7 @@ PSY 356,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, False, False]"
 PSY 357,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[True, False, False, False]"
-PSY 360   [WI],3.0," PSY 265 [Min Grade: D]
+PSY 360 [WI],3.0," PSY 265 [Min Grade: D]
 ","[False, False, False, False]"
 PSY 368,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, True, True, False]"
@@ -3239,10 +3238,10 @@ PSY 455,3.0," PSY 101 [Min Grade: D] or PSY 111 [Min Grade: D]
 ","[False, False, False, False]"
 PSY 463,3.0," PSY 101 [Min Grade: D] or PSY 112 [Min Grade: D]
 ","[False, False, True, False]"
-PSY 490   [WI],4.0,,"[False, False, False, False]"
-PSY 491   [WI],4.0," PSY 490 [Min Grade: D]
+PSY 490 [WI],4.0,,"[False, False, False, False]"
+PSY 491 [WI],4.0," PSY 490 [Min Grade: D]
 ","[False, False, False, False]"
-PSY 492   [WI],4.0," PSY 491 [Min Grade: D]
+PSY 492 [WI],4.0," PSY 491 [Min Grade: D]
 ","[False, False, False, False]"
 PSY I199,0.0-12.0,,"[False, False, False, False]"
 PSY I299,0.0-12.0,,"[False, False, False, False]"
@@ -3297,8 +3296,8 @@ SOC 340,4.0,,"[False, False, False, False]"
 SOC 341,4.0,,"[False, False, False, False]"
 SOC 346,4.0,,"[True, False, False, False]"
 SOC 349,4.0,,"[False, False, False, False]"
-SOC 355   [WI],4.0,,"[False, False, False, False]"
-SOC 356   [WI],4.0," SOC 355 [Min Grade: D] or SOC 260 [Min Grade: D]
+SOC 355 [WI],4.0,,"[False, False, False, False]"
+SOC 356 [WI],4.0," SOC 355 [Min Grade: D] or SOC 260 [Min Grade: D]
 ","[False, False, False, False]"
 SOC 370,4.0,,"[False, False, False, False]"
 SOC 405,3.0,,"[False, False, False, False]"
@@ -3339,7 +3338,7 @@ SPAN 211,4.0," (SPAN 103 [Min Grade: D] or SPAN 113 [Min Grade: D])
 ","[False, False, False, False]"
 SPAN 212,4.0," (SPAN 201 [Min Grade: D] or SPAN 211 [Min Grade: D])
 ","[False, False, True, False]"
-SPAN 310   [WI],4.0," SPAN 202 [Min Grade: D] or SPAN 212 [Min Grade: D]
+SPAN 310 [WI],4.0," SPAN 202 [Min Grade: D] or SPAN 212 [Min Grade: D]
 ","[False, False, False, False]"
 SPAN 320,4.0," SPAN 310 [Min Grade: D]
 ","[False, True, False, True]"
@@ -3349,7 +3348,7 @@ SPAN 340,4.0," SPAN 310 [Min Grade: D]
 ","[False, True, False, False]"
 SPAN 350,4.0," SPAN 310 [Min Grade: D]
 ","[True, True, False, False]"
-SPAN 410   [WI],4.0," SPAN 310 [Min Grade: D]
+SPAN 410 [WI],4.0," SPAN 310 [Min Grade: D]
 ","[False, False, False, False]"
 SPAN 420,4.0," SPAN 310 [Min Grade: D]
 ","[False, False, False, False]"
@@ -3394,17 +3393,17 @@ WGST T480,0.0-12.0,,"[False, False, False, False]"
 WRIT 195,3.0,,"[False, False, True, False]"
 WRIT 200,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[False, False, True, False]"
-WRIT 210   [WI],3.0," (ENGL 101 [Min Grade: C] or ENGL 111 [Min Grade: C]) and (ENGL 102 [Min Grade: C] or ENGL 112 [Min Grade: C])
+WRIT 210 [WI],3.0," (ENGL 101 [Min Grade: C] or ENGL 111 [Min Grade: C]) and (ENGL 102 [Min Grade: C] or ENGL 112 [Min Grade: C])
 ","[False, False, False, False]"
 WRIT 211,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[False, False, False, False]"
 WRIT 212,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[False, True, False, False]"
-WRIT 215   [WI],3.0," ENGL 103 [Min Grade: D], ENGL 113 [Min Grade: D] (Can be taken Concurrently)(ENGL 101 [Min Grade: D] or ENGL 111 [Min Grade: D]) and (ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D])
+WRIT 215 [WI],3.0," ENGL 103 [Min Grade: D], ENGL 113 [Min Grade: D] (Can be taken Concurrently)(ENGL 101 [Min Grade: D] or ENGL 111 [Min Grade: D]) and (ENGL 102 [Min Grade: D] or ENGL 112 [Min Grade: D])
 ","[False, False, False, False]"
-WRIT 220   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+WRIT 220 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-WRIT 225   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+WRIT 225 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 WRIT 226,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[True, False, False, False]"
@@ -3414,9 +3413,9 @@ WRIT 280,1.0,,"[True, True, True, False]"
 WRIT 290,0.0-3.0,,"[False, True, True, False]"
 WRIT 295,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[False, False, False, False]"
-WRIT 301   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+WRIT 301 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
-WRIT 302   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: D]
+WRIT 302 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: D]
 ","[False, False, False, False]"
 WRIT 303,3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, True]"
@@ -3427,12 +3426,12 @@ WRIT 310,3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, True]"
 WRIT 311,3.0," (ENGL 101 [Min Grade: C] or ENGL 111 [Min Grade: C]) and (ENGL 102 [Min Grade: C] or ENGL 112 [Min Grade: C]) and (ENGL 103 [Min Grade: C] or ENGL 113 [Min Grade: C])
 ","[False, False, False, False]"
-WRIT 312   [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
+WRIT 312 [WI],3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D] or ENGL 105 [Min Grade: A]
 ","[False, False, False, False]"
 WRIT 315,3.0," ENGL 103 [Min Grade: D] or ENGL 113 [Min Grade: D]
 ","[True, False, False, False]"
 WRIT 320,3.0,,"[False, False, True, False]"
-WRIT 400   [WI],4.0,,"[False, False, False, False]"
+WRIT 400 [WI],4.0,,"[False, False, False, False]"
 WRIT 401,3.0," WRIT 295 [Min Grade: C] and WRIT 301 [Min Grade: C]
 ","[False, False, False, False]"
 WRIT 402,3.0," WRIT 295 [Min Grade: C] and WRIT 302 [Min Grade: C]
@@ -3519,7 +3518,7 @@ STAT T380,0.0-12.0,,"[False, False, False, False]"
 STAT T480,0.5-12.0,,"[False, False, False, False]"
 ECON 201,4.0,,"[True, True, True, True]"
 ECON 202,4.0, ECON 201 [Min Grade: D] (Can be taken Concurrently),"[True, True, True, True]"
-ECON 203   [WI],4.0," ECON 202 [Min Grade: D] (Can be taken Concurrently)ECON 201 [Min Grade: D]
+ECON 203 [WI],4.0," ECON 202 [Min Grade: D] (Can be taken Concurrently)ECON 201 [Min Grade: D]
 ","[False, False, False, False]"
 ECON 240,4.0,,"[True, True, True, True]"
 ECON 248,1.0," MATH 102 [Min Grade: C] or MATH 121 [Min Grade: C] or ECON 201 [Min Grade: C]
@@ -3533,11 +3532,11 @@ ECON 301,4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C] and (MATH 102
 ","[True, True, True, False]"
 ECON 321,4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C] and ECON 301 [Min Grade: C] and (MATH 102 [Min Grade: C] or MATH 121 [Min Grade: C])
 ","[True, True, True, False]"
-ECON 322   [WI],4.0," ECON 301 [Min Grade: C] and ECON 321 [Min Grade: C]
+ECON 322 [WI],4.0," ECON 301 [Min Grade: C] and ECON 321 [Min Grade: C]
 ","[False, False, False, False]"
 ECON 324,4.0," ECON 201 [Min Grade: D] and ECON 202 [Min Grade: D]
 ","[True, False, False, False]"
-ECON 326   [WI],4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C]
+ECON 326 [WI],4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C]
 ","[False, False, False, False]"
 ECON 330,4.0," ECON 201 [Min Grade: C]
 ","[False, False, True, False]"
@@ -3555,7 +3554,7 @@ ECON 344,4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C]
 ","[False, False, False, False]"
 ECON 348,4.0," ECON 201 [Min Grade: C] and (MATH 102 [Min Grade: C] or MATH 121 [Min Grade: C])
 ","[False, False, False, False]"
-ECON 350   [WI],4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C] and STAT 201 [Min Grade: C]
+ECON 350 [WI],4.0," ECON 201 [Min Grade: C] and ECON 202 [Min Grade: C] and STAT 201 [Min Grade: C]
 ","[False, False, False, False]"
 ECON 351,4.0," ECON 201 [Min Grade: C]
 ","[False, True, False, False]"
@@ -3637,7 +3636,7 @@ BUSN 102,4.0," BUSN 101 [Min Grade: D]
 BUSN 103,2.0,,"[False, False, False, False]"
 BUSN 105,3.0,,"[True, True, True, False]"
 BUSN 111,4.0,,"[True, True, True, False]"
-BUSN 112   [WI],4.0,,"[False, False, False, False]"
+BUSN 112 [WI],4.0,,"[False, False, False, False]"
 BUSN 211,2.0," UNIV 101 [Min Grade: B]
 ","[False, False, False, False]"
 BUSN 350,4.0," (BUSN 101 [Min Grade: D] and BUSN 102 [Min Grade: D]) or BUSN 111 [Min Grade: D]
@@ -3848,7 +3847,7 @@ OPR T180,0.0-12.0,,"[False, False, False, False]"
 OPR T280,0.0-12.0,,"[False, False, False, False]"
 OPR T380,0.0-12.0,,"[False, False, False, False]"
 OPR T480,0.5-12.0,,"[False, False, False, False]"
-ORGB 300   [WI],4.0,,"[False, False, False, False]"
+ORGB 300 [WI],4.0,,"[False, False, False, False]"
 ORGB 320,4.0,,"[True, False, True, False]"
 ORGB 370,4.0,,"[False, False, False, False]"
 ORGB 400,4.0,,"[False, True, True, False]"
@@ -3942,7 +3941,7 @@ SMT 321,4.0,,"[False, False, False, False]"
 SMT 325,4.0,,"[False, False, False, False]"
 SMT 333,4.0,,"[False, False, True, False]"
 SMT 335,4.0,,"[False, False, False, False]"
-SMT 340   [WI],4.0," SMT 110 [Min Grade: D]
+SMT 340 [WI],4.0," SMT 110 [Min Grade: D]
 ","[False, False, False, False]"
 SMT 347,3.0," SMT 110 [Min Grade: D]
 ","[False, False, False, False]"
@@ -3989,9 +3988,9 @@ ENTP 102,3.0," ENTP 101 [Min Grade: D]
 ","[False, False, False, False]"
 ENTP 105,3.0,,"[True, False, True, True]"
 ENTP 205,3.0,,"[False, True, False, False]"
-ENTP 210   [WI],3.0,,"[False, False, False, False]"
+ENTP 210 [WI],3.0,,"[False, False, False, False]"
 ENTP 215,3.0,,"[False, True, False, False]"
-ENTP 225   [WI],3.0,,"[False, False, False, False]"
+ENTP 225 [WI],3.0,,"[False, False, False, False]"
 ENTP 250,3.0,,"[True, False, False, False]"
 ENTP 260,3.0,,"[False, True, False, False]"
 ENTP 270,3.0,,"[True, True, True, True]"
@@ -4010,7 +4009,7 @@ ENTP 385,3.0,,"[False, False, True, False]"
 ENTP 390,3.0,,"[False, False, True, False]"
 ENTP 395,12.0," ENTP 105 [Min Grade: D] and ENTP 225 [Min Grade: D]
 ","[False, False, False, False]"
-ENTP 410   [WI],3.0," ENTP 210 [Min Grade: D], ENTP 270 [Min Grade: D], ENTP 385 [Min Grade: D] (Can be taken Concurrently)","[False, False, False, False]"
+ENTP 410 [WI],3.0," ENTP 210 [Min Grade: D], ENTP 270 [Min Grade: D], ENTP 385 [Min Grade: D] (Can be taken Concurrently)","[False, False, False, False]"
 ENTP 440,3.0,,"[True, False, False, False]"
 ENTP 445,3.0,,"[False, False, False, False]"
 ENTP 450,3.0," ENTP 205 [Min Grade: D] and ENTP 325 [Min Grade: D]
@@ -4159,9 +4158,9 @@ CT 414,3.0,,"[False, True, False, True]"
 CT 415,3.0,,"[True, False, False, True]"
 CT 432,3.0," CT 420 [Min Grade: D] or CT 301 [Min Grade: D]
 ","[False, True, False, True]"
-CT 491   [WI],3.0," INFO 324 [Min Grade: D]
+CT 491 [WI],3.0," INFO 324 [Min Grade: D]
 ","[False, False, False, False]"
-CT 496   [WI],3.0," CT 491 [Min Grade: D]
+CT 496 [WI],3.0," CT 491 [Min Grade: D]
 ","[False, False, False, False]"
 CT I199,0.0-12.0,,"[False, False, False, False]"
 CT I299,0.0-12.0,,"[False, False, False, False]"
@@ -4220,7 +4219,7 @@ INFO 315,3.0," INFO 210 [Min Grade: D]
 ","[False, False, True, False]"
 INFO 323,3.0," INFO 103 [Min Grade: D] and INFO 210 [Min Grade: D] and INFO 212 [Min Grade: D]
 ","[False, False, True, False]"
-INFO 324   [WI],3.0," (INFO 153 [Min Grade: D] or CS 172 [Min Grade: D]) and INFO 200 [Min Grade: D]
+INFO 324 [WI],3.0," (INFO 153 [Min Grade: D] or CS 172 [Min Grade: D]) and INFO 200 [Min Grade: D]
 ","[False, False, False, False]"
 INFO 332,3.0," INFO 103 [Min Grade: D] and (STAT 201 [Min Grade: D] or PBHL 211 [Min Grade: D])
 ","[False, False, True, False]"
@@ -4360,9 +4359,9 @@ CHE 344,3.0," (CHE 343 [Min Grade: D] or CHE 304 [Min Grade: D]) and (CHE 341 [M
 ","[False, False, False, False]"
 CHE 350,3.0," MATH 210 [Min Grade: D] or ENGR 232 [Min Grade: D] or MATH 262 [Min Grade: D]
 ","[True, False, True, False]"
-CHE 351   [WI],2.5," CHE 341 [Min Grade: D] and CHE 330 [Min Grade: D]
+CHE 351 [WI],2.5," CHE 341 [Min Grade: D] and CHE 330 [Min Grade: D]
 ","[False, False, False, False]"
-CHE 352   [WI],2.5," CHE 343 [Min Grade: D] and CHE 331 [Min Grade: D]
+CHE 352 [WI],2.5," CHE 343 [Min Grade: D] and CHE 331 [Min Grade: D]
 ","[False, False, False, False]"
 CHE 360,3.0," CHE 211 [Min Grade: D] or CHE 201 [Min Grade: D]
 ","[False, False, False, False]"
@@ -4392,7 +4391,7 @@ CHE 433,3.0," CHE 341 [Min Grade: D] or CHE 302 [Min Grade: D]
 CHE 451,3.0," CHE 482 [Min Grade: D]
 ","[False, False, False, False]"
 CHE 452,3.0,,"[False, False, False, False]"
-CHE 453   [WI],2.5, CHE 362 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
+CHE 453 [WI],2.5, CHE 362 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
 CHE 460,3.0,,"[False, False, False, False]"
 CHE 461,3.0," BIO 141 [Min Grade: C] or BIO 122 [Min Grade: C]
 ","[False, False, False, False]"
@@ -4402,15 +4401,15 @@ CHE 466,3.0," CHE 472 [Min Grade: D]
 ","[False, True, False, False]"
 CHE 471,4.0," CHE 331 [Min Grade: D], CHE 362 [Min Grade: D] (Can be taken Concurrently)CHE 371 [Min Grade: D] and CHE 372 [Min Grade: D]
 ","[True, False, False, False]"
-CHE 472   [WI],3.0," CHE 471 [Min Grade: D]
+CHE 472 [WI],3.0," CHE 471 [Min Grade: D]
 ","[False, False, False, False]"
-CHE 473   [WI],3.0," CHE 472 [Min Grade: D]
+CHE 473 [WI],3.0," CHE 472 [Min Grade: D]
 ","[False, False, False, False]"
 CHE 481,3.0," CHE 304 [Min Grade: D] and CHE 308 [Min Grade: D]
 ","[False, False, False, False]"
-CHE 482   [WI],3.0," CHE 481 [Min Grade: D]
+CHE 482 [WI],3.0," CHE 481 [Min Grade: D]
 ","[False, False, False, False]"
-CHE 483   [WI],3.0," CHE 482 [Min Grade: D]
+CHE 483 [WI],3.0," CHE 482 [Min Grade: D]
 ","[False, False, False, False]"
 CHE 498,3.0," CHE I499 [Min Grade: D]
 ","[False, False, False, False]"
@@ -4422,11 +4421,11 @@ CHE T180,0.0-12.0,,"[False, False, False, False]"
 CHE T280,0.0-12.0,,"[False, False, False, False]"
 CHE T380,0.0-12.0,,"[False, False, False, False]"
 CHE T480,0.0-12.0,,"[False, False, False, False]"
-CAE 491   [WI],3.0," (CIVE 330 [Min Grade: D] and CIVE 303 [Min Grade: D]) or (AE 391 [Min Grade: D] and CIVE 303 [Min Grade: D]) or (CIVE 330 [Min Grade: D] and CIVE 312 [Min Grade: D]) or (CIVE 303 [Min Grade: D] and CIVE 312 [Min Grade: D]) or (AE 391 [Min Grade: D] and CIVE 330 [Min Grade: D])
+CAE 491 [WI],3.0," (CIVE 330 [Min Grade: D] and CIVE 303 [Min Grade: D]) or (AE 391 [Min Grade: D] and CIVE 303 [Min Grade: D]) or (CIVE 330 [Min Grade: D] and CIVE 312 [Min Grade: D]) or (CIVE 303 [Min Grade: D] and CIVE 312 [Min Grade: D]) or (AE 391 [Min Grade: D] and CIVE 330 [Min Grade: D])
 ","[False, False, False, False]"
-CAE 492   [WI],3.0," CAE 491 [Min Grade: D]
+CAE 492 [WI],3.0," CAE 491 [Min Grade: D]
 ","[False, False, False, False]"
-CAE 493   [WI],3.0," CAE 492 [Min Grade: D]
+CAE 493 [WI],3.0," CAE 492 [Min Grade: D]
 ","[False, False, False, False]"
 CIVE 240,3.0,,"[True, True, True, True]"
 CIVE 250,4.0," MEM 202 [Min Grade: D] and CAEE 202 [Min Grade: D] and ENGR 220 [Min Grade: D]
@@ -4455,8 +4454,8 @@ CIVE 430,3.0," CAEE 212 [Min Grade: D] and CIVE 320 [Min Grade: D]
 ","[True, False, True, False]"
 CIVE 431,3.0," CIVE 330 [Min Grade: D]
 ","[False, True, False, False]"
-CIVE 477   [WI],2.0,,"[False, False, False, False]"
-CIVE 478   [WI],1.0," CIVE 477 [Min Grade: D]
+CIVE 477 [WI],2.0,,"[False, False, False, False]"
+CIVE 478 [WI],1.0," CIVE 477 [Min Grade: D]
 ","[False, False, False, False]"
 CIVE I199,0.0-12.0,,"[False, False, False, False]"
 CIVE I299,0.0-12.0,,"[False, False, False, False]"
@@ -4487,7 +4486,7 @@ CMGT 162,3.0," CMGT 161 [Min Grade: D]
 ","[False, True, True, False]"
 CMGT 163,3.0," CMGT 162 [Min Grade: D]
 ","[False, False, True, True]"
-CMGT 240   [WI],3.0," MATH 121 [Min Grade: D]
+CMGT 240 [WI],3.0," MATH 121 [Min Grade: D]
 ","[False, False, False, False]"
 CMGT 251,3.0," MATH 121 [Min Grade: D]
 ","[True, False, True, False]"
@@ -4520,7 +4519,7 @@ CMGT 372,3.0," CMGT 371 [Min Grade: D]
 ","[False, True, True, False]"
 CMGT 375,3.0," CMGT 265 [Min Grade: D]
 ","[False, True, False, False]"
-CMGT 385   [WI],3.0," CMGT 263 [Min Grade: D]
+CMGT 385 [WI],3.0," CMGT 263 [Min Grade: D]
 ","[False, False, False, False]"
 CMGT 450,3.0," CMGT 363 [Min Grade: D]
 ","[True, True, False, False]"
@@ -4536,9 +4535,9 @@ CMGT 485,3.0," CMGT 385 [Min Grade: D]
 ","[False, True, False, False]"
 CMGT 486,3.0," CMGT 485 [Min Grade: D]
 ","[False, True, False, False]"
-CMGT 491   [WI],3.0," CMGT 364 [Min Grade: D] and CMGT 385 [Min Grade: D]
+CMGT 491 [WI],3.0," CMGT 364 [Min Grade: D] and CMGT 385 [Min Grade: D]
 ","[False, False, False, False]"
-CMGT 492   [WI],3.0," CMGT 491 [Min Grade: D]
+CMGT 492 [WI],3.0," CMGT 491 [Min Grade: D]
 ","[False, False, False, False]"
 CMGT 493,3.0," CMGT 492 [Min Grade: D]
 ","[False, False, True, False]"
@@ -4837,11 +4836,11 @@ ECE 482,4.0," ECE 481 [Min Grade: D]
 ","[False, True, False, False]"
 ECE 483,4.0," ECE 371 [Min Grade: D] or ECEE 304 [Min Grade: D]
 ","[False, False, True, False]"
-ECE 491   [WI],3.0," ECE 361 [Min Grade: D]
+ECE 491 [WI],3.0," ECE 361 [Min Grade: D]
 ","[False, False, False, False]"
-ECE 492   [WI],3.0," ECE 491 [Min Grade: D]
+ECE 492 [WI],3.0," ECE 491 [Min Grade: D]
 ","[False, False, False, False]"
-ECE 493   [WI],3.0," ECE 492 [Min Grade: D]
+ECE 493 [WI],3.0," ECE 492 [Min Grade: D]
 ","[False, False, False, False]"
 ECE I199,0.0-12.0,,"[False, False, False, False]"
 ECE I299,12.0,,"[False, False, False, False]"
@@ -4851,7 +4850,7 @@ ECE T180,0.0-12.0,,"[False, False, False, False]"
 ECE T280,0.0-12.0,,"[True, True, True, False]"
 ECE T380,0.0-12.0,,"[False, True, True, False]"
 ECE T480,0.0-12.0,,"[True, False, True, False]"
-ECEL 301   [WI],2.0," ECE 200 [Min Grade: D] and ECE 201 [Min Grade: D] and (TDEC 132 [Min Grade: D] or TDEC 133 [Min Grade: D] or ENGR 104 [Min Grade: D] or ENGR 103 [Min Grade: D])
+ECEL 301 [WI],2.0," ECE 200 [Min Grade: D] and ECE 201 [Min Grade: D] and (TDEC 132 [Min Grade: D] or TDEC 133 [Min Grade: D] or ENGR 104 [Min Grade: D] or ENGR 103 [Min Grade: D])
 ","[False, False, False, False]"
 ECEL 302,2.0," ECEL 301 [Min Grade: D]
 ","[False, False, False, False]"
@@ -4917,7 +4916,7 @@ EET 324,4.0," EET 202 [Min Grade: D]
 ","[False, True, False, False]"
 EET 325,3.0," EET 205 [Min Grade: D]
 ","[False, False, True, False]"
-EET 333   [WI],4.0," (PHYS 153 [Min Grade: D] or PHYS 101 [Min Grade: D]) and (PHYS 154 [Min Grade: D] or PHYS 102 [Min Grade: D])
+EET 333 [WI],4.0," (PHYS 153 [Min Grade: D] or PHYS 101 [Min Grade: D]) and (PHYS 154 [Min Grade: D] or PHYS 102 [Min Grade: D])
 ","[False, False, False, False]"
 EET 335,4.0," PHYS 153 [Min Grade: D] and PHYS 154 [Min Grade: D]
 ","[False, False, False, False]"
@@ -4947,7 +4946,7 @@ EGMT 296,1.0,,"[False, True, False, False]"
 EGMT 340,3.0,,"[False, False, False, False]"
 EGMT 345,3.0,,"[False, False, False, False]"
 EGMT 350,3.0,,"[False, False, False, False]"
-EGMT 404   [WI],3.0,,"[False, False, False, False]"
+EGMT 404 [WI],3.0,,"[False, False, False, False]"
 EGMT 462,3.0,,"[False, False, True, False]"
 EGMT 465,3.0,,"[False, False, False, False]"
 EGMT 470,2.0," (EGMT 295 [Min Grade: D] and EGMT 296 [Min Grade: D]) or (ORGB 320 [Min Grade: D] and EGMT 404 [Min Grade: D] and EGMT 462 [Min Grade: D])
@@ -5029,11 +5028,11 @@ ENVE 486,2.0," ENVE 302 [Min Grade: D] and ENVS 401 [Min Grade: D]
 ","[False, True, False, False]"
 ENVE 487,2.0," ENVE 486 [Min Grade: D]
 ","[False, False, True, False]"
-ENVE 491   [WI],3.0," ENVE 302 [Min Grade: D]
+ENVE 491 [WI],3.0," ENVE 302 [Min Grade: D]
 ","[False, False, False, False]"
-ENVE 492   [WI],3.0," ENVE 491 [Min Grade: D]
+ENVE 492 [WI],3.0," ENVE 491 [Min Grade: D]
 ","[False, False, False, False]"
-ENVE 493   [WI],3.0," ENVE 492 [Min Grade: D]
+ENVE 493 [WI],3.0," ENVE 492 [Min Grade: D]
 ","[False, False, False, False]"
 ENVE I199,0.0-12.0,,"[False, False, False, False]"
 ENVE I299,0.0-12.0,,"[False, False, False, False]"
@@ -5132,10 +5131,10 @@ MET 409,3.0," CHEM 111 [Min Grade: D] and CHEM 113 [Min Grade: D]
 ","[False, False, False, False]"
 MET 411,3.0," MET 316 [Min Grade: D]
 ","[False, False, False, False]"
-MET 421   [WI],3.0,,"[False, False, False, False]"
+MET 421 [WI],3.0,,"[False, False, False, False]"
 MET 422,3.0," MET 421 [Min Grade: D]
 ","[False, True, False, False]"
-MET 423   [WI],3.0," MET 422 [Min Grade: D]
+MET 423 [WI],3.0," MET 422 [Min Grade: D]
 ","[False, False, False, False]"
 MET I199,0.0-12.0,,"[False, False, False, False]"
 MET I299,0.0-12.0,,"[False, False, False, False]"
@@ -5168,7 +5167,7 @@ MATE 345,4.5, MATE 355 [Min Grade: D] (Can be taken Concurrently),"[False, True,
 MATE 351,4.0, MATE 355 [Min Grade: D] (Can be taken Concurrently),"[False, True, False, False]"
 MATE 355,3.0," ENGR 220 [Min Grade: D]
 ","[True, False, False, False]"
-MATE 366   [WI],4.5," MATE 245 [Min Grade: D]
+MATE 366 [WI],4.5," MATE 245 [Min Grade: D]
 ","[False, False, False, False]"
 MATE 370,3.0," (MATE 221 [Min Grade: D] or MATE 230 [Min Grade: D]) and (ENGR 231 [Min Grade: D] or MATH 261 [Min Grade: D] or MATH 201 [Min Grade: D])
 ","[True, False, False, False]"
@@ -5191,11 +5190,11 @@ MATE 482,3.0," ENGR 220 [Min Grade: D]
 ","[True, False, False, False]"
 MATE 483,3.0," MATE 245 [Min Grade: D]
 ","[True, False, False, False]"
-MATE 491   [WI],2.0," MATE 280 [Min Grade: D] and MATE 315 [Min Grade: D] and MATE 351 [Min Grade: D]
+MATE 491 [WI],2.0," MATE 280 [Min Grade: D] and MATE 315 [Min Grade: D] and MATE 351 [Min Grade: D]
 ","[False, False, False, False]"
 MATE 492,3.0," MATE 491 [Min Grade: D]
 ","[False, True, False, False]"
-MATE 493   [WI],3.0," MATE 492 [Min Grade: D]
+MATE 493 [WI],3.0," MATE 492 [Min Grade: D]
 ","[False, False, False, False]"
 MATE I199,0.0-12.0,,"[False, False, False, False]"
 MATE I299,0.0-12.0,,"[False, False, False, False]"
@@ -5327,7 +5326,7 @@ MEM 458,0.0-3.0," MEM 355 [Min Grade: D]
 ","[True, False, False, False]"
 MEM 459,3.0," MEM 458 [Min Grade: D]
 ","[False, False, True, False]"
-MEM 462   [WI],3.0,,"[False, False, False, False]"
+MEM 462 [WI],3.0,,"[False, False, False, False]"
 MEM 475,3.0," MEM 238 [Min Grade: D]
 ","[False, False, False, False]"
 MEM 476,3.0," MEM 475 [Min Grade: D]
@@ -5335,11 +5334,11 @@ MEM 476,3.0," MEM 475 [Min Grade: D]
 MEM 477,3.0," MEM 238 [Min Grade: D]
 ","[False, False, False, False]"
 MEM 478,3.0,,"[False, False, False, False]"
-MEM 491   [WI],2.0," MEM 435 [Min Grade: D] and MEM 391 [Min Grade: D] and (MEM 351 [Min Grade: D] or MEM 311 [Min Grade: D] or MEM 331 [Min Grade: D])
+MEM 491 [WI],2.0," MEM 435 [Min Grade: D] and MEM 391 [Min Grade: D] and (MEM 351 [Min Grade: D] or MEM 311 [Min Grade: D] or MEM 331 [Min Grade: D])
 ","[False, False, False, False]"
-MEM 492   [WI],0.0-3.0," MEM 491 [Min Grade: D]
+MEM 492 [WI],0.0-3.0," MEM 491 [Min Grade: D]
 ","[False, False, False, False]"
-MEM 493   [WI],0.0-3.0," MEM 492 [Min Grade: D]
+MEM 493 [WI],0.0-3.0," MEM 492 [Min Grade: D]
 ","[False, False, False, False]"
 MEM I199,0.0-12.0,,"[False, False, False, False]"
 MEM I299,0.0-12.0,,"[False, False, False, False]"
@@ -5420,7 +5419,7 @@ FYE T280,0.0-12.0,,"[False, False, True, False]"
 GSTD 100,1.0,,"[True, True, True, False]"
 GSTD 111,3.0,,"[False, False, False, False]"
 GSTD 200,3.0,,"[True, False, True, False]"
-GSTD 201   [WI],3.0,,"[False, False, False, False]"
+GSTD 201 [WI],3.0,,"[False, False, False, False]"
 GSTD 302,3.0,,"[True, False, True, False]"
 GSTD 303,3.0,,"[False, True, False, False]"
 GSTD 360,3.0,,"[True, False, False, False]"
@@ -5457,7 +5456,7 @@ LAW 211,4.0,,"[False, False, False, False]"
 LAW 215,4.0,,"[False, False, True, False]"
 LAW 216,4.0,,"[False, True, False, False]"
 LAW 217,4.0,,"[True, False, False, False]"
-LAW 301   [WI],4.0,,"[False, False, False, False]"
+LAW 301 [WI],4.0,,"[False, False, False, False]"
 LAW 304,4.0," LAW 110 [Min Grade: D] and PSCI 220 [Min Grade: D]
 ","[False, False, False, False]"
 LAW 305,4.0,,"[False, False, False, False]"
@@ -5484,7 +5483,7 @@ BACS 220,3.0,,"[False, False, False, False]"
 BACS 230,3.0,,"[False, False, False, False]"
 BACS 232,3.0,,"[False, False, False, False]"
 BACS 234,3.0,,"[True, False, False, False]"
-BACS 236   [WI],3.0," ENGL 101 [Min Grade: D], ENGL 111 [Min Grade: D], ENGL 102 [Min Grade: D], ENGL 112 [Min Grade: D], ENGL 103 [Min Grade: D], ENGL 113 [Min Grade: D] (Can be taken Concurrently)","[False, False, False, False]"
+BACS 236 [WI],3.0," ENGL 101 [Min Grade: D], ENGL 111 [Min Grade: D], ENGL 102 [Min Grade: D], ENGL 112 [Min Grade: D], ENGL 103 [Min Grade: D], ENGL 113 [Min Grade: D] (Can be taken Concurrently)","[False, False, False, False]"
 BACS 250,3.0,,"[False, False, False, False]"
 BACS 255,3.0, BACS 220 [Min Grade: D] (Can be taken Concurrently),"[False, False, True, False]"
 BACS 301,3.0, BACS 220 [Min Grade: D] (Can be taken Concurrently),"[True, False, False, False]"
@@ -5502,7 +5501,7 @@ BACS 368,3.0,,"[False, False, False, False]"
 BACS 370,3.0,,"[False, False, False, False]"
 BACS 380,3.0,,"[False, False, False, True]"
 BACS 390,3.0,,"[False, False, False, False]"
-BACS 401   [WI],3.0, BACS 220 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
+BACS 401 [WI],3.0, BACS 220 [Min Grade: D] (Can be taken Concurrently),"[False, False, False, False]"
 BACS 404,3.0," BACS 304 [Min Grade: C]
 ","[False, True, False, False]"
 BACS 405,3.0,,"[False, False, False, True]"
@@ -5531,7 +5530,7 @@ BMES 241,2.0," MATH 200 [Min Grade: D] and PHYS 102 [Min Grade: D] and BIO 122 [
 ","[False, True, False, True]"
 BMES 301,2.0," BMES 345 [Min Grade: D] (Can be taken Concurrently)(MATH 201 [Min Grade: D] or MATH 261 [Min Grade: D] or ENGR 231 [Min Grade: D])
 ","[True, False, True, False]"
-BMES 302   [WI],2.0," ECE 201 [Min Grade: D] (Can be taken Concurrently)BIO 201 [Min Grade: D]
+BMES 302 [WI],2.0," ECE 201 [Min Grade: D] (Can be taken Concurrently)BIO 201 [Min Grade: D]
 ","[False, False, False, False]"
 BMES 303,2.0," ECE 201 [Min Grade: D] and (MATH 210 [Min Grade: D] or ENGR 232 [Min Grade: D] or MATH 262 [Min Grade: D])
 ","[False, True, False, True]"
@@ -5632,7 +5631,7 @@ BMES 485,2.0," BMES 412 [Min Grade: D] or BMES 430 [Min Grade: D] or BMES 432 [M
 BMES 488,3.0,,"[False, False, True, False]"
 BMES 490,2.0-3.0," BMES 382 [Min Grade: D]
 ","[True, True, True, False]"
-BMES 491   [WI],3.0," BMES 382 [Min Grade: D]
+BMES 491 [WI],3.0," BMES 382 [Min Grade: D]
 ","[False, False, False, False]"
 BMES 492,2.0,,"[False, True, False, False]"
 BMES 493,3.0,,"[False, False, True, False]"
@@ -5693,7 +5692,7 @@ CULA 330,3.0," CULA 115 [Min Grade: D] or CULA 120 [Min Grade: D]
 ","[False, False, False, False]"
 CULA 400,3.0," CULA 115 [Min Grade: D] or CULA 120 [Min Grade: D]
 ","[False, False, True, False]"
-CULA 405   [WI],3.0,,"[False, False, False, False]"
+CULA 405 [WI],3.0,,"[False, False, False, False]"
 CULA 410,3.0," CULA 405 [Min Grade: D]
 ","[False, False, False, False]"
 CULA 412,3.0,,"[False, False, True, False]"
@@ -5882,15 +5881,15 @@ HSAD 329,3.0," ENGL 103 [Min Grade: D] or ENGL 105 [Min Grade: A] or HUM 108 [Mi
 ","[False, False, True, True]"
 HSAD 330,3.0," ACCT 115 [Min Grade: D] or ACCT 110 [Min Grade: D]
 ","[True, True, True, False]"
-HSAD 331   [WI],3.0," (HSAD 310 [Min Grade: C] and HSAD 332 [Min Grade: C])
+HSAD 331 [WI],3.0," (HSAD 310 [Min Grade: C] and HSAD 332 [Min Grade: C])
 ","[False, False, False, False]"
-HSAD 332   [WI],3.0," HSAD 310 [Min Grade: C]
+HSAD 332 [WI],3.0," HSAD 310 [Min Grade: C]
 ","[False, False, False, False]"
 HSAD 333,3.0," ENGL 101 [Min Grade: D] and ENGL 102 [Min Grade: D] and ENGL 103 [Min Grade: D]
 ","[False, False, False, False]"
 HSAD 334,3.0," HSAD 310 [Min Grade: C]
 ","[True, True, True, True]"
-HSAD 335   [WI],3.0," HSAD 310 [Min Grade: C] and PSCI 110 [Min Grade: D]
+HSAD 335 [WI],3.0," HSAD 310 [Min Grade: C] and PSCI 110 [Min Grade: D]
 ","[False, False, False, False]"
 HSAD 336,3.0," ENGL 101 [Min Grade: D]
 ","[False, True, False, False]"
@@ -6026,7 +6025,7 @@ NURS 311,3.0," NURS 310 [Min Grade: C]
 ","[False, True, False, False]"
 NURS 312,3.0," NURS 310 [Min Grade: C] and NURS 311 [Min Grade: C]
 ","[False, False, True, False]"
-NURS 317   [WI],3.0,,"[False, False, False, False]"
+NURS 317 [WI],3.0,,"[False, False, False, False]"
 NURS 320,6.0," NURS 120 [Min Grade: C] and NURS 221 [Min Grade: C] and NURS 225 [Min Grade: C] and NURS 226 [Min Grade: C]
 ","[True, True, True, True]"
 NURS 321,6.0," NURS 320 [Min Grade: C] and NURS 323 [Min Grade: C]
@@ -6035,7 +6034,7 @@ NURS 322,6.0," PSY 120 [Min Grade: C] (Can be taken Concurrently)NURS 320 [Min G
 ","[True, True, True, True]"
 NURS 323,3.0," NURS 120 [Min Grade: C] and NURS 221 [Min Grade: C] and NURS 225 [Min Grade: C] and NURS 226 [Min Grade: C]
 ","[True, True, True, True]"
-NURS 325   [WI],4.5,,"[False, False, False, False]"
+NURS 325 [WI],4.5,,"[False, False, False, False]"
 NURS 326,6.0," NURS 320 [Min Grade: C] and NURS 323 [Min Grade: C] and NURS 321 [Min Grade: C] and NURS 329 [Min Grade: C] and NURS 322 [Min Grade: C]
 ","[True, True, True, False]"
 NURS 327,6.0," NURS 320 [Min Grade: C] and NURS 321 [Min Grade: C] and NURS 322 [Min Grade: C] and NURS 323 [Min Grade: C] and NURS 329 [Min Grade: C] and NURS 328 [Min Grade: C]
@@ -6044,7 +6043,7 @@ NURS 328,6.0," NURS 320 [Min Grade: C] and NURS 321 [Min Grade: C] and NURS 323 
 ","[True, True, True, True]"
 NURS 329,3.0," NURS 323 [Min Grade: C] and NURS 320 [Min Grade: C]
 ","[True, True, True, True]"
-NURS 330   [WI],4.5," STS 345 [Min Grade: C] and NURS 325 [Min Grade: C]
+NURS 330 [WI],4.5," STS 345 [Min Grade: C] and NURS 325 [Min Grade: C]
 ","[False, False, False, False]"
 NURS 335,4.5,,"[True, True, True, False]"
 NURS 338,3.0,,"[True, True, True, False]"
@@ -6055,7 +6054,7 @@ NURS 346,6.0," NURS 325 [Min Grade: C]
 NURS 350,1.0-3.0,,"[False, False, False, False]"
 NURS 380,6.0," NURS 325 [Min Grade: C]
 ","[False, True, False, True]"
-NURS 407   [WI],4.5," NURS 325 [Min Grade: C] and NURS 330 [Min Grade: C]
+NURS 407 [WI],4.5," NURS 325 [Min Grade: C] and NURS 330 [Min Grade: C]
 ","[False, False, False, False]"
 NURS 410,5.0,,"[False, False, False, True]"
 NURS 420,6.0," NURS 320 [Min Grade: C] and NURS 321 [Min Grade: C] and NURS 323 [Min Grade: C] and NURS 326 [Min Grade: C] and NURS 328 [Min Grade: C] and NURS 329 [Min Grade: C]
@@ -6064,7 +6063,7 @@ NURS 421,6.0," NURS 320 [Min Grade: C] and NURS 321 [Min Grade: C] and NURS 323 
 ","[False, True, True, True]"
 NURS 422,0.0-3.0," NURS 321 [Min Grade: C] and NURS 329 [Min Grade: C]
 ","[True, True, False, True]"
-NURS 423   [WI],4.0," NURS 321 [Min Grade: C] and NURS 329 [Min Grade: C] and STS 345 [Min Grade: C]
+NURS 423 [WI],4.0," NURS 321 [Min Grade: C] and NURS 329 [Min Grade: C] and STS 345 [Min Grade: C]
 ","[False, False, False, False]"
 NURS 455,3.0,,"[False, False, False, False]"
 NURS 460,6.0," NURS 330 [Min Grade: C] and NURS 325 [Min Grade: C]
@@ -6146,13 +6145,13 @@ NFS T280,0.5-9.0,,"[False, False, False, False]"
 NFS T380,0.5-9.0,,"[False, False, False, False]"
 NFS T480,0.5-9.0,,"[False, False, False, False]"
 STS 345,4.0,,"[False, False, False, False]"
-CSDN 101   [WI],1.0,,"[False, False, False, False]"
+CSDN 101 [WI],1.0,,"[False, False, False, False]"
 CSDN 102,1.0," CSDN 101 [Min Grade: D]
 ","[False, True, False, False]"
 CSDN 203,1.0," CSDN 102 [Min Grade: D]
 ","[False, True, False, False]"
-CSDN 210   [WI],3.0,,"[False, False, False, False]"
-CSDN 220   [WI],3.0,,"[False, False, False, False]"
+CSDN 210 [WI],3.0,,"[False, False, False, False]"
+CSDN 220 [WI],3.0,,"[False, False, False, False]"
 CSDN 304,3.0,,"[True, True, True, False]"
 CSDN 305,3.0,,"[True, True, True, False]"
 CSDN 306,3.0,,"[True, True, True, False]"
@@ -6354,7 +6353,7 @@ EDEX 352,3.0," EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B]
 ","[False, False, True, False]"
 EDEX 355,3.0," EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B]
 ","[False, False, False, False]"
-EDEX 368   [WI],3.0," EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B]
+EDEX 368 [WI],3.0," EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B]
 ","[False, False, False, False]"
 EDEX 375,3.0," EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B]
 ","[True, False, True, False]"
@@ -6366,7 +6365,7 @@ EDEX 382,3.0,,"[False, False, True, False]"
 EDEX 383,3.0,,"[False, False, False, True]"
 EDEX 388,3.0," EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B]
 ","[False, False, True, False]"
-EDEX 414   [WI],9.0," EDEX 348 [Min Grade: B] and EDEX 349 [Min Grade: B] and EDEX 350 [Min Grade: B] and EDEX 352 [Min Grade: B] and EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B] and EDEX 355 [Min Grade: B] and EDEX 336 [Min Grade: B] and EDEX 368 [Min Grade: B] and EDEX 378 [Min Grade: B]
+EDEX 414 [WI],9.0," EDEX 348 [Min Grade: B] and EDEX 349 [Min Grade: B] and EDEX 350 [Min Grade: B] and EDEX 352 [Min Grade: B] and EDEX 142 [Min Grade: B] and EDEX 344 [Min Grade: B] and EDEX 355 [Min Grade: B] and EDEX 336 [Min Grade: B] and EDEX 368 [Min Grade: B] and EDEX 378 [Min Grade: B]
 ","[False, False, False, False]"
 EDEX I199,0.0-12.0,,"[False, False, False, False]"
 EDEX I299,0.0-12.0,,"[False, False, False, False]"
@@ -6419,7 +6418,7 @@ EDUC 216,3.0,,"[False, True, False, True]"
 EDUC 223,3.0," EDUC 123 [Min Grade: D]
 ","[True, False, False, False]"
 EDUC 236,3.0,,"[False, False, True, False]"
-EDUC 305   [WI],1.0,,"[False, False, False, False]"
+EDUC 305 [WI],1.0,,"[False, False, False, False]"
 EDUC 306,3.0,,"[False, True, False, True]"
 EDUC 308,3.0,,"[True, False, True, False]"
 EDUC 312,3.0,,"[False, False, False, False]"
@@ -6428,7 +6427,7 @@ EDUC 315,3.0,,"[False, False, False, True]"
 EDUC 316,3.0,,"[False, True, True, True]"
 EDUC 322,3.0,,"[False, False, False, True]"
 EDUC 324,3.0,,"[True, False, False, True]"
-EDUC 326   [WI],3.0,,"[False, False, False, False]"
+EDUC 326 [WI],3.0,,"[False, False, False, False]"
 EDUC 328,3.0,,"[False, False, False, False]"
 EDUC 335,3.0,,"[False, True, False, True]"
 EDUC 336,3.0," EDUC 236 [Min Grade: D]
@@ -6443,8 +6442,8 @@ EDUC 361,1.5,,"[False, False, False, True]"
 EDUC 362,1.5,,"[False, False, False, True]"
 EDUC 365,3.0,,"[True, True, True, False]"
 EDUC 405,1.0,,"[True, False, False, False]"
-EDUC 409   [WI],9.0,,"[False, False, False, False]"
-EDUC 410   [WI],9.0,,"[False, False, False, False]"
+EDUC 409 [WI],9.0,,"[False, False, False, False]"
+EDUC 410 [WI],9.0,,"[False, False, False, False]"
 EDUC 411,3.0,,"[True, False, True, False]"
 EDUC I199,0.0-12.0,,"[False, False, False, False]"
 EDUC I299,0.0-12.0,,"[False, False, False, False]"

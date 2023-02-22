@@ -1,5 +1,5 @@
 from sequence import LinkedList, Node
-
+import pandas as pd
 class Course:
 
     
@@ -94,10 +94,10 @@ class Course:
                             linkedListArray.append(Node(orTemp.strip(), True)) # step 6 add to linked list w/ and internal
                         self.prereqArray.append(linkedListArray)
                     else:
-                        self.prereqArray.append(LinkedList(Node(temp.strip())))
+                        self.prereqArray.append(LinkedList(Node(temp.strip(), True)))
             else:        
                 tempArray = string.split("and") #indiv seperate on and
-                linkedListArray =  LinkedList(Node(tempArray[0].strip()))
+                linkedListArray =  LinkedList(Node(tempArray[0].strip(), True))
                 del(tempArray[0])
                 for temp in tempArray:
                     linkedListArray.append(Node(temp.strip(), True))
@@ -114,10 +114,10 @@ class Course:
                             linkedListArray.append(Node(orTemp.strip(), False)) # step 6 add to linked list w/ or internal
                         self.prereqArray.append(linkedListArray)
                     else:
-                        self.prereqArray.append(LinkedList(Node(temp.strip())))
+                        self.prereqArray.append(LinkedList(Node(temp.strip(), False)))
             else:        
                 tempArray = string.split("or")
-                linkedListArray =  LinkedList(Node(tempArray[0].strip()))
+                linkedListArray =  LinkedList(Node(tempArray[0].strip(), False))
                 del(tempArray[0])
                 for temp in tempArray:
                     linkedListArray.append(Node(temp.strip(), False))
@@ -178,7 +178,20 @@ class Course:
             return any(char.isdigit() for char in inputString)
         return (identifier in inputString)
 
-
+    def havePreqs(self, df: pd.DataFrame):
+        if not self.orBoolean:
+            for prereqSequence in self.prereqArray:
+                andBoolean = False
+                if prereqSequence.checkDataFrame(df):
+                    andBoolean = True
+                if andBoolean == False:
+                    return False
+            return True
+        else:
+            for prereqSequence in self.prereqArray:
+                if prereqSequence(df):
+                    return True    
+        return False
 #--------------------------------------------PRINTING------------------------------------
 
      #temp toString
