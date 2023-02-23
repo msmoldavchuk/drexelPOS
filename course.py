@@ -22,16 +22,19 @@ class Course:
             self.orBoolean = False
             boolean = True
             self.andBoolean = boolean
-            
+            self.noPreqs = False
+
+            self.mustAddBoolean = False
+            self.seqCourse = []
             #makes sure prereq string is not none type
-            if isinstance(prereqString, type(None)) or prereqString == "empty":
-                self.prereqArray.append(LinkedList(Node(""))) 
+            if isinstance(prereqString, type(None)) or prereqString == "empty" or prereqString == "":
+                self.prereqArray.append(LinkedList(Node(" "))) 
+                self.noPreqs = True
                 #print("Does this ever happen")
             else:
                 # clean and format the prerequiste string
                 self.cleanPreqs(self.wrongParanthesesCheck(self.cleanCommas(self.concurentlyClear(self.cleanMinGrade(prereqString)))))
 
-            print(self.andBoolean)
                 
    
             #self.avail = avail
@@ -39,10 +42,13 @@ class Course:
     def getPrereqArray(self):
         return self.prereqArray
 
+    def appendToPreReqArray(self, val):
+        self.prereqArray.append(val)
+
     def setAviabilityTrue(self, index):
         self.avialabilityArray[index] = True
 #---------------------------------------GETTERS/SETTERS-----------------------------------
-
+    
     # getter for course name
     def getCourseName(self):
         return self.courseName
@@ -50,6 +56,7 @@ class Course:
     # getter for credits
     def getCredits(self):
         return self.credits
+
     def getAndBoolean(self):
         return self.andBoolean
     
@@ -79,18 +86,41 @@ class Course:
     def setAndBoolean(self, paramater):
         self.andBoolean = paramater
 
-    # setter for availibility
     def getAvial(self):
         return self.avialabilityArray
 
+    def createSequence(self, course):
+        #print(self.getCourseName() + " then " + course.getCourseName())
+        self.seqCourse.append(course)
     
+    def setMustAddBoolean(self, bool):
+        self.mustAddBoolean = bool
+
+    def getMustAddBoolean(self):
+        return self.mustAddBoolean
+    def checkIfSequence(self):
+        if not self.seqCourse:
+            return False
+        else:
+            return True
+    def checkSequenceLength(self):
+        if self.checkIfSequence():
+            return 1 + self.seqCourse[0].checkSequenceLength()
+        return 0
+    def adjustSequencePriority(self):
+        if self.checkIfSequence():
+            self.seqCourse[0].setMustAddBoolean(True)
+
+    
+
+    
+        
 #-------------------------------------------------CONVERTS PREREQS--------------------------------------
     # cleans a prequiste string and converts it into an array of linked lists
     def cleanPreqs(self, string):
         if self.inversalCheck(string): # step 1 check for (x and y) OR (a and b)
             #print("1")
             self.setAndBoolean(False) #makes it so that every index of array means or not and
-            print("1" + self.getCourseName())
             if (self.has_identifier(string, "or")):  # step 2 splits on or
                 tempArray = string.split("or")
                 for temp in tempArray:
@@ -100,19 +130,19 @@ class Course:
                         del(orArray[0])
                         for orTemp in orArray:
                             linkedListArray.append(Node(orTemp.strip(), True)) # step 6 add to linked list w/ and internal
-                        self.prereqArray.append(linkedListArray)
+                        self.appendToPreReqArray(linkedListArray)
                     else:
-                        self.prereqArray.append(LinkedList(Node(temp.strip(), True)))
+                        
+                        self.appendToPreReqArray(LinkedList(Node(temp.strip(), True)))
             else:        
                 tempArray = string.split("and") #indiv seperate on and
                 linkedListArray =  LinkedList(Node(tempArray[0].strip(), True))
                 del(tempArray[0])
                 for temp in tempArray:
                     linkedListArray.append(Node(temp.strip(), True))
-                self.prereqArray.append(linkedListArray)
+                self.appendToPreReqArray(linkedListArray)
         else: # step 1.5 go w/ (x or y) AND (a or b)
             self.setAndBoolean(True) #makes it so that every index of array means or not and
-            print(self.getCourseName() + " " + str(self.andBoolean), end = "")
             if (self.has_identifier(string, "and")): # step 2 splits on and
                 tempArray = string.split("and") 
                 for temp in tempArray:
@@ -122,16 +152,26 @@ class Course:
                         del(orArray[0])
                         for orTemp in orArray:
                             linkedListArray.append(Node(orTemp.strip(), False)) # step 6 add to linked list w/ or internal
-                        self.prereqArray.append(linkedListArray)
+                        self.appendToPreReqArray(linkedListArray)
                     else:
-                        self.prereqArray.append(LinkedList(Node(temp.strip(), False)))
-            else:        
+                        self.appendToPreReqArray(LinkedList(Node(temp.strip(), False)))
+            elif self.has_identifier(string, "or"):        
                 tempArray = string.split("or")
+                """if tempArray[0].strip() == "MATH 117":
+                    print("HERE")
+                    print(self.getCourseName())"""
                 linkedListArray =  LinkedList(Node(tempArray[0].strip(), False))
                 del(tempArray[0])
                 for temp in tempArray:
                     linkedListArray.append(Node(temp.strip(), False))
-                self.prereqArray.append(linkedListArray)
+                self.appendToPreReqArray(linkedListArray)
+            else:
+                
+                """if string.strip() == "ENGL 101":
+                    print("OR")
+                    print(self.getCourseName())"""
+                
+                self.appendToPreReqArray(LinkedList(Node(string.strip(), False)))
 
 #-----------------------------------------CLEANS PREREQS(HELPER METHODS)------------------------------
     
@@ -189,10 +229,10 @@ class Course:
         return (identifier in inputString)
 
     def havePreqs(self, df: pd.DataFrame):
-        if self.prereqArray[0].checkForNull():
+        if self.noPreqs:
             return True
-        elif self.andBoolean:
-            for prereqSequence in self.prereqArray:
+        elif self.getAndBoolean():
+            for prereqSequence in self.getPrereqArray():
                 andBooleanInternal = False
                 if prereqSequence.checkDataFrame(df):
                     andBooleanInternal = True
@@ -200,13 +240,9 @@ class Course:
                     return False
             return True
         else:
-            print("Here???")
             for prereqSequence in self.prereqArray:
                 if prereqSequence.checkDataFrame(df):
-                    return True  
-        print(str(self.andBoolean))
-            
-        print("Is this happening")  
+                    return True              
         return False
 #--------------------------------------------PRINTING------------------------------------
 

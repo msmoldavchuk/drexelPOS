@@ -23,7 +23,7 @@ class Degree():
                     if seq.checkDataFrame(df):
                         self.degreeFrame.loc[i, "Taken"] = True
                         break
-        self.displayDF(df) # test line
+        #self.displayDF(df) # test line
                 
     def checkIfTaken(self, course):
         for i in range(len(self.degreeFrame.index)):
@@ -73,6 +73,7 @@ class Degree():
         x =self.concentrationsDF.loc[pos, "Concentration"]
         #self.displayDF(x)
         return x
+
     def selectScienceSequence(self, choice):
         for i in range(len(self.degreeFrame)):
             if self.degreeFrame.loc[i, "Type"] == "SCI" and self.degreeFrame.loc[i, "Flag"] == 3:

@@ -19,7 +19,7 @@ class LinkedList:
             if(cur.next is None): 
                 break
             
-            if(cur.internalBool):
+            if(cur.getInternalBool()):
                 print(" and ", end = "")
             else:
                 print(" or ", end = "")
@@ -35,15 +35,30 @@ class LinkedList:
             cur = cur.next
        
         return array
+    def getData(self):
+        print("Done")
+        return self.head.data
+
+    def has_identifier(self, inputString, identifier)->str:
+        if(identifier == "Digit"):
+            return any(char.isdigit() for char in inputString)
+        return (identifier in inputString)
+
+    def cleanWIFormating(self, string)->str:
+        while(self.has_identifier(string, "[") or self.has_identifier(string, "]")):
+            x = string[string.index('['):string.index(']')+1]
+            string = string.replace(x,"")    
+        return string
+
 
     def checkForNull(self):
-        if self.head == "":
+        if self.head == " ":
             return True
-            
+
     def checkIfContains(self, item):
         cur = self.head
         while(True):
-            if cur.data.split() == item.split():
+            if cur.data.strip() == item.strip():
                 return True
             if(cur.next is None): 
                     break  
@@ -52,11 +67,12 @@ class LinkedList:
 
     def checkDataFrame(self, df: pd.DataFrame):
         cur = self.head
-        if (cur.internalBool == False): # OR
+        
+        if (cur.getInternalBool() == False): # OR
             # only one class has to match
             while(True):       
                 for i in range(len(df.index)):
-                    if(df.loc[i,"Courses"].split() == cur.data.split() and df.loc[i,"Taken"]):
+                    if(self.cleanWIFormating(df.loc[i,"Courses"]).strip() == cur.data.strip() and df.loc[i,"Taken"]):
                         return True
                 if(cur.next is None): 
                     break  
@@ -65,7 +81,8 @@ class LinkedList:
             while(True):
                 andClassTaken = False # intially class for and sequence is not taken
                 for i in range(len(df.index)):
-                    if(df.loc[i,"Courses"].split() == cur.data.split() and df.loc[i,"Taken"]):
+                        #if df.loc[i, "Courses"].strip() == "ENGL 101":
+                    if(self.cleanWIFormating(df.loc[i,"Courses"]).strip() == cur.data.strip() and df.loc[i,"Taken"]):
                         andClassTaken = True # if it is taken set it to true                
                 if not andClassTaken: # if an and class was ever not taken return false always
                     return False
@@ -83,7 +100,7 @@ class LinkedList:
             if(cur.next is None): 
                 break
             
-            if(cur.internalBool):
+            if(cur.getInternalBool()):
                 string += " and "
             else:
                 string += " or "
@@ -126,9 +143,13 @@ class Node:
         internal bool other idea false = or, true =  and""" #<- current execution
         self.internalBool = internalBool    
         self.next = None
+        
 
     def __str__(self):
         return str(self.data)
+
+    def getInternalBool(self):
+        return self.internalBool
         
 
 class Sequence:
