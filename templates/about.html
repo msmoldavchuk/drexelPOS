@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {%block head%}
     <meta name="viewport"  content="with=device-width, initial-scale=1.0">
-    <title> About Us</title>
+    <title> About Us</title> {% block title %}{% endblock %}
     <!--css file link-->
-    <link rel="stylesheet" href="aboutstyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename="aboutstyle.css") }}">
+    {% endblock %}
 </head>
 <body>
 
 <!---------POS- an quick introduction---------->
+{%block about%}
 <section class="about">
    <h1> Who are we?</h1>
    <p> 
@@ -17,7 +20,7 @@
 
     <div class="mason-col">
         <h3>Mason McClintic</h3>
-        <img src = "profile1.PNG" alt="mem1" style="width: 50%">
+        <img href = "{{ url_for('static', filename='pics/Michaelprofile.jpeg') }}" alt="mem1" style="width: 50%">
         <p class="title">Back-end Developer</p>
         <p>Mason McClintic is a first year Computer Science student at Drexel University. 
         His current focus is on web scrapping and website backend intergration.
@@ -26,7 +29,7 @@
 
     <div class="michael-col">
         <h3>Michael Moldavchuk </h3>
-        <img src = "Michaelprofile.jpeg" alt="mem1" style="width: 50%">
+        <img href = "{{ url_for('static', filename='pics/Michaelprofile.jpeg') }}" alt="mem1" style="width: 50%"/>
         <p class="title">Back-end Developer</p>
         <p>Michael Moldavchuk is a first year Data Science student at Drexel University. 
         His current focus is on cleaning data and implemanting data into algorithms.
@@ -35,6 +38,7 @@
 
     <div class="sania-col">
         <h3>Sania Mirza</h3>
+        <img href = "{{ url_for('static', filename='pics/Michaelprofile.jpeg') }}" alt="mem1" style="width: 50%"/>
         <p class="title">Front-end Developer</p>
         <p>It will provide an interactive and user-friendly interface, making it easy for
         users to modify their plan and adapt it to their changing needs. So users can stay
@@ -43,13 +47,14 @@
     
     <div class="ashley-col">
         <h3>Ashley Phan</h3>
+        <img href = "{{ url_for('static', filename='pics/Michaelprofile.jpeg') }}" alt="mem1" style="width: 50%"/>
         <p class="title">Front-end Developer</p>
         <p>Ashley Phan is a first-year software engineering student at Drexel University. 
             Her current focus on the front-end development which allow her to combine creativity 
             and technical skills to build user-friendly, and visually appealing websites and applications. 
         </p>
+        {%endblock%}
     </div>
-
    </div>
 </section >
 
