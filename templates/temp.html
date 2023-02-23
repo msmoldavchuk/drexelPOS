@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<title> Temp</title>
+{% block body %}
+    <h1> This is a temp page</h1>
+    <form action="{{ url_for('temp') }}" method="post">
+        <input type="checkbox" from="temp" name="name">
+        <input type="submit" value="Submit">
+    </form>
+
+    {{name}}
+{% endblock %}

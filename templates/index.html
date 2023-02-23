@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport"  content="with=device-width, initial-scale=1.0">
+    <title> Drexel University's Plan of Study</title>
+        <!--css file link-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!--scrapping link-->
+<script type="text/Python" src="scrapper.py"></script>
+
+</head>
+<body>
+<!---header section starts right here-->
+     <section class="header">
+        <nav>
+        <div class="nav-links" id = "navLinks">
+            <i class = "fa fa-times" onclick="hideMenu()"></i>
+            <div style = "text-align:left;"><img src="mainlogo.png" class="logo"></div>
+            <ul>
+               <li><a href=''>Home</a></li> 
+               <li><a href=''>POS</a></li> 
+               <li><a href=''>Plan</a></li>
+               <li><a href=''>Degreework</a></li>
+               <li><a href=''>About us</a></li>   
+            </ul>
+        </div>
+        <i class = "fa fa-times" onclick= "showMenu()"></i>
+        <div class="degreework">
+            <h1>POS. CAUSE PLANNING IS HARD</h1>
+            <p>Transform Your Study Habits with the Power of Planning. We're Here to Help </p>
+        <div>
+            <button type="button"><span></span>Michael named this</button>
+            <button type="button"><span></span>Second</button>
+        </div>
+        </nav>
+     </section>
+
+<!---------POS------------>
+<section class="pos">
+   <h1> What is POS?</h1>
+   <p>"Welcome to the world of efficient and organized 
+    studying! We are excited to introduce you to our new Plan 
+    of Study Generator web page, designed to help you take control
+    of your studies and achieve academic success. With our innovative tool, 
+    you can easily create a personalized study plan that fits your schedule,
+    and balancing your coursework. Whether you're a CCI student or someone 
+    looking to improve their study habits, our POS is the solution you've
+    been searching for. So why wait? Start taking the first step towards better 
+    grades and a brighter future, today!"  </p>
+<div class="row">
+
+    <div class="course-col">
+        <h3>How does POS work?</h3>
+        <p>This generator will use data parsed from Drexel's course catalog
+        and term master schedule. Then an algorithm will rank courses on importance
+        and fill up an individual's quarters to create a plan of study. </p>
+    </div>
+
+    <div class="course-col">
+        <h3>What can we do? </h3>
+        <p>Features of this product are that a user can input their co-op cycle,
+         APs, planned graduation year and minors they are interested in. This 
+         will be shown on a website and it will include the plan of study and 
+         an individual's degree requirements. In addition, within the plan of 
+         study certain courses will be highlighted to emphasize that they are the 
+         most important to take.
+        </p>
+    </div>
+
+    <div class="course-col">
+        <h3>Why, us?</h3>
+        <p>It will provide an interactive and user-friendly interface, making it easy for
+        users to modify their plan and adapt it to their changing needs. So users can stay
+         on top of their studies and avoid falling behind</p>
+    </div>
+
+   </div>
+</section >
+
+
+
+<!------Extra resources from advising CCI------->
+<section class="Academic">
+    <h1>Academic Planning</h1>
+    <div class="row">
+
+        <div class="planning-col">
+            <h3>Transfer in Courses</h3>
+            <p> In certain situations, students can take courses outside of Drexel and have  them transfer back to Drexel.   </p>
+            <h4>Policies for transfer of undergraduate credit:</h4>
+            <p>
+        + Transfer credit will be given for any pre-approved course for which you received a grade of "C" or better.<br>
+        + A maxium of 90 transfer credits earned at an outside institution can count towards CCI degree. </p>
+        </div>
+    
+        <div class="planning-col">
+            <h3> Registration</h3>
+            <h4>Waitlists</h4>
+            <p>
+            + Students should always add themselves to a waitlist if possible.<br>
+            + Students cannot waitlist for different sections of course they are already registered for.<br>
+            + Waitlists are removed from all courses University-wide on Tuesday before week 1. 
+            At this point, the first eligible person to see an available seat can grab it.
+            </p>
+            <h4>Overrides</h4>
+            <p>
+            There is not guaranteed, even for seniors. Please see below for more information on NEED vs. WANT<br>
+            + Need = you have NO OTHER course options or times when you can take the course without pushing out graduation.<br>
+            + Want = your prefer it, but have other options<br>
+            If you determined NEED a course and you are encountering an error when you try to register or add ourself to the waitlist, please complette the ______
+            
+            </p>
+        </div>
+    
+        <div class="planning-col">
+            <h3>Minor</h3>
+            <p>In order to declare a minor, studnets must:<br>
+                +Have completed a minimum of 30 credits<br>
+                +Demonstrate that completion of the minor will be achieved at or before the time of graduation<br>
+            Once you have determined that you want to move forward with adding the major, you will need email the minor
+            advisor to request the minor.
+
+            </p>
+        </div>
+    
+       </div>
+
+
+</section>
+
+<!--Javascript for the menu-->
+<script>
+    var navlinks = document.getElementById("navlinks");
+    function showMenu(){
+        navlinks.style.right = "0";
+    }
+    function hideMenu(){
+        navlinks.style.right  = "-200px";
+    }
+
+
+</script>
+
+
+</body>
+</html>
