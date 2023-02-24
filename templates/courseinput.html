@@ -1,7 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Select Courses</title>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+</head>
+<body>
+  {% block content %}{% endblock %}
   <style>
 		.container {
 			display: flex;
@@ -14,14 +20,21 @@
 		}
 	</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
-<link rel= "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
-</head>
+{% block scripts %}{% endblock %}
+</body>
+</html>
+
 <body>
-  <div class="container">
-		<div class="column">
+{% extends 'base.html' %}
+
+{% block title %} Select Courses {% endblock %}
+
+{% block content %}
+
+<div class="container">
+<div class="column">
 <center>
   <h2> Computer Science Requirements </h2>
   <hr/>
@@ -89,12 +102,12 @@
 	<p>
 		<label for="option3"><input type="checkbox" id="option3" name="option3" value="Physic squence has been choose">PHYC</label>
 	</p>
-	<button onclick="submitCheckbox()">Submit</button>
+	<button onclick="submitCheckbox()">Submit</button>   <!---retrieves the selected values and displays them in alert box-->
 	<script>
 		function submitCheckbox() {
 			let checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
-			let values = Array.from(checkboxes).map(cb => cb.value);
-			alert("Selected options: " + values.join(", "));
+			let values = Array.from(checkboxes).map(cb => cb.value); //stores the values of all checkboxes in an array named values
+			alert("Your selected science squence is: " + values.join(", ")); // created alert dialog box that display message, still considering if it helpful or not
 		}
 	</script>
 </div>
@@ -201,11 +214,11 @@
 
   <script>
     document.getElementById("generate-btn").addEventListener("click", function() {
-      // code to submit input data
+      // upon clicking, submits input data 
       window.location.href = "new-page.html"; // redirect user to new page
     });
   
-    const form = document.querySelector('form');
+    const form = document.querySelector('form');  
     form.addEventListener('submit', e => {
       e.preventDefault();
       fetch('/submit-form', {
@@ -241,4 +254,5 @@
 <script type="text/javascript">
   $(".chosen").chosen();
 </script>
-</html>
+
+
