@@ -20,7 +20,7 @@ def plan():
 
 @app.route('/POS')
 def pos():
-    return render_template('pos.html')
+    return render_template('courseinput.html')
 @app.route('/temp', methods=['GET', 'POST'])
 def temp():
     if request.method == 'POST':
