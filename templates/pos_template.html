@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}{% endblock %}-POS</title>
+    {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>

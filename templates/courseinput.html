@@ -1,13 +1,12 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <title>POS</title>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 </head>
 <body>
-  {% block content %}{% endblock %}
+
   <style>
 		.container {
 			display: flex;
@@ -22,16 +21,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
-{% block scripts %}{% endblock %}
+
 </body>
 </html>
 
 <body>
-{% extends 'base.html' %}
+
 
 {% block title %} Select Courses {% endblock %}
 
-{% block content %}
+
 
 <div class="container">
 <div class="column">
