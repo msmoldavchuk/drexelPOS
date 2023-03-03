@@ -43,7 +43,11 @@ filtered_prerequiste_ditctionary = {}
 #creditsInWrongPlaceBoolean = False
 LOC = ["Arts and Sciences","Bennett S. LeBow Coll. of Bus.","Center for Civic Engagement","Close Sch of Entrepreneurship","Col of Computing & Informatics","College of Engineering","Dornsife Sch of Public Health","Goodwin Coll of Prof Studies","Graduate College", "Miscellaneous","Nursing & Health Professions","Pennoni Honors College","Sch.of Biomed Engr,Sci & Hlth","School of Education","Thomas R. Kline School of Law"]
 
-
+FRESHMAN = 0
+SOPHMORE = 40
+PREJUNIOR = 70.5
+JUNIOR = 96.5
+SENIOR = 130
 
 #---------------------------------------METHODS TO SCRAPE DATA----------------------------------------
 # This function takes in a course html and prints out the course id and name
@@ -65,11 +69,22 @@ def process_course_html(html_course):
             break
         if child.text == "Prerequisites:":
             temp = True
+
+    temp = False
+    restrictionString = "None"
+    for child in html_course:
+        if temp:
+            restrictionString = child
+            break
+        if child.text == "Restrictions:":
+            temp = True
+
+
     # Create a course object w/ Course Id, Credits and UNFORMATED prereqstring
     # Adds course object to dictonatiy w/ the key value being the course id
     # i.e CS 172 maps to course object for CS 172 
 
-    course_dictionary[cleanWIFormating(course_id.replace("\xa0", " "))] = c(cleanWIFormating(course_id.replace("\xa0", " ")), course_credits, prereqString)
+    course_dictionary[cleanWIFormating(course_id.replace("\xa0", " "))] = c(cleanWIFormating(course_id.replace("\xa0", " ")), course_credits, prereqString, [False, False, False, False], restrictionString)
    
 
 
@@ -132,6 +147,7 @@ def getConcentration(dfList)->pd.DataFrame:
     concentrationDF = pd.DataFrame({'Concentration':[], "Name":[]})
     for df in dfList:
         coursesNotPrimary = df.loc[:,'Courses']
+        courseDesc = df.loc[:,"Label"]
         credits = df.loc[:,'Credits']
         courses = []
         for course in coursesNotPrimary:
@@ -165,7 +181,12 @@ def getConcentration(dfList)->pd.DataFrame:
                 coursesParsed.append(courses[i])
                 creditsParsed.append(credits[i])
                 descriptionsParsed.append(descriptorRequired)
-                flagParsed.append(0)
+                
+                if "*" in courseDesc[i]:
+                    flagParsed.append(7)
+                else:
+                    flagParsed.append(0)
+
             elif has_identifier(courses[i], "Electives"):
                 """
                 if not checkForNoCredits(credits[i]):
@@ -185,7 +206,7 @@ def getConcentration(dfList)->pd.DataFrame:
                 """   
                 seqFlag = True     
             else:               
-                dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed})
+                dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Taken": False})
                 coursesParsed = []
                 creditsParsed = []
                 descriptionsParsed = []
@@ -196,7 +217,7 @@ def getConcentration(dfList)->pd.DataFrame:
 
 
     
-        dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed})
+        dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Taken": False})
         concentrationDF.loc[len(concentrationDF.index)] = [dfPart, descriptorRequired] 
         
     return concentrationDF
@@ -233,6 +254,8 @@ def parseThroughClasses(dfList)-> d:
 
     # support vars for looping
     seqFlag = False
+    selectFlag = False
+    choseFlag = False
     descriptorRequired = ""
     inc = 1
     myiter = iter(range(0, len(courses)))
@@ -399,8 +422,10 @@ def keyWordSearcher(course, initialDescription):
         "Information": "IS", 
         "Science": "SCI", 
         "Mathematics":"MTH",
-        "Arts & Humanities": "ArH", 
-        "University": "Unv" 
+        "Humanities": "HUM", 
+        "University": "Unv", 
+        "Statistics": "Stat",
+        "Programing": "Prg"
     }
 
     if "Requirements" in course:
@@ -513,27 +538,34 @@ def printList(list):
 def convertCSVToCourseObject():
    #df = pd.read_csv("in.csv",converters={"Col3": literal_eval})
     
-    df = pd.read_csv("courseObjects1.csv",converters={3:literal_eval})
+    df = pd.read_csv("courseObjects4.csv",converters={3:literal_eval})
 
     #df = pd.read_csv("courseObjects.csv") 
-    df.columns = ['Courses', 'Credits', 'Prereqs', "Avail"]
+    df.columns = ['Courses', 'Credits', 'Prereqs', "Avail", "Enrollment"]
     for i in range(len(df.index)):
         if pd.notna(df.loc[i,"Prereqs"]):
-            course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], df.loc[i, "Prereqs"], df.loc[i, "Avail"])
+            if pd.notna(df.loc[i, "Enrollment"]):
+                course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], df.loc[i, "Prereqs"], df.loc[i, "Avail"], df.loc[i, "Enrollment"])
+            else:
+                course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], df.loc[i, "Prereqs"], df.loc[i, "Avail"], "")
+
         else:
-            course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], "", df.loc[i, "Avail"])
+            if pd.notna(df.loc[i, "Enrollment"]):
+                course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], "", df.loc[i, "Avail"], df.loc[i, "Enrollment"])
+            else:
+                course_dictionary[df.loc[i, "Courses"]] = c(df.loc[i, "Courses"], df.loc[i, "Credits"], "", df.loc[i, "Avail"], "")
 
 def convertCourseObjectToCSV():
-    filename = 'courseObjects1.csv'
+    filename = 'courseObjects4.csv'
     try:
         with open(filename, 'w', newline='') as f:
             writer = csv.writer(f)
             for key in course_dictionary:
                 courseObj = course_dictionary[key]
                 if isinstance(courseObj.getPrereqString(), type(None)) or courseObj.getPrereqString() == "":
-                    writer.writerow([cleanWIFormating(courseObj.getCourseName()), courseObj.getCredits(), "", courseObj.getAvial()])
+                    writer.writerow([cleanWIFormating(courseObj.getCourseName()), courseObj.getCredits(), "", courseObj.getAvial(), courseObj.getRestrctionString()])
                 else:
-                    writer.writerow([cleanWIFormating(courseObj.getCourseName()), courseObj.getCredits(), courseObj.getPrereqString(), courseObj.getAvial()])
+                    writer.writerow([cleanWIFormating(courseObj.getCourseName()), courseObj.getCredits(), courseObj.getPrereqString(), courseObj.getAvial(), courseObj.getRestrctionString()])
 
     except BaseException as e:
         print('BaseException:', filename)
@@ -719,7 +751,28 @@ def printPlanOfStudy(posArray):
             print("\t"+str(miniCounter)+"." + classes)  
             miniCounter += 1     
         counter+= 1
-
+# converts plan of study to a dictonary
+def convertToDictionary(posArray):
+    counter = 0
+    firstYear = True
+    year = 2022
+    dictonary = {}
+    for quarter in posArray:
+        if counter == 0:
+            dictonary.update({(str(year) + str(15)):  quarter})
+        elif counter == 1:
+            dictonary.update({(str(year) + str(25)):  quarter})
+        elif counter == 2:
+            dictonary.update({(str(year) + str(35)):  quarter})
+        elif counter == 3 and not firstYear:
+            dictonary.update({(str(year) + str(45)):  quarter})
+        else:
+            firstYear = False
+            counter *= 0
+            year+=1
+            dictonary.update({(str(year) + str(15)):  quarter})       
+        counter+= 1
+        return dictonary
 def filterOnCurrent(df: pd.DataFrame, coursesAssigned):
     
     df2 = df.copy()
@@ -747,20 +800,33 @@ def availCalculator(df: pd.DataFrame, numberOfArray):
             if course_dictionary[df2.loc[i, "Courses"]].getSummerAvail():
                 suMulti = numberOfArray[3] / df.loc[i, "Value"]
             if (fMulti + wMulti + sMulti + suMulti) > df.loc[i, "Value"]:
-                df2.loc[i, "Value"] = .0000000001
+                df2.loc[i, "Value"] = .00000000000000000000000000000001
             else:
                 df2.loc[i, "Value"] = df2.loc[i, "Value"] - fMulti - wMulti - sMulti - suMulti
         except:
             pass
-    displayDF(df2)
+    # displayDF(df2)
     return df2
+
+# gets credits as a paramter and returns a number signifiging the classifcation of a student
+# higher the number = higher classification
+def getClassification(credits):
+    if credits >= SENIOR:
+        return 5
+    elif credits >= JUNIOR:
+        return 4
+    elif credits >= PREJUNIOR:
+        return 3
+    elif credits >= SOPHMORE:
+        return 2
+    else:
+        return 1
     
 
-
-def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, numberOfArray)->list:
+def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, numberOfArray, classification, creditGoal)->list:
     #arrayOfBooleans = [firstYear, coopYear, finalYear] (note)
 
-    credits = 0
+    credits = 0.0
     course = "First Class"
     prevCourse = "First Class"
     addedThisTerm = []
@@ -774,7 +840,8 @@ def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, nu
     elif arrayOfBooleans[2] == True:
         numberOfTermsThisYear = 3
     valueDf = availCalculator(filteredDataFrame, numberOfArray)
-    while(creditMin > credits):
+    #valueDf = filteredDataFrame
+    while(creditGoal >= credits):
         max = 0
         pos = 1
             # for pre req checking
@@ -791,12 +858,13 @@ def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, nu
                             print("!" + filteredDataFrame.loc[j , "Courses"])
                         
                             if course_dictionary[filteredDataFrame.loc[j, "Courses"]].getAvial()[quarter]:
-                                if  course_dictionary[filteredDataFrame.loc[j, "Courses"]].havePreqs(filterOnCurrent(filteredDataFrame, addedThisTerm)): #modify dataframe to make sure it address courses in the term
-                                    #print("!!!" + filteredDataFrame.loc[j , "Courses"])
-                                    if course_dictionary[filteredDataFrame.loc[j, "Courses"]].checkSequenceLength() < numberOfTermsThisYear:
-                                        course = filteredDataFrame.loc[j, "Courses"]
-                                        pos = j
-                                        max = tempMax                          
+                                if course_dictionary[filteredDataFrame.loc[j, "Courses"]].processCourseRequirments(classification):
+                                    if  course_dictionary[filteredDataFrame.loc[j, "Courses"]].havePreqs(filterOnCurrent(filteredDataFrame, addedThisTerm)): #modify dataframe to make sure it address courses in the term
+                                        #print("!!!" + filteredDataFrame.loc[j , "Courses"])
+                                        if course_dictionary[filteredDataFrame.loc[j, "Courses"]].checkSequenceLength() < numberOfTermsThisYear:
+                                            course = filteredDataFrame.loc[j, "Courses"]
+                                            pos = j
+                                            max = tempMax                          
             except:
                 pass
 
@@ -811,10 +879,10 @@ def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, nu
         else:
             for previousCourse in addedThisTerm:
                 course_dictionary[previousCourse].adjustSequencePriority()
-            return [arrayForTerm, filteredDataFrame, degreeReq]
+            return [arrayForTerm, filteredDataFrame, degreeReq, credits]
     for previousCourse in addedThisTerm:
         course_dictionary[previousCourse].adjustSequencePriority()
-    return [arrayForTerm, filteredDataFrame, degreeReq]
+    return [arrayForTerm, filteredDataFrame, degreeReq, credits]
 
 def correctSequences():
     course_dictionary["CI 102"].createSequence(course_dictionary["CI 103"])
@@ -834,47 +902,14 @@ def takeCOOP101Checker(coopNumber, springSummerCoop, year, term):
     else:
         return False
 
-if __name__ == '__main__':
-    
-    # -------SCRAPING----------
-    #scrapeCourseCatalog()
-    #scrapeTermMaster()
-    #convertCourseObjectToCSV()
-
-    #-----Not Scraping-----
-    convertCSVToCourseObject()
-    correctSequences()
-    course_dictionary_2 = {}
-    
-    NAME = "CS" # temp var
-    COLLEGE = "CCI"
-    ## modification ends
-
-    list_degree_frame = parseDegreeRequiremnts(NAME)
-    degreeReq = parseThroughClasses(list_degree_frame)
-    degreeReq.setDegreeName(NAME)
-    degreeReq.setDegreeCollege(COLLEGE)
-    print(degreeReq)
-
-    # TEMP HARD CODED DETERIMENES SCIENCE SEQUENCE
-    SEQUENCELOCK = "PHYS"
-    degreeReq.selectScienceSequence(SEQUENCELOCK)
-
-    prereqDictionaryFill(degreeReq.getDegree())
-    concDf = degreeReq.selectConcentration("Algorithms and Theory")
-    prereqDictionaryFill(concDf)
-
-    filteredDataFrame = filterPrereqDictionary(degreeReq.getMegaDegreeRequirments())
-
-    # TEMP VARs
-
+def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     if degreeReq.getDegreeCollege() == "CCI":
-        numberOfQuarters = 18
-        springSummerCoop = True
-        coopNumber = 3
+        #numberOfQuarters = 18
+        #springSummerCoop = False
+        #coopNumber = 3
         numTermsPremade = 1
-        creditMin = 15
-        creditMax = 17
+        #creditMin = 15
+        #creditMax = 17
 
         numberOfFalls = 5
         numberOfWinters = 5
@@ -882,7 +917,7 @@ if __name__ == '__main__':
         numberOfSummers = 5
         
         
-        if springSummerCoop:
+        if SPRINGSUMMERCOOP:
             numberOfSprings = 2
             numberOfSummers = 0
         else:
@@ -891,7 +926,7 @@ if __name__ == '__main__':
             numberOfSummers = 3
 
         posArray = [] #array that contains the plan of study
-        for i in range(numberOfQuarters):
+        for i in range(NUMBEROFQUARTERS):
             posArray.append([])
         numberOfArray = [numberOfFalls, numberOfWinters, numberOfSprings, numberOfSummers]
         coopBoolean = False
@@ -903,30 +938,26 @@ if __name__ == '__main__':
         # -------- pre decided terms -----------------
         firstTermPremade = True
         predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        #predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+
+        credits = 0.0
         for i in range(numTermsPremade):
             if i == 0 and firstTermPremade:
                 posArray[i].append("UNIV CI101")
-
+                credits += 1
                 for course in predetiermendCourses:
                     posArray[i].append(course)
                     filteredDataFrame = assignPredeterminedCourse(course, filteredDataFrame)
+                    credits += course_dictionary[course].getCredits()
             degreeReq.checkCompletion(filteredDataFrame)
 
-        #posArray[1] = createPlanForTerm(filteredDataFrame,degreeReq)[0]
 
-        #printPlanOfStudy(posArray)
-
-
-
-
-
-        displayDF(filteredDataFrame)
-        for i in range(numTermsPremade, numberOfQuarters+1):
+        for i in range(numTermsPremade, NUMBEROFQUARTERS+1):
             year = 1
             totalQuarterAvail = calculateQuarterlyAvail(filteredDataFrame)
             #totalQuarterSingularAvail = calculateQuarterlySingularAvail(filteredDataFrame)
             term = i
-            credits = 0.0
+            classification = getClassification(credits)
             #for QuarterAvail in totalQuarterAvail:
             #   print("A "+str(QuarterAvail))
             #   print("S "+str(totalQuarterSingularAvail))
@@ -936,18 +967,18 @@ if __name__ == '__main__':
                     term -= 4
                     year += 1
 
-                if coopNumber == 1 and year == 3:
+                if COOPNUMBER == 1 and year == 3:
                     coopYear = True
-                    coopBoolean = coopBooleanFinder(springSummerCoop, term)
-                elif coopNumber == 3 and (year == 2 or year == 3 or year == 4):
+                    coopBoolean = coopBooleanFinder(SPRINGSUMMERCOOP, term)
+                elif COOPNUMBER == 3 and (year == 2 or year == 3 or year == 4):
                     coopYear = True
-                    coopBoolean = coopBooleanFinder(springSummerCoop, term)
+                    coopBoolean = coopBooleanFinder(SPRINGSUMMERCOOP, term)
                 else:
                     coopYear = False
                     coopBoolean = False
-                    if coopNumber == 1 and year == 4:
+                    if COOPNUMBER == 1 and year == 4:
                         finalYear = True
-                    elif coopNumber == 3 and year == 5:
+                    elif COOPNUMBER == 3 and year == 5:
                         finalYear = True
 
             if not firstYear:
@@ -961,10 +992,12 @@ if __name__ == '__main__':
                     posArray[i].append("COOP 201")
                 else:
                     numberOfArray[term] -= 1
-                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 0, arrayOfBooleans, numberOfArray)
+                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 0, arrayOfBooleans, numberOfArray, classification, CREDITGOAL)
                     posArray[i] = outputArray[0]
                     filteredDataFrame = outputArray[1]
-                    degreeReq = outputArray[2]                 
+                    degreeReq = outputArray[2] 
+                    credits += outputArray[3]
+                
             elif term == 1:
 
                 #print("Winter") # winter
@@ -973,12 +1006,13 @@ if __name__ == '__main__':
                     posArray[i].append("COOP 201")
                 else:
                     numberOfArray[term] -= 1
-                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 1, arrayOfBooleans, numberOfArray)
+                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 1, arrayOfBooleans, numberOfArray, classification, CREDITGOAL)
                     posArray[i] = outputArray[0]
                     filteredDataFrame = outputArray[1]
                     degreeReq = outputArray[2]
+                    credits += outputArray[3]
 
-                    if takeCOOP101Checker(coopNumber, springSummerCoop, year, term):
+                    if takeCOOP101Checker(COOPNUMBER, SPRINGSUMMERCOOP, year, term):
                         posArray[i].append("COOP 101")
                         filteredDataFrame = assignPredeterminedCourse("COOP 101", filteredDataFrame)
                         degreeReq.checkCompletion(filteredDataFrame)
@@ -991,12 +1025,14 @@ if __name__ == '__main__':
                     posArray[i].append("COOP 201")
                 else:
                     numberOfArray[term] -= 1
-                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 2, arrayOfBooleans, numberOfArray)
+                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 2, arrayOfBooleans, numberOfArray, classification, CREDITGOAL)
                     posArray[i] = outputArray[0]
                     filteredDataFrame = outputArray[1]
                     degreeReq = outputArray[2]
+                    credits += outputArray[3]
+
                     
-                    if takeCOOP101Checker(coopNumber, springSummerCoop, year, term):
+                    if takeCOOP101Checker(COOPNUMBER, SPRINGSUMMERCOOP, year, term):
                         posArray[i].append("COOP 101")
                         filteredDataFrame = assignPredeterminedCourse("COOP 101", filteredDataFrame)
                         degreeReq.checkCompletion(filteredDataFrame)
@@ -1015,41 +1051,62 @@ if __name__ == '__main__':
                     posArray[i].append("COOP 201")
                 else:
                     numberOfArray[term] -= 1
-                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 3, arrayOfBooleans, numberOfArray)
+                    outputArray = createPlanForTerm(filteredDataFrame, degreeReq, 3, arrayOfBooleans, numberOfArray, classification, CREDITGOAL)
                     posArray[i] = outputArray[0]
                     filteredDataFrame = outputArray[1]
                     degreeReq = outputArray[2]
+                    credits += outputArray[3]
+
             print("_____________________________________________________________")
+    return posArray
 
-        
-        # temp for testing
-       
-        
-        
-        printPlanOfStudy(posArray)
-        displayDF(filteredDataFrame)
+def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION2 = "Artificial Intelligence and Machine Learning"):
+    list_degree_frame = parseDegreeRequiremnts(NAME)
+    degreeReq = parseThroughClasses(list_degree_frame)
+    degreeReq.setDegreeName(NAME)
+    degreeReq.setDegreeCollege(COLLEGE)
+    degreeReq.selectScienceSequence(SEQUENCELOCK, course_dictionary)
+    prereqDictionaryFill(degreeReq.getDegree())
+    #concentration lines
+    concDf = degreeReq.selectConcentration(CONCENTRATION1)
+    concDf2 = degreeReq.selectConcentration(CONCENTRATION2)
+    prereqDictionaryFill(concDf)
+    prereqDictionaryFill(concDf2)
+    return degreeReq
 
-        print("")
-        counter = 0
-        for i in range(len(filteredDataFrame.index)):
-            if not filteredDataFrame.loc[i,"Taken"]:
-                print(filteredDataFrame.loc[i, "Courses"])
-                counter+=1
-        print("Failed: " + str(counter))
-       
-
-
-
-# no pre reqs shows up as ""
+def testPlanOfStudy(posArray, filteredDataFrame, degreeReq):
+    printPlanOfStudy(posArray)
+    displayDF(filteredDataFrame)
+    counter = 0
+    for i in range(len(filteredDataFrame.index)):
+        if not filteredDataFrame.loc[i,"Taken"]:
+            print(filteredDataFrame.loc[i, "Courses"])
+            counter+=1
+    print("Failed: " + str(counter))
     
+    degreeReq.displayDFMain()
+    displayDF(degreeReq.getElectives())
 
-
-
-
-  
-
-
-
+def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION2 = "Artificial Intelligence and Machine Learning"):
+    # -------SCRAPING----------
+    """
+    scrapeCourseCatalog()
+    scrapeTermMaster()
+    convertCourseObjectToCSV()
+    """
+    #-----Not Scraping-----
+    convertCSVToCourseObject()
+    correctSequences()
+    #-----SET UP DEGREE--------------------
+    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCELOCK, CONCENTRATION1, CONCENTRATION2)
+    filteredDataFrame = filterPrereqDictionary(degreeReq.getFullDegree())
+    #----Get Plan of Study-------   
+    posArray = createPlan(degreeReq, filteredDataFrame)
+    #------Display Play of Study
+    testPlanOfStudy(posArray, filteredDataFrame, degreeReq)
+    return convertToDictionary(posArray)
+   
     
     
-#------------------------------- EVERYTHING BELLOW IS TEMPORARLIY UNUSED PLEASE IGNORE----------------------------------------------
+#------------------------------- EVERYTHING BELLOW IS "Main"----------------------------------------------
+getPlanOfStudy()

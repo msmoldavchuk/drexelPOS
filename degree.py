@@ -14,6 +14,8 @@ class Degree():
             
         self.concentrationsDF:pd.DataFrame = concDF
         self.concentrationCredits = concCredits
+
+        self.fullDegree = self.degreeFrame
         
     def checkCompletion(self, df:pd.DataFrame): 
         for i in range(len(self.degreeFrame.index)):
@@ -71,10 +73,31 @@ class Degree():
                 break
 
         x =self.concentrationsDF.loc[pos, "Concentration"]
+        self.addToFullDegree(x)
         #self.displayDF(x)
         return x
+    
+    def findFlag(self, choice):
+        pos = 0
+        for i in range(len(self.concentrationsDF.loc[:,"Name"])):
+            if self.concentrationsDF.loc[i,"Name"] == choice:
+                pos = i
+                break
+        
+        conc = self.concentrationsDF.loc[pos, "Concentration"]
+        for i in range(len(conc.index)):
+            return 
 
-    def selectScienceSequence(self, choice):
+    def addToFullDegree(self, new):
+        for i in range(len(new.index)): 
+            self.fullDegree.loc[len(self.fullDegree.index)] = new.loc[i]
+        self.displayDF(self.fullDegree)
+    
+
+    def getFullDegree(self):
+        return self.fullDegree
+
+    def selectScienceSequence(self, choice, dictonary):
         for i in range(len(self.degreeFrame)):
             if self.degreeFrame.loc[i, "Type"] == "SCI" and self.degreeFrame.loc[i, "Flag"] == 3:
                 for seqs in self.degreeFrame.loc[i, "Sequence"].getSequence():
@@ -83,6 +106,12 @@ class Degree():
                     if self.has_identifier(seq[0], choice):
                         #print("DOES THIS OCCUR!!!!!!!!!!!!!!!!")
                         self.degreeFrame.loc[i, "Sequence"] = s(seqs)
+                        credits = 0.0
+                        seqsTwo = seqs.iterateThroughArray()
+                        for seqTwo in seqsTwo:
+                             credits += dictonary[seqTwo.strip()].getCredits()
+                        self.degreeFrame.loc[i, "Credits"] = str(credits)
+                        self.setPostCredits(i)
                         break
 
 
@@ -137,7 +166,16 @@ class Degree():
         tempDataFrame = pd.concat([self.degreeFrame, self.concentrationsDF],axis = 1)
         return tempDataFrame
 
+    def getElectives(self):
+        electiveDataFrame = pd.DataFrame({"Sequence": [], "Credits": [],"Type": [], "Flag":[], "Taken": []})
+        for i in range(len(self.degreeFrame.index)):
+            if self.degreeFrame.loc[i, "Flag"] == 1:
+                electiveDataFrame.loc[len(electiveDataFrame.index)] = self.degreeFrame.loc[i]
+        return electiveDataFrame
     
+    def setPostCredits(self, index):
+        self.degreeFrame.loc[index + 1, "Credits"] = str(float(self.degreeFrame.loc[index+1, "Credits"]) - float(self.degreeFrame.loc[index, "Credits"]))
+
     # to string for the degree
     def __str__(self):
         type = ""

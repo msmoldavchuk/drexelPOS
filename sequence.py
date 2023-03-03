@@ -32,9 +32,9 @@ class LinkedList:
             array.append(cur.data) #appends data to an array
             if(cur.next is None): 
                 break    
-            cur = cur.next
-       
+            cur = cur.next 
         return array
+    
     def getData(self):
         print("Done")
         return self.head.data

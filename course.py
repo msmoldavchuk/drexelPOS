@@ -7,14 +7,24 @@ class Course:
     #prereqArray = [] #index = and
 
     # constructor
-    def __init__(self, courseName, credits, prereqString = "empty", avialabilityArray = [False, False, False, False]):
+    def __init__(self, courseName, credits, prereqString = "empty", avialabilityArray = [False, False, False, False], restrictionString = "None"):
             self.courseName = courseName.strip()
             self.credits = credits
             self.prereqString = prereqString
 
             #self.avialabilityArray = [False, False, False, False]
+            
             self.avialabilityArray = avialabilityArray
 
+            self.restrictionArray = []
+            if restrictionString == "None":
+                self.restrictionString = ""
+            else:
+                self.restrictionString = restrictionString
+                self.restrictionArray = self.processRestrictionString(self.restrictionString)
+
+
+            
             #normal assumption is that every index in prereq array is AND
             #if orboolean is true then every index in array is OR
             self.prereqArray = []
@@ -38,7 +48,49 @@ class Course:
                 
    
             #self.avail = avail
+    def getRestrctionString(self):
+        return self.restrictionString
+    
+    # temp coded like this to hard filter data
+    def processRestrictionString(self, string):
+        finalArray = []
+        if "Cannot enroll if classification is" in string:
+            newString = string[string.find("Cannot enroll if classification is "):]
+            newArray = newString.split("or")
+            for part in newArray:
+                arrayTwo = [part, False]
+                finalArray.append(arrayTwo)
+        return finalArray
 
+    def processCannotEnroll(self):
+        final = ""
+        for classif in self.restrictionArray:
+            final = classif[0]
+        return final
+
+    # improve in future    
+    def processCourseRequirments(self, classif):
+        if self.restrictionArray:       
+            # cannot enroll
+            if not self.restrictionArray[0][1]:
+                if classif > self.convertClassifications(self.processCannotEnroll()):
+                    return True
+                else: return False
+        else:
+            return True
+        
+    def convertClassifications(self, string):
+        if string.strip() == "Senior":
+            return 5
+        elif string.strip() == "Junior":
+            return 4
+        elif string.strip() == "Pre-Junior":
+            return 3
+        elif string.strip() == "Sophmore":
+            return 2
+        else:
+            return 1
+        
     def getPrereqArray(self):
         return self.prereqArray
 
@@ -55,7 +107,7 @@ class Course:
     
     # getter for credits
     def getCredits(self):
-        return self.credits
+        return float(self.credits)
 
     def getAndBoolean(self):
         return self.andBoolean
@@ -112,7 +164,6 @@ class Course:
             self.seqCourse[0].setMustAddBoolean(True)
 
     
-
     
         
 #-------------------------------------------------CONVERTS PREREQS--------------------------------------
