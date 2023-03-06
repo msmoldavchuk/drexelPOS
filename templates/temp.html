@@ -2,50 +2,44 @@
 <title> Temp</title>
 
     <h1> This is a temp page</h1>
-    <form action="{{ url_for('temp') }}" method="post">
-        <input type="checkbox" from="temp" name="name">
+    <form action="{{ url_for('temp') }}" method="post" id="form">
+        <input type="checkbox" from="temp" name="name" >
+        <input type="text" from="temp" name="major">
         <input type="submit" value="Submit">
     </form>
-   <script>
-  fetch('/test')
-      .then(function (response) {
-          return response.json();
-      }).then(function (text) {
-          console.log('GET response:');
-          console.log(text.greeting); 
-      });
-      </script>
 
-<input id="clickMe" type="button" value="clickme" onclick="postData('/test/data', data ='test');" />
-  <script>
-    // Example POST method implementation:
-async function postData(url = "", data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      "Content-Type": "application/json",
-      'Accept': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  let info = response.json();
-  console.log(info);
-  console.log(info.data);
-  info.then((data) => {
-    console.log(data); // JSON data parsed by `data.json()` call
-    document.getElementById('clickMe').setAttribute('value', data);
-})
-}
+    <p id="testing">
+        This is where the data will be displayed
+    </p>
+   <Script>
+    let data = document.getElementById("form");
+    data.addEventListener("submit", function(e){
+        e.preventDefault();
+        let name = data.elements.name.value;
+        let major = data.elements.major.value;
+        let form = {
+            name: name,
+            major: major
 
-//postData("https://example.com/answer", { answer: 42 }).then((data) => {
-//  console.log(data); // JSON data parsed by `data.json()` call
-//);
-  </script>
-  
-{% block body %}
-    {{data}}
-    {{name}}
-{% endblock %}
+        };
+
+        fetch('{{url_for("testfn2")}}', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+    .then((data) => {
+        text = document.getElementById("testing");
+        text.innerHTML = data;
+    })
+        .catch(err => console.log(err))
+
+        console.log(name);
+        console.log(major);
+    })
+   </Script>
 

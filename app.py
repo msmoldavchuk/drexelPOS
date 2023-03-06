@@ -4,6 +4,7 @@ from flask import request
 import requests
 from flask import json
 from flask import jsonify
+from werkzeug.datastructures import ImmutableMultiDict
 app = Flask(__name__)
 
 
@@ -38,7 +39,7 @@ def api_pos():
 def api_poscs():
     #this takes the form data from the CS POS page and runs it through the API
     #returns the data as a json object
-    #method()
+    #method(request.form.get('major'), request.form.get('year_type'), request.form.get(coop), re)
     return jsonify({'place': 'holder'})
 
 
@@ -59,15 +60,18 @@ def testfn():
 @app.route('/test/data', methods=['GET', 'POST'])
 def testfn2():
     if request.method == 'POST':
-        
-        print(request.get_data(as_text=True))
-        message = request.get_data(as_text=True)
-        return jsonify(message)
+        print(request.mimetype)
+        data = request.get_json()
+        print(request.get_json())
+        print(data.get('major'))
+        print(request.get_data().decode('utf-8'))
+
+        return jsonify("it works")
+   
+
+
 
 @app.route('/temp', methods=['GET', 'POST'])
 def temp():
-    if request.method == 'POST':
-        if request.form.get('name'):
-            return render_template('temp.html', name="hi")
     return render_template('temp.html')
             
