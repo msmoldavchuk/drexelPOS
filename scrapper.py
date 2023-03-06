@@ -478,35 +478,54 @@ def appendToDictonaray(item):
             except KeyError:
                 print("Never seen this might as well put text? " + str(item))
 
-def prereqDictionaryFill(df: pd.DataFrame):
+def prereqDictionaryFill(df: pd.DataFrame, columName = "Sequence"):
     for i in range(len(df.index)):
-        seqArray = df.loc[i,"Sequence"]
-        for seq in seqArray.getSequence():
-           # print("Sequence: " +str(seq))
-            courseArray = seq.iterateThroughArray()
-            for course in courseArray:
-                try:
-                    if course == "Elective" or course == "Total":
+        if columName == "Sequence":
+            seqArray = df.loc[i,columName]
+            for seq in seqArray.getSequence():
+            # print("Sequence: " +str(seq))
+                courseArray = seq.iterateThroughArray()
+                for course in courseArray:
+                    try:
+                        if course == "Elective" or course == "Total":
+                            pass
+                        else:
+                            appendToDictonaray(str(course).strip())
+                            prereqCycle(course_dictionary[str(course).strip()])
+                    except KeyError:
                         pass
-                    else:
-                        appendToDictonaray(str(course).strip())
-                        prereqCycle(course_dictionary[str(course).strip()])
-                except KeyError:
+        else:
+            course = df.loc[i, columName]
+            try:
+                if course == "Elective" or course == "Total":
                     pass
+                else:
+                    appendToDictonaray(str(course).strip())
+                    prereqCycle(course_dictionary[str(course).strip()])
+            except KeyError:
+                pass
+
 
 # changew by adding 10 and use 1 less global
-def filterPrereqDictionary(df: pd.DataFrame):
+def filterPrereqDictionary(df: pd.DataFrame, columName = "Sequence"):
     filteredPrequistes = pd.DataFrame({'Courses':[], 'Value':[], 'Taken':[]})
     for i in range(len(df.index)):
-        seqArray = df.loc[i,"Sequence"]
-        for seq in seqArray.getSequence():
-            courseArray = seq.iterateThroughArray()
-            for course in courseArray:
-                try:
-                    if course != "Elective":
-                        filteredPrequistes.loc[len(filteredPrequistes.index)] = [str(course).strip() , course_int_dictionary[str(course).strip()], False]
-                except KeyError:
-                    pass
+        if columName == "Sequence":
+            seqArray = df.loc[i,columName]
+            for seq in seqArray.getSequence():
+                courseArray = seq.iterateThroughArray()
+                for course in courseArray:
+                    try:
+                        if course != "Elective":
+                            filteredPrequistes.loc[len(filteredPrequistes.index)] = [str(course).strip() , course_int_dictionary[str(course).strip()], False]
+                    except KeyError:
+                        pass
+        else:      
+            try:
+                filteredPrequistes.loc[len(filteredPrequistes.index)] = [str(df.loc[i, columName]).strip() , course_int_dictionary[str(df.loc[i, columName]).strip()], False]
+            except:
+                pass
+
     #filteredPrequistes.columns = ['Courses', 'Credits']
     return filteredPrequistes
 
@@ -783,29 +802,61 @@ def filterOnCurrent(df: pd.DataFrame, coursesAssigned):
                 
     return df2
 
-def availCalculator(df: pd.DataFrame, numberOfArray):
+def availCalculator(df: pd.DataFrame, numberOfArray, quarter):
+    # quarter 0 = fall, 1 = winter, 2 = spring, 3 = summer
     df2 = df.copy(True)
     fMulti = 0
     wMulti = 0
     sMulti = 0
     suMulti = 0
+    limiter = 0
     for i in range(len(df2.index)):
         try:
+            # 3.5 is a magic number
             if course_dictionary[df2.loc[i, "Courses"]].getFallAvail():
-                fMulti = numberOfArray[0] / df.loc[i, "Value"]
+                fMulti = numberOfArray[0] / df.loc[i, "Value"] / 3.5
             if course_dictionary[df2.loc[i, "Courses"]].getWinterAvail():
-                wMulti = numberOfArray[1] / df.loc[i, "Value"]
+                wMulti = numberOfArray[1] / df.loc[i, "Value"] / 3.5
             if course_dictionary[df2.loc[i, "Courses"]].getSpringAvail():
-                sMulti = numberOfArray[2] / df.loc[i, "Value"]
+                sMulti = numberOfArray[2] / df.loc[i, "Value"] / 3.5
             if course_dictionary[df2.loc[i, "Courses"]].getSummerAvail():
-                suMulti = numberOfArray[3] / df.loc[i, "Value"]
-            if (fMulti + wMulti + sMulti + suMulti) > df.loc[i, "Value"]:
-                df2.loc[i, "Value"] = .00000000000000000000000000000001
+                suMulti = numberOfArray[3] / df.loc[i, "Value"] / 3.5
+            """
+            avialQuarters = course_dictionary[df2.loc[i, "Courses"]].getAvial()
+            for i in range(len(avialQuarters)):
+                if avialQuarters[i] == True and i == quarter:
+                    limiter += 10
+                elif avialQuarters[i] == True and i != quarter:
+                    limiter -= 2
+                else:
+                    limiter += .5
+            """
+            if (fMulti + wMulti + sMulti + suMulti) + limiter > df.loc[i, "Value"]:
+                df2.loc[i, "Value"] = .00000000001
+                
+                """
+                print("Oof")
+                print(df.loc[i,"Courses"])
+                print("Val:"+str(df2.loc[i,"Value"]))
+                print(str(fMulti))
+                print(str(wMulti))
+                print(str(sMulti))
+                print(str(suMulti))
+                """
             else:
-                df2.loc[i, "Value"] = df2.loc[i, "Value"] - fMulti - wMulti - sMulti - suMulti
+                df2.loc[i, "Value"] = df2.loc[i, "Value"] - fMulti - wMulti - sMulti - suMulti + limiter
+                """
+                print("Doof")
+                print(df.loc[i,"Courses"])
+                print("Val:"+str(df2.loc[i,"Value"]))
+                print(str(fMulti))
+                print(str(wMulti))
+                print(str(sMulti))
+                print(str(suMulti))
+                """
         except:
             pass
-    # displayDF(df2)
+    #displayDF(df2)
     return df2
 
 # gets credits as a paramter and returns a number signifiging the classifcation of a student
@@ -823,7 +874,7 @@ def getClassification(credits):
         return 1
     
 
-def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, numberOfArray, classification, creditGoal)->list:
+def createPlanForTerm(filteredDataFrame, degreeReq: d, quarter, arrayOfBooleans, numberOfArray, classification, creditGoal)->list:
     #arrayOfBooleans = [firstYear, coopYear, finalYear] (note)
 
     credits = 0.0
@@ -839,11 +890,13 @@ def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, nu
         numberOfTermsThisYear = 2
     elif arrayOfBooleans[2] == True:
         numberOfTermsThisYear = 3
-    valueDf = availCalculator(filteredDataFrame, numberOfArray)
+    valueDf = availCalculator(filteredDataFrame, numberOfArray, quarter)
     #valueDf = filteredDataFrame
+    
     while(creditGoal >= credits):
         max = 0
         pos = 1
+        interalValue = 0
             # for pre req checking
         for j in range(len(filteredDataFrame.index)):
             try:
@@ -855,7 +908,7 @@ def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, nu
                     if not degreeReq.checkIfTaken(filteredDataFrame.loc[j, "Courses"]):
                         tempMax = valueDf.loc[j, "Value"] # uses value array w/ avail calcs
                         if tempMax > max: 
-                            print("!" + filteredDataFrame.loc[j , "Courses"])
+                            #print("!" + filteredDataFrame.loc[j , "Courses"])
                         
                             if course_dictionary[filteredDataFrame.loc[j, "Courses"]].getAvial()[quarter]:
                                 if course_dictionary[filteredDataFrame.loc[j, "Courses"]].processCourseRequirments(classification):
@@ -864,24 +917,52 @@ def createPlanForTerm(filteredDataFrame, degreeReq, quarter, arrayOfBooleans, nu
                                         if course_dictionary[filteredDataFrame.loc[j, "Courses"]].checkSequenceLength() < numberOfTermsThisYear:
                                             course = filteredDataFrame.loc[j, "Courses"]
                                             pos = j
-                                            max = tempMax                          
+                                            max = tempMax     
+                                            interalValue = valueDf.loc[j,"Value"]                 
             except:
                 pass
 
         
         if prevCourse != course:
-            arrayForTerm.append(course)
-            filteredDataFrame.loc[pos, "Taken"] = True
-            credits += float(course_dictionary[course].getCredits())
-            degreeReq.checkCompletion(filteredDataFrame)
-            prevCourse = course
-            addedThisTerm.append(course)
+            if interalValue == .00000000001 and (creditGoal - 4) <= credits: # for assinging undefined elective
+                elective = degreeReq.pickElectiveRandom()
+                if elective[0] == "No Class":
+                    break
+                else:
+                    arrayForTerm.append(elective[0])
+                    credits += float(elective[1])
+                    prevCourse = elective[0]
+                    addedThisTerm.append(elective[0])
+            else:
+                arrayForTerm.append(course)
+                filteredDataFrame.loc[pos, "Taken"] = True
+                credits += float(course_dictionary[course].getCredits())
+                degreeReq.checkCompletion(filteredDataFrame)
+                prevCourse = course
+                addedThisTerm.append(course)
         else:
+            if degreeReq.getFreeElectiveMode():
+                while credits <= creditGoal:
+                    elective = degreeReq.freeElectivesRandom()
+                    if elective[0] == "No Class":
+                        break
+                    else:
+                        arrayForTerm.append(elective[0])
+                        credits += float(elective[1])
+                        prevCourse = elective[0]
+                        addedThisTerm.append(elective[0])
+            
             for previousCourse in addedThisTerm:
-                course_dictionary[previousCourse].adjustSequencePriority()
+                try:
+                    course_dictionary[previousCourse].adjustSequencePriority()
+                except:
+                    pass
             return [arrayForTerm, filteredDataFrame, degreeReq, credits]
     for previousCourse in addedThisTerm:
-        course_dictionary[previousCourse].adjustSequencePriority()
+        try:
+            course_dictionary[previousCourse].adjustSequencePriority()
+        except:
+            pass
     return [arrayForTerm, filteredDataFrame, degreeReq, credits]
 
 def correctSequences():
@@ -901,6 +982,21 @@ def takeCOOP101Checker(coopNumber, springSummerCoop, year, term):
         return True
     else:
         return False
+
+def checkIfPossible(degreeReq, filteredDataFrame):
+    internalDf = pd.DataFrame({"Courses": filteredDataFrame.loc[:,"Courses"], "Value": filteredDataFrame.loc[:,"Value"], "Taken": True})
+    for i in range(len(internalDf.index)):
+        try:
+            if not course_dictionary[internalDf.loc[i,"Courses"].strip()].havePreqs(internalDf):
+                course = course_dictionary[internalDf.loc[i, "Courses"]].findMissingPrereq(internalDf)
+                filteredDataFrame.loc[len(filteredDataFrame.index)] = [course, 0, False]
+                degreeReq.takeFreeElectives(course_dictionary[course].getCredits())
+                return False
+        except:
+            pass
+    return True
+
+
 
 def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     if degreeReq.getDegreeCollege() == "CCI":
@@ -1060,18 +1156,18 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
             print("_____________________________________________________________")
     return posArray
 
-def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION2 = "Artificial Intelligence and Machine Learning"):
+def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION1COURSES = ["CS 457", "CS 300", "MATH 305"], CONCENTRATION2 = "Artificial Intelligence and Machine Learning", CONCENTRATION2COURSES = ["CS 380", "CS 383", "DSCI 351"] ):
     list_degree_frame = parseDegreeRequiremnts(NAME)
     degreeReq = parseThroughClasses(list_degree_frame)
     degreeReq.setDegreeName(NAME)
     degreeReq.setDegreeCollege(COLLEGE)
     degreeReq.selectScienceSequence(SEQUENCELOCK, course_dictionary)
-    prereqDictionaryFill(degreeReq.getDegree())
+    #prereqDictionaryFill(degreeReq.getDegree())
     #concentration lines
-    concDf = degreeReq.selectConcentration(CONCENTRATION1)
-    concDf2 = degreeReq.selectConcentration(CONCENTRATION2)
-    prereqDictionaryFill(concDf)
-    prereqDictionaryFill(concDf2)
+    concDf = degreeReq.selectConcentration(CONCENTRATION1, CONCENTRATION1COURSES)
+    concDf2 = degreeReq.selectConcentration(CONCENTRATION2, CONCENTRATION2COURSES)
+    #prereqDictionaryFill(concDf)
+    #prereqDictionaryFill(concDf2)
     return degreeReq
 
 def testPlanOfStudy(posArray, filteredDataFrame, degreeReq):
@@ -1081,13 +1177,13 @@ def testPlanOfStudy(posArray, filteredDataFrame, degreeReq):
     for i in range(len(filteredDataFrame.index)):
         if not filteredDataFrame.loc[i,"Taken"]:
             print(filteredDataFrame.loc[i, "Courses"])
-            counter+=1
+            counter += 1
     print("Failed: " + str(counter))
     
     degreeReq.displayDFMain()
     displayDF(degreeReq.getElectives())
 
-def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION2 = "Artificial Intelligence and Machine Learning"):
+def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION1COURSES = ["CS 457", "CS 300", "MATH 305"], CONCENTRATION2 = "Artificial Intelligence and Machine Learning", CONCENTRATION2COURSES= ["CS 380", "CS 383", "DSCI 351"], NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     # -------SCRAPING----------
     """
     scrapeCourseCatalog()
@@ -1098,10 +1194,19 @@ def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTR
     convertCSVToCourseObject()
     correctSequences()
     #-----SET UP DEGREE--------------------
-    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCELOCK, CONCENTRATION1, CONCENTRATION2)
-    filteredDataFrame = filterPrereqDictionary(degreeReq.getFullDegree())
+    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCELOCK, CONCENTRATION1,CONCENTRATION1COURSES, CONCENTRATION2, CONCENTRATION2COURSES)
+    
+    prereqDictionaryFill(degreeReq.getFullDegree())
+    tempDf = filterPrereqDictionary(degreeReq.getFullDegree())
+    checkIfMissing = False
+    while(not checkIfMissing):
+        checkIfMissing = checkIfPossible(degreeReq, tempDf)   
+    course_int_dictionary.clear()
+
+    prereqDictionaryFill(tempDf, "Courses")
+    filteredDataFrame = filterPrereqDictionary(tempDf, "Courses")
     #----Get Plan of Study-------   
-    posArray = createPlan(degreeReq, filteredDataFrame)
+    posArray = createPlan(degreeReq, filteredDataFrame,  NUMBEROFQUARTERS, SPRINGSUMMERCOOP, CREDITGOAL, COOPNUMBER)
     #------Display Play of Study
     testPlanOfStudy(posArray, filteredDataFrame, degreeReq)
     return convertToDictionary(posArray)

@@ -2080,8 +2080,7 @@ ENGL 102,3.0," ENGL 101 [Min Grade: D]
 ENGL 103,3.0," ENGL 102 [Min Grade: D]
 ","[True, True, True, True]",
 ENGL 105,3.0,,"[False, False, False, False]", Can enroll if major is HONR.
-ENGL 111,3.0," APE 2 or ESL 110 [Min Grade: D]
-","[True, False, False, False]",
+ENGL 111,3.0,,"[True, False, False, False]",
 ENGL 112,3.0," ENGL 111 [Min Grade: D]
 ","[True, True, True, False]",
 ENGL 113,3.0," ENGL 112
@@ -2785,8 +2784,7 @@ MATH 116,4.0," APC 060 or MATH 100 [Min Grade: C] or APMA49 P or APCA49 P
 MATH 117,4.0," MATH 116 [Min Grade: C-]
 ","[False, True, True, False]",
 MATH 119,0.0-4.0,,"[False, False, True, False]", Can enroll if classification is Freshman or Sophomore .
-MATH 121,4.0," MATH 110 [Min Grade: C-] or MATH 105 [Min Grade: C-] or APC 070 or APCA50 P
-","[True, True, True, True]", Can enroll if classification is Freshman.
+MATH 121,4.0,,"[True, True, True, True]", Can enroll if classification is Freshman.
 MATH 122,4.0," MATH 117 [Min Grade: C-] or MATH 121 [Min Grade: C-]
 ","[True, True, True, True]",
 MATH 123,4.0," MATH 122 [Min Grade: D]

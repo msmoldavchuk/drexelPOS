@@ -1,6 +1,6 @@
 from sequence import Sequence as s
 import pandas as pd
-
+import random
 class Degree():
     # constructor for degree object
     # recives arrays and converts them into a dataframe
@@ -16,6 +16,39 @@ class Degree():
         self.concentrationCredits = concCredits
 
         self.fullDegree = self.degreeFrame
+
+        self.freeElectiveMode = True
+        #self.electiveDictonary = {} implemant latter w/ scrapping
+
+    def getFreeElectiveMode(self):
+        return self.freeElectiveMode
+    
+    def freeElectivesRandom(self):
+        if self.getFreeElectiveMode():
+            for i in range(len(self.degreeFrame.index)):
+                if self.degreeFrame.loc[i,"Type"] == "Special":
+                    
+                    if random.randint(1,4) == 4:
+                        credit = 4
+                        self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credit)
+                        if float(self.degreeFrame.loc[i,"Credits"]) == -1:
+                            credit = 3
+                            self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credit)
+                            self.freeElectiveMode = False
+                        elif float(self.degreeFrame.loc[i,"Credits"]) <= 0:
+                            self.freeElectiveMode = False
+                    else:
+                        credit = 3
+                        self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credit)
+                        if float(self.degreeFrame.loc[i,"Credits"]) == 1:
+                            credit = 4
+                            self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credit)
+                            self.freeElectiveMode = False
+                        elif float(self.degreeFrame.loc[i,"Credits"]) <= 0:
+                            self.freeElectiveMode = False
+                    return ["Free Elective" , credit]
+        else:
+            return ["No Class" , 0]
         
     def checkCompletion(self, df:pd.DataFrame): 
         for i in range(len(self.degreeFrame.index)):
@@ -35,6 +68,11 @@ class Degree():
                     return self.degreeFrame.loc[i, "Taken"]
         return False
 
+    def takeFreeElectives(self, credits):
+         for i in range(len(self.degreeFrame.index)):
+            if self.degreeFrame.loc[i,"Type"] == "Special":
+                self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credits)
+                break
 
     def printConcentrations(self):
         for i in range(len(self.concentrationsDF.loc[:,"Concentration"])):
@@ -65,34 +103,32 @@ class Degree():
         return finalArray
 
     #CLEAN LATER
-    def selectConcentration(self, choice):
-        pos = 0
-        for i in range(len(self.concentrationsDF.loc[:,"Name"])):
-            if self.concentrationsDF.loc[i,"Name"] == choice:
-                pos = i
-                break
-
-        x =self.concentrationsDF.loc[pos, "Concentration"]
-        self.addToFullDegree(x)
-        #self.displayDF(x)
-        return x
-    
-    def findFlag(self, choice):
+    def selectConcentration(self, choice, courses):
         pos = 0
         for i in range(len(self.concentrationsDF.loc[:,"Name"])):
             if self.concentrationsDF.loc[i,"Name"] == choice:
                 pos = i
                 break
         
-        conc = self.concentrationsDF.loc[pos, "Concentration"]
-        for i in range(len(conc.index)):
-            return 
-
-    def addToFullDegree(self, new):
-        for i in range(len(new.index)): 
-            self.fullDegree.loc[len(self.fullDegree.index)] = new.loc[i]
-        self.displayDF(self.fullDegree)
+        x =self.concentrationsDF.loc[pos, "Concentration"]
+        for i in range(len(x.index)):
+            if str(x.loc[i, "Sequence"]) in courses:
+                self.addToFullDegreeSeries(x.loc[i])
+        #self.displayDF(x)
+        #return x
     
+
+
+    def addToFullDegreeDf(self, new):
+        for i in range(len(new.index)): 
+            if not (new.loc[i, "Sequence"] in self.fullDegree.loc[:,"Sequence"].tolist()):
+                self.fullDegree.loc[len(self.fullDegree.index)] = new.loc[i, "Sequence"]
+        #self.displayDF(self.fullDegree)
+    
+    def addToFullDegreeSeries(self, new): 
+        if not (new[0] in self.fullDegree.loc[:,"Sequence"].tolist()):
+            self.fullDegree.loc[len(self.fullDegree.index)] = new
+        #self.displayDF(self.fullDegree)
 
     def getFullDegree(self):
         return self.fullDegree
@@ -173,6 +209,31 @@ class Degree():
                 electiveDataFrame.loc[len(electiveDataFrame.index)] = self.degreeFrame.loc[i]
         return electiveDataFrame
     
+    def pickElectiveRandom(self):
+        for i in range(len(self.degreeFrame.index)):
+            if self.degreeFrame.loc[i, "Flag"] == 1 and self.degreeFrame.loc[i,"Type"] != "Special" and self.degreeFrame.loc[i,"Taken"] == False:
+                elective = self.degreeFrame.loc[i,"Type"] + " " + str(self.degreeFrame.loc[i, "Sequence"])
+                if "science" in elective:
+                    credit = 4.0
+                else:
+                    credit = 3.0
+                self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credit)
+                if float(self.degreeFrame.loc[i, "Credits"]) < 0:
+                    counter = 0
+                    while float(self.degreeFrame.loc[i, "Credits"]) < 0:
+                        self.degreeFrame.loc[i, "Credits"] = str(float(self.degreeFrame.loc[i, "Credits"]) + 1)
+                        counter += 1
+                    self.takeFreeElectives(counter)
+                    
+                
+                if float(self.degreeFrame.loc[i,"Credits"]) == 0:
+                    self.degreeFrame.loc[i,"Taken"] = True
+
+                return [elective, credit]
+            elif self.degreeFrame.loc[i, "Flag"] == 1 and self.degreeFrame.loc[i,"Type"] == "Special":
+                self.freeElectiveMode = True
+                return ["No Class", 0]
+
     def setPostCredits(self, index):
         self.degreeFrame.loc[index + 1, "Credits"] = str(float(self.degreeFrame.loc[index+1, "Credits"]) - float(self.degreeFrame.loc[index, "Credits"]))
 

@@ -11,7 +11,8 @@ class LinkedList:
             current.next = new_node
         else:
             self.head = new_node 
-
+    def __str__(self):
+        return str(self.head.data)
     def iterateThroughPrint(self):
         cur = self.head
         while(True):
