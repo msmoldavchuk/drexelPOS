@@ -1775,8 +1775,7 @@ CHEC T280,0.0-12.0,,"[False, False, False, False]",
 CHEC T380,0.0-12.0,,"[False, False, False, False]",
 CHEC T480,0.0-12.0,,"[False, False, False, False]",
 CHEM 100,2.0,,"[False, False, False, False]",
-CHEM 101,3.5," APCH 12 or CHEM 111 [Min Grade: D] or APCH50 P
-","[True, True, False, True]",
+CHEM 101,3.5,,"[True, True, False, True]",
 CHEM 102,4.5," CHEM 101 [Min Grade: D] or CHEM 121 [Min Grade: D] or CHEM 161 [Min Grade: D]
 ","[False, True, True, False]",
 CHEM 103,4.5," CHEM 102 [Min Grade: D] or CHEM 122 [Min Grade: D] or CHEM 108 [Min Grade: D] or (CHEM 162 [Min Grade: D] and CHEM 164 [Min Grade: D])

@@ -988,9 +988,16 @@ def checkIfPossible(degreeReq, filteredDataFrame):
     for i in range(len(internalDf.index)):
         try:
             if not course_dictionary[internalDf.loc[i,"Courses"].strip()].havePreqs(internalDf):
-                course = course_dictionary[internalDf.loc[i, "Courses"]].findMissingPrereq(internalDf)
-                filteredDataFrame.loc[len(filteredDataFrame.index)] = [course, 0, False]
-                degreeReq.takeFreeElectives(course_dictionary[course].getCredits())
+                #print(""+internalDf.loc[i,"Courses"])       
+                overrider = 0
+                while True:
+                    try:
+                        course = course_dictionary[internalDf.loc[i, "Courses"]].findMissingPrereq(internalDf, overrider)
+                        degreeReq.takeFreeElectives(course_dictionary[course].getCredits()) # see if course exists
+                        filteredDataFrame.loc[len(filteredDataFrame.index)] = [course, 0, False]        
+                        break
+                    except:
+                        overrider += 1
                 return False
         except:
             pass
@@ -1030,21 +1037,32 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
         coopYear = False
         finalYear = False
       
-
+        # templines
+        numTermsPremade = 3
+        predetiermendCourses2 = ["MATH 201", "ENGL 102", "CI 102", "PHYS 101", "CIVC 101", "CS 172", "CS 171"]
+        predetiermendCourses3 = ["MATH 122", "ENGL 103", "CI 103", "CS 265","SE 181","CS 270", "UNIV CI101", "COOP 101"]
         # -------- pre decided terms -----------------
         firstTermPremade = True
         predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
         #predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+
+        predetiermendCourseArray = [predetiermendCourses, predetiermendCourses2, predetiermendCourses3]
 
         credits = 0.0
         for i in range(numTermsPremade):
             if i == 0 and firstTermPremade:
                 posArray[i].append("UNIV CI101")
                 credits += 1
-                for course in predetiermendCourses:
+
+            for course in predetiermendCourseArray[i]:
+                try:
                     posArray[i].append(course)
                     filteredDataFrame = assignPredeterminedCourse(course, filteredDataFrame)
                     credits += course_dictionary[course].getCredits()
+                except:
+                    #posArray[i].append(course)
+                    #filteredDataFrame = assignPredeterminedCourse(course, filteredDataFrame)
+                    credits += 1
             degreeReq.checkCompletion(filteredDataFrame)
 
 
@@ -1156,7 +1174,7 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
             print("_____________________________________________________________")
     return posArray
 
-def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION1COURSES = ["CS 457", "CS 300", "MATH 305"], CONCENTRATION2 = "Artificial Intelligence and Machine Learning", CONCENTRATION2COURSES = ["CS 380", "CS 383", "DSCI 351"] ):
+def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "CHEM", CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]]):
     list_degree_frame = parseDegreeRequiremnts(NAME)
     degreeReq = parseThroughClasses(list_degree_frame)
     degreeReq.setDegreeName(NAME)
@@ -1164,8 +1182,10 @@ def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENT
     degreeReq.selectScienceSequence(SEQUENCELOCK, course_dictionary)
     #prereqDictionaryFill(degreeReq.getDegree())
     #concentration lines
-    concDf = degreeReq.selectConcentration(CONCENTRATION1, CONCENTRATION1COURSES)
-    concDf2 = degreeReq.selectConcentration(CONCENTRATION2, CONCENTRATION2COURSES)
+    
+    for concentration in CONCENTRATIONARRAY:
+        degreeReq.selectConcentration(concentration[0], concentration[1])
+    
     #prereqDictionaryFill(concDf)
     #prereqDictionaryFill(concDf2)
     return degreeReq
@@ -1183,7 +1203,7 @@ def testPlanOfStudy(posArray, filteredDataFrame, degreeReq):
     degreeReq.displayDFMain()
     displayDF(degreeReq.getElectives())
 
-def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATION1 = "Algorithms and Theory", CONCENTRATION1COURSES = ["CS 457", "CS 300", "MATH 305"], CONCENTRATION2 = "Artificial Intelligence and Machine Learning", CONCENTRATION2COURSES= ["CS 380", "CS 383", "DSCI 351"], NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
+def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]], NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     # -------SCRAPING----------
     """
     scrapeCourseCatalog()
@@ -1194,7 +1214,7 @@ def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTR
     convertCSVToCourseObject()
     correctSequences()
     #-----SET UP DEGREE--------------------
-    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCELOCK, CONCENTRATION1,CONCENTRATION1COURSES, CONCENTRATION2, CONCENTRATION2COURSES)
+    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCELOCK, CONCENTRATIONARRAY)
     
     prereqDictionaryFill(degreeReq.getFullDegree())
     tempDf = filterPrereqDictionary(degreeReq.getFullDegree())

@@ -164,23 +164,27 @@ class Course:
         if self.checkIfSequence():
             self.seqCourse[0].setMustAddBoolean(True)
 
-    def findMissingPrereq(self, df:pd.DataFrame):
+    def findMissingPrereq(self, df:pd.DataFrame, overrider = 0):
         #print(self.getCourseName())
-
         if self.getAndBoolean(): #normal  ((x or y) and (a or b))
             for prereqSequence in self.getPrereqArray():
                 if not prereqSequence.checkDataFrame(df): 
                     courses = prereqSequence.iterateThroughArray()
                     for course in courses:
                         if not (course in df.loc[:,"Courses"].tolist()):
-                            return course
+                            if overrider != 0:
+                                overrider -= 1
+                            else:
+                                return course
         else: #((x and y) or (a and b)) NOT TESTED FULLY!!!!!!!!
             for prereqSequence in self.getPrereqArray():
                 courses = prereqSequence.iterateThroughArray()
                 for course in courses:
                     if not (course in df.loc[:,"Courses"].tolist()):
-                            return course
-
+                            if overrider != 0:
+                                overrider -= 1
+                            else:
+                                return course
 
     
         
