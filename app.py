@@ -5,6 +5,7 @@ import requests
 from flask import json
 from flask import jsonify
 from werkzeug.datastructures import ImmutableMultiDict
+import scrapper
 app = Flask(__name__)
 
 
@@ -39,8 +40,8 @@ def api_pos():
 def api_poscs():
     #this takes the form data from the CS POS page and runs it through the API
     #returns the data as a json object
-    #method(request.form.get('major'), request.form.get('year_type'), request.form.get(coop), re)
-    return jsonify({'place': 'holder'})
+    data = scrapper.getPlanOfStudy(request.form.get('major'), request.form.get('year_type'), request.form.get(coop))
+    return jsonify({data})
 
 
 #test routes
@@ -62,12 +63,9 @@ def testfn2():
     if request.method == 'POST':
         print(request.mimetype)
         data = request.get_json()
-        print(request.get_json())
-        print(data.get('major'))
-        print(request.get_data().decode('utf-8'))
+        data = scrapper.getPlanOfStudy(NAME=data.get('major'),CONCENTRATION1= data.get('concentration1'), CONCENTRATION2= data.get('concentration2'),SPRINGSUMMERCOOP=data.get('coop'),SEQUENCELOCK=data.get('sequence'))
+        return jsonify(data)
 
-        return jsonify("it works")
-   
 
 
 

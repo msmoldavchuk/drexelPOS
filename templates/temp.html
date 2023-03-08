@@ -3,11 +3,66 @@
 
     <h1> This is a temp page</h1>
     <form action="{{ url_for('temp') }}" method="post" id="form">
-        <input type="checkbox" from="temp" name="name" >
-        <input type="text" from="temp" name="major">
-        <input type="submit" value="Submit">
-    </form>
+        <fieldset>
+            <legend>Select your major</legend>
+            <select name = "dropdown">
+                <option value = "CS" selected>Computer Science</option>
+             </select>
+        </fieldset>
+        <fieldset>
+            <legend>pick a the type of degree</legend>
+            <input type="radio" name="degree" value="4">4 year<br>
+            <input type="radio" name="degree" value="5">5 year<br>
+        </fieldset>
+        <fieldset>
+            <legend>pick a coop cycle</legend>
+            <input type="radio" name="coop" value="FW">Fall Winter<br>
+            <input type="radio" name="coop" value="SS">Spring Summer<br>
+        </fieldset>
+        <fieldset>
+            <legend>pick a science sequence</legend>
+            <input type="radio" name="sequence" value="PHYS">physics<br>
+            <input type="radio" name="sequence" value="CHEM">chemistry<br>
+            <input type="radio" name="sequence" value="BIO">biology<br>
+        </fieldset>
 
+        <fieldset>  
+            <legend>Pick 2 concentrations</legend>  
+            <input type="checkbox" name="Concentration" value="Algorithms and Theory" onclick="return ValidateConcentrationSelection();">Algorithms and Theory<br>  
+            <input type="checkbox" name="Concentration" value="Artificial Intelligence and Machine Learning" onclick="return ValidateConcentrationSelection();">Artificial Intelligence and Machine Learning<br>  
+            <input type="checkbox" name="Concentration" value="Computer Graphics, Vision, and Interaction" onclick="return ValidateConcentrationSelection();">Computer Graphics, Vision, and Interaction<br>  
+            <input type="checkbox" name="Concentration" value="Computer Security and Privacy" onclick="return ValidateConcentrationSelection();">Computer Security and Privacy<br>  
+            <input type="checkbox" name="Concentration" value="Computer Systems & Architecture" onclick="return ValidateConcentrationSelection();">Computer Systems & Architecture<br>  
+            <input type="checkbox" name="Concentration" value="Game Programming and Development" onclick="return ValidateConcentrationSelection();">Game Programming and Development<br>  
+            <input type="checkbox" name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br>  
+            <input type="checkbox" name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br>
+            <br>  
+            <input type="submit" value="Submit now">  
+        </fieldset>  
+    </form>  
+        
+        <script type="text/javascript">  
+        function ValidateConcentrationSelection()  
+        {  
+            var checkboxes = document.getElementsByName("Concentration");  
+            var numberOfCheckedItems = 0;  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                if(checkboxes[i].checked)  
+                    numberOfCheckedItems++;  
+            }  
+            if(numberOfCheckedItems > 2)  
+            {  
+                alert("You can't select more than two favorite pets!");  
+                return false;  
+            }  
+        }
+        function displaySubConcentrationList() {
+            var label= document.createElement("label");
+            var description = document.createTextNode("");
+            var checkbox = document.createElement("input");
+        }
+        </script>
     <p id="testing">
         This is where the data will be displayed
     </p>
@@ -15,11 +70,27 @@
     let data = document.getElementById("form");
     data.addEventListener("submit", function(e){
         e.preventDefault();
-        let name = data.elements.name.value;
-        let major = data.elements.major.value;
+        let year = data.elements.degree.value;
+        let major = data.elements.dropdown.value;
+        let concentrations = [];
+        let coop = data.elements.coop.value;
+        if (coop == "FW") {
+            coop = false;
+        } else {
+            coop = true;
+        }
+        for (let i = 0; i < data.elements.Concentration.length; i++) {
+            if (data.elements.Concentration[i].checked) {
+                concentrations.push(data.elements.Concentration[i].value);
+            }
+        }
         let form = {
-            name: name,
-            major: major
+            major: major,
+            coop : coop,
+            sequence : data.elements.sequence.value,
+            concentration1 : concentrations[0],
+            concentration2 : concentrations[1],
+            year : year
 
         };
 
@@ -33,8 +104,13 @@
         })
         .then(response => response.json())
     .then((data) => {
-        text = document.getElementById("testing");
-        text.innerHTML = data;
+        text = document.getElementById("testing"); 
+        console.log(data);
+        text.innerHTML = "";
+        for (let term in data) {
+            text.innerHTML += term + ": " + data[term] + "<br>";
+        }
+        
     })
         .catch(err => console.log(err))
 
