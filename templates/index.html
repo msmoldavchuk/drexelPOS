@@ -12,7 +12,7 @@
             <i class = "fa fa-times" onclick="hideMenu()"></i>
             <div style = "text-align:left;"><img src= "{{ url_for('static', filename='mainlogo.png') }}" class="logo"></div>
             <ul>
-                <!---href="{{ url_for('static', filename='style.css') }}">  -->
+                <link rel="stylesheet" href="{{ url_for ('style') }}">
                 <li class="active"><a href = "{{ url_for('index') }}">Home</a></li> 
                <li><a href=''>POS</a></li> 
                <li><a href=''>Plan</a></li>
