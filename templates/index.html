@@ -10,7 +10,7 @@
         <nav>
         <div class="nav-links" id = "navLinks">
             <i class = "fa fa-times" onclick="hideMenu()"></i>
-            <div style = "text-align:left;"><img src= "{{ url_for('mainlogo') }}" class="logo"></div>
+            <div style = "text-align:left;"><img src= "{{ url_for('static', filename='mainlogo.png') }}" class="logo"></div>
             <ul>
                 <!---href="{{ url_for('static', filename='style.css') }}">  -->
                 <li class="active"><a href = "{{ url_for('index') }}">Home</a></li> 

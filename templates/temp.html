@@ -58,9 +58,19 @@
             }  
         }
         function displaySubConcentrationList() {
-            var label= document.createElement("label");
-            var description = document.createTextNode("");
-            var checkbox = document.createElement("input");
+            let conetrations = document.getElementsByName("Concentration");
+            for( contration in conetrations){
+                if(contration.checked){
+                    var subConcentrationList = document.createElement("subConcentrationList",tag_name="label");
+                    subConcentrationList.setAttribute("id", "subConcentrationList");
+                    var coreCourseList = document.getElementById("coreCourseList");
+                    var otherCourseList = document.getElementById("otherCourseList");
+                }
+            }
+
+
+
+    
         }
         </script>
     <p id="testing">
