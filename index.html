@@ -3,11 +3,6 @@
 <head>
     <meta name="viewport"  content="with=device-width, initial-scale=1.0">
     <title> Drexel University's Plan of Study</title>
-        <!--css file link-->
-    <link rel="stylesheet" href="style.css">
-    <!--scrapping link-->
-<script type="text/Python" src="scrapper.py"></script>
-
 </head>
 <body>
 <!---header section starts right here-->
@@ -15,13 +10,14 @@
         <nav>
         <div class="nav-links" id = "navLinks">
             <i class = "fa fa-times" onclick="hideMenu()"></i>
-            <div style = "text-align:left;"><img src="mainlogo.png" class="logo"></div>
+            <div style = "text-align:left;"><img src= "{{ url_for('mainlogo') }}" class="logo"></div>
             <ul>
-               <li><a href=''>Home</a></li> 
+                <!---href="{{ url_for('static', filename='style.css') }}">  -->
+                <li class="active"><a href = "{{ url_for('index') }}">Home</a></li> 
                <li><a href=''>POS</a></li> 
                <li><a href=''>Plan</a></li>
                <li><a href=''>Degreework</a></li>
-               <li><a href=''>About us</a></li>   
+               <li class="active"><a href = "{{ url_for('about') }}">About Us</a></li>
             </ul>
         </div>
         <i class = "fa fa-times" onclick= "showMenu()"></i>
@@ -29,12 +25,13 @@
             <h1>POS. CAUSE PLANNING IS HARD</h1>
             <p>Transform Your Study Habits with the Power of Planning. We're Here to Help </p>
         <div>
-            <button type="button"><span></span>Michael named this</button>
-            <button type="button"><span></span>Second</button>
+            <a href="{{ url_for('temp') }}">
+                <button type="button"><span></span>Generate POS</button>
+            </a>
+            <button type="button"><span></span>Degree Requirements</button>
         </div>
         </nav>
      </section>
-
 <!---------POS------------>
 <section class="pos">
    <h1> What is POS?</h1>
