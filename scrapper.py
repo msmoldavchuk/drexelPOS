@@ -78,15 +78,21 @@ def process_course_html(html_course):
             break
         if child.text == "Restrictions:":
             temp = True
-
-
     # Create a course object w/ Course Id, Credits and UNFORMATED prereqstring
     # Adds course object to dictonatiy w/ the key value being the course id
     # i.e CS 172 maps to course object for CS 172 
-
     course_dictionary[cleanWIFormating(course_id.replace("\xa0", " "))] = c(cleanWIFormating(course_id.replace("\xa0", " ")), course_credits, prereqString, [False, False, False, False], restrictionString)
    
 
+def process_requiremnt_html():
+    
+    url = "https://catalog.drexel.edu/undergraduate/collegeofcomputingandinformatics/computerscience/#requirementsbstext"
+    url = requests.get(url).text
+    scrapper = BeautifulSoup(url, 'html.parser')
+    scrapperScraped = scrapper.find_all('ul')
+    #for sc in scrapperScraped:
+   #     print(sc.text)
+    return scrapperScraped[2].text
 
 def parseDegreeRequiremnts(degreename)->list:
     degreelinks = {
@@ -843,6 +849,8 @@ def availCalculator(df: pd.DataFrame, numberOfArray, quarter):
                 print(str(sMulti))
                 print(str(suMulti))
                 """
+            elif course_dictionary[df2.loc[i, "Courses"]].checkIfSequence():
+                df2.loc[i, "Value"] += 10
             else:
                 df2.loc[i, "Value"] = df2.loc[i, "Value"] - fMulti - wMulti - sMulti - suMulti + limiter
                 """
@@ -1003,7 +1011,23 @@ def checkIfPossible(degreeReq, filteredDataFrame):
             pass
     return True
 
-
+def displayPhantomConcentrations(degreeReq):
+    concDf = degreeReq.getConcentrationsTesting()
+    #displayDF(concDf)
+    for i in range(len(concDf.index)):
+        miniConcDf = concDf.loc[i,"Concentration"]
+        for j in range(len(miniConcDf.index)):
+            try:
+                course = course_dictionary[str(miniConcDf.loc[j,"Sequence"])]
+                courseAvail = course.getAvial()
+                tempBool = False
+                for avail in courseAvail:
+                    if avail:
+                        tempBool = True
+                if tempBool == False:
+                    print(str(course) + " Phantom")
+            except:
+                print("Key Error"+str(miniConcDf.loc[j,"Sequence"]))
 
 def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     if degreeReq.getDegreeCollege() == "CCI":
@@ -1190,7 +1214,7 @@ def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "CHEM", CONCENT
     #prereqDictionaryFill(concDf2)
     return degreeReq
 
-def testPlanOfStudy(posArray, filteredDataFrame, degreeReq):
+def testPlanOfStudy(posArray, filteredDataFrame, degreeReq:d):
     printPlanOfStudy(posArray)
     displayDF(filteredDataFrame)
     counter = 0
@@ -1200,8 +1224,9 @@ def testPlanOfStudy(posArray, filteredDataFrame, degreeReq):
             counter += 1
     print("Failed: " + str(counter))
     
-    degreeReq.displayDFMain()
-    displayDF(degreeReq.getElectives())
+    #degreeReq.displayDFMain()
+    #displayDF(degreeReq.getElectives())
+    
 
 def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]], NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     # -------SCRAPING----------
@@ -1231,7 +1256,23 @@ def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTR
     testPlanOfStudy(posArray, filteredDataFrame, degreeReq)
     return convertToDictionary(posArray)
    
+#--------------------------------------String Process-------------------------
+def electiveProcessing(unProcessedString: str):
+    print(unProcessedString)
+    if "electives" in unProcessedString:
+        postColonString = unProcessedString[unProcessedString.index("electives")+10:] 
+        if ":" in postColonString:
+            #print(postColonString)
+            postPreColonString = postColonString[:postColonString.index("electives")]  
+            #print(postPreColonString)           
+            electiveSlice = unProcessedString[:postPreColonString.rindex(" ")]
+            singularString(electiveSlice) #method call
+            remainderString = unProcessedString[:postPreColonString.rindex(" ")]            
+            return remainderString
     
-    
+def singularString(unprocessedString):
+    print(unprocessedString)
 #------------------------------- EVERYTHING BELLOW IS "Main"----------------------------------------------
-getPlanOfStudy()
+if __name__ == "__main__":
+    #electiveProcessing(process_requiremnt_html())
+    getPlanOfStudy()

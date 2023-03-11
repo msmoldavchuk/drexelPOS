@@ -150,6 +150,7 @@ class Course:
 
     def getMustAddBoolean(self):
         return self.mustAddBoolean
+    
     def checkIfSequence(self):
         if not self.seqCourse:
             return False
