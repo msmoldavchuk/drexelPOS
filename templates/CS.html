@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<title> Temp</title>
+<title> CS</title>
 
-    <h1> This is a temp page</h1>
+    <h1> Welcome to the CS POS page</h1>
     <form action="{{ url_for('temp') }}" method="post" id="form">
         <fieldset>
             <legend>Select your major</legend>
@@ -57,21 +57,7 @@
                 return false;  
             }  
         }
-        function displaySubConcentrationList() {
-            let conetrations = document.getElementsByName("Concentration");
-            for( contration in conetrations){
-                if(contration.checked){
-                    var subConcentrationList = document.createElement("subConcentrationList",tag_name="label");
-                    subConcentrationList.setAttribute("id", "subConcentrationList");
-                    var coreCourseList = document.getElementById("coreCourseList");
-                    var otherCourseList = document.getElementById("otherCourseList");
-                }
-            }
 
-
-
-    
-        }
         </script>
     <p id="testing">
         This is where the data will be displayed
@@ -104,7 +90,7 @@
 
         };
 
-        fetch('{{url_for("testfn2")}}', {
+        fetch('{{url_for("csPOS")}}', {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'

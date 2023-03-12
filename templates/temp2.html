@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<form action="{{ url_for('temp') }}" method="post" id="form">
+<fieldset>  
+    <legend>Pick 2 concentrations</legend>  
+    <input type="checkbox" name="Concentration" value="Algorithms and Theory" onclick="return ValidateConcentrationSelection();">Algorithms and Theory<br>  
+    <input type="checkbox" name="Concentration" value="Artificial Intelligence and Machine Learning" onclick="return ValidateConcentrationSelection();">Artificial Intelligence and Machine Learning<br>  
+    <input type="checkbox" name="Concentration" value="Computer Graphics, Vision, and Interaction" onclick="return ValidateConcentrationSelection();">Computer Graphics, Vision, and Interaction<br>  
+    <input type="checkbox" name="Concentration" value="Computer Security and Privacy" onclick="return ValidateConcentrationSelection();">Computer Security and Privacy<br>  
+    <input type="checkbox" name="Concentration" value="Computer Systems & Architecture" onclick="return ValidateConcentrationSelection();">Computer Systems & Architecture<br>  
+    <input type="checkbox" name="Concentration" value="Game Programming and Development" onclick="return ValidateConcentrationSelection();">Game Programming and Development<br>  
+    <input type="checkbox" name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br>  
+    <input type="checkbox" name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br>
+    <br>  
+    <fieldset>
+        <div name="coreList1" id="coreList" value="none"></div>
+        <div name="coreList2" id="coreList" value="none"></div>
+    </fieldset>
+    <input type="submit" value="Submit now">  
+</fieldset>  
+</form>  
+
+<script type="text/javascript">  
+function ValidateConcentrationSelection()  
+{  
+    var checkboxes = document.getElementsByName("Concentration");  
+    var numberOfCheckedItems = 0;  
+    for(var i = 0; i < checkboxes.length; i++)  
+    {  
+        if(checkboxes[i].checked)  
+            numberOfCheckedItems++;  
+    }  
+    if(numberOfCheckedItems > 2)  
+    {  
+        alert("You can't select more than two favorite pets!");  
+        return false;  
+    }  
+    else{
+        addCoreList();
+    }
+
+}
+function addCoreList()
+{
+    contentration = document.getElementsByName("Concentration");
+    for (let i = 0; i < contentration.length; i++) {
+        if (contentration[i].checked) {
+            
+            if (contentration[i].value == "Algorithms and Theory") {
+
+                let corelist = []
+                corelist.append('<input type="checkbox" name="CS 440" value="CS 440">Theory of Computation<br>')
+                corelist.append('<input type="checkbox" name="CS 457" value="CS 457">Data Structures and Algorithms I<br>')
+                if (document.getElementById("coreList1").value == "none") {
+                    document.getElementById("coreList1").innerHTML = corelist[0]
+                    document.getElementById("coreList2").innerHTML = corelist[1]
+                }
+                else if (document.getElementById("coreList2").value == "none") {
+                    document.getElementById("coreList2").innerHTML = corelist[0]
+                    document.getElementById("coreList3").innerHTML = corelist[1]
+                }
+
+            }
+            else if (contentration[i].value == "Artificial Intelligence and Machine Learning") {
+                
+            }
+            else if (contentration[i].value == "Computer Graphics, Vision, and Interaction") {
+                
+            }
+            else if (contentration[i].value == "Computer Security and Privacy") {
+                
+            }
+            else if (contentration[i].value == "Computer Systems & Architecture") {
+                
+            }
+            else if (contentration[i].value == "Game Programming and Development") {
+                
+            }
+            else if (contentration[i].value == "Programming Languages and Systems") {
+                
+            }
+            else if (contentration[i].value == "Software Engineering") {
+                
+            }
+
+        }
+    }
+}
+</script>

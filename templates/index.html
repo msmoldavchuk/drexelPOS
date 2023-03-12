@@ -12,7 +12,7 @@
             <i class = "fa fa-times" onclick="hideMenu()"></i>
             <div style = "text-align:left;"><img src= "{{ url_for('static', filename='mainlogo.png') }}" class="logo"></div>
             <ul>
-                <link rel="stylesheet" href="{{ url_for ('style') }}">
+                <link rel="stylesheet" href="{{ url_for ('static' ,filename='style.css') }}">
                 <li class="active"><a href = "{{ url_for('index') }}">Home</a></li> 
                <li><a href=''>POS</a></li> 
                <li><a href=''>Plan</a></li>
@@ -25,7 +25,7 @@
             <h1>POS. CAUSE PLANNING IS HARD</h1>
             <p>Transform Your Study Habits with the Power of Planning. We're Here to Help </p>
         <div>
-            <a href="{{ url_for('temp') }}">
+            <a href="{{ url_for('CS') }}">
                 <button type="button"><span></span>Generate POS</button>
             </a>
             <button type="button"><span></span>Degree Requirements</button>
