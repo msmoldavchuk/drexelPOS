@@ -202,6 +202,8 @@ class Degree():
         tempDataFrame = pd.concat([self.degreeFrame, self.concentrationsDF],axis = 1)
         return tempDataFrame
 
+    def getConcentrationsTesting(self):
+        return self.concentrationsDF
     def getElectives(self):
         electiveDataFrame = pd.DataFrame({"Sequence": [], "Credits": [],"Type": [], "Flag":[], "Taken": []})
         for i in range(len(self.degreeFrame.index)):
