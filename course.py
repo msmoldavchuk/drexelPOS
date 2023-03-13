@@ -12,8 +12,7 @@ class Course:
             self.credits = credits
             self.prereqString = prereqString
 
-            #self.avialabilityArray = [False, False, False, False]
-            
+            #self.avialabilityArray = [False, False, False, False] 
             self.avialabilityArray = avialabilityArray
 
             self.restrictionArray = []
@@ -125,8 +124,14 @@ class Course:
         return self.avialabilityArray[2]
 
     def getSummerAvail(self)->bool:
-        return self.avialabilityArray[3]  
-        
+        return self.avialabilityArray[3] 
+
+    def getAvial(self):
+        return self.avialabilityArray 
+    
+    def getMustAddBoolean(self):
+        return self.mustAddBoolean
+    
      # setter for courseName
     def setCourseName(self, courseName):
         self.courseName = courseName
@@ -138,18 +143,17 @@ class Course:
     def setAndBoolean(self, paramater):
         self.andBoolean = paramater
 
-    def getAvial(self):
-        return self.avialabilityArray
+    def setMustAddBoolean(self, bool):
+        self.mustAddBoolean = bool
+
+    
 
     def createSequence(self, course):
         #print(self.getCourseName() + " then " + course.getCourseName())
         self.seqCourse.append(course)
     
-    def setMustAddBoolean(self, bool):
-        self.mustAddBoolean = bool
-
-    def getMustAddBoolean(self):
-        return self.mustAddBoolean
+ 
+    
     
     def checkIfSequence(self):
         if not self.seqCourse:
