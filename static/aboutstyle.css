@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container {
+    text-align: center;
+    background-image: linear-gradient(#eeeeee, #d3d0c9 );
+
+}
+
+.row {
+    padding-top: 30px;
+    color: #444;
+    font-size: 20px;
+    margin: auto;
+    line-height: 50px;
+}
+
+.sub-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.team1 {
+    margin: 10px;
+    padding: 22px;
+    max-width: 30%;
+    cursor: pointer;
+    transition: 0.4s;
+    box-sizing: border-box;
+}
+.team2 {
+    margin: 10px;
+    padding: 22px;
+    max-width: 30%;
+    cursor: pointer;
+    transition: 0.4s;
+    box-sizing: border-box;
+}
+
+.team3 {
+    margin: 10px;
+    padding: 22px;
+    max-width: 30%;
+    cursor: pointer;
+    transition: 0.4s;
+    box-sizing: border-box;
+}
+
+.team4 {
+    margin: 10px;
+    padding: 22px;
+    max-width: 30%;
+    cursor: pointer;
+    transition: 0.4s;
+    box-sizing: border-box;
+}
+
+.team1:hover {
+    background: #ece8db;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px #746537;
+}
+
+.team2:hover {
+    background: #aebcc4;
+    border-radius: 12px;
+}
+
+.team3:hover {
+    background: #d3cbc7;
+    border-radius: 12px;
+}
+
+.team4:hover {
+    background: #c1ccca;
+    border-radius: 12px;
+}
+.team1 img {
+    width: 180px;
+    height: 200px;
+}
+.team2 img {
+    width: 180px;
+    height: 200px;
+}
+.team3 img {
+    width: 180px;
+    height: 200px;
+}
+.team4 img {
+    width: 180px;
+    height: 200px;
+}
+.name {
+    padding: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.title {
+    font-style: italic;
+    color: #888;
+}
+
+.bio {
+    margin: 20px 0;
+    font-weight: lighter;
+    color: #4e4e4e;
+}
