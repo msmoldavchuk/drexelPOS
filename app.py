@@ -28,7 +28,11 @@ def csPOS():
     if request.method == 'POST':
         print(request.mimetype)
         data = request.get_json()
-        data = scrapper.getPlanOfStudy(NAME=data.get('major'),CONCENTRATION1= data.get('concentration1'), CONCENTRATION2= data.get('concentration2'),SPRINGSUMMERCOOP=data.get('coop'),SEQUENCELOCK=data.get('sequence'))
+        hardCodeDictoanary = {"Algorithms and Theory":["CS 457","MATH 300","MATH 305"],"Artificial Intelligence and Machine Learning":["DSCI 351","CS 383","CS 380"],"Computer Systems & Architecture":["CS 314","CS 361","CS 370"],"Software Engineering":["CS 375","SE 320","SE 410"]}
+        conc1 = data.get('concentration1')
+        conc2 = data.get('concentration2')
+        concentrationArray = [[conc1, hardCodeDictoanary.get(conc1)], [conc2, hardCodeDictoanary.get(conc2)]]
+        data = scrapper.getPlanOfStudy(NAME=data.get('major'),SPRINGSUMMERCOOP=data.get('coop'),SEQUENCELOCK=data.get('sequence'), CONCENTRATIONARRAY=concentrationArray)
         return jsonify(data)
 
    

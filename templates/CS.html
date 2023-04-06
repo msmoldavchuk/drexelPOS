@@ -2,7 +2,7 @@
 <title> CS</title>
 
     <h1> Welcome to the CS POS page</h1>
-    <form action="{{ url_for('temp') }}" method="post" id="form">
+    <form action="{{ url_for('csPOS') }}" method="post" id="form">
         <fieldset>
             <legend>Select your major</legend>
             <select name = "dropdown">
@@ -53,14 +53,21 @@
             }  
             if(numberOfCheckedItems > 2)  
             {  
-                alert("You can't select more than two favorite pets!");  
+                alert("You can't select more than two concentrations!");  
                 return false;  
             }  
         }
 
         </script>
     <p id="testing">
-        This is where the data will be displayed
+        This is where the data will be displayed\
+    <table id="pos">
+        <tr>
+            <th>Quater</th>
+            <th>Courses</th>
+
+        </tr>
+
     </p>
    <Script>
     let data = document.getElementById("form");
@@ -103,13 +110,35 @@
         text = document.getElementById("testing"); 
         console.log(data);
         text.innerHTML = "";
+        let table = document.getElementById("pos");
+        while(table.rows.length > 0) {
+            table.deleteRow(0);
+        }           
+        console.log(table);
         for (let term in data) {
-            text.innerHTML += term + ": " + data[term] + "<br>";
+            temp = term
+            if (temp.endsWith("15")) {
+                temp = temp.slice(0, -2) + " Fall";
+            } else if (temp.endsWith("25")) {
+                temp = temp.slice(0, -2) + " Winter";
+            } else if (temp.endsWith("35")) {
+                temp = temp.slice(0, -2) + " Spring";
+            } else if (temp.endsWith("45")) {
+                temp = temp.slice(0, -2) + " Summer";
+            }
+            text.innerHTML += term + ": " + data[term].join(" | ") + "<br>";
+
+            let row = document.createElement("tr");
+            let col1 = document.createElement("td");
+            let col2 = document.createElement("td");
+            col1.innerHTML = temp;
+            col2.innerHTML = data[term].join(" | ");
+            row.appendChild(col1);
+            row.appendChild(col2);
+            table.appendChild(row);
         }
         
-    })
-        .catch(err => console.log(err))
-
+    }).catch(err => console.log(err))
         console.log(name);
         console.log(major);
     })

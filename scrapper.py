@@ -843,7 +843,7 @@ def convertToDictionary(posArray):
             year+=1
             dictonary.update({(str(year) + str(15)):  quarter})       
         counter+= 1
-        return dictonary
+    return dictonary
     
 # gets a special dataframe
 # makes a copy to avoid refrence issues
@@ -890,7 +890,10 @@ def availCalculator(df: pd.DataFrame, numberOfArray, quarter):
                 else:
                     limiter += .5
             """
-            if (fMulti + wMulti + sMulti + suMulti) + limiter > df.loc[i, "Value"]:
+            if course_dictionary[df2.loc[i, "Courses"]].checkIfSequence():
+                print("flag")
+                df2.loc[i, "Value"] = 100
+            elif (fMulti + wMulti + sMulti + suMulti) + limiter > df.loc[i, "Value"]:
                 df2.loc[i, "Value"] = .00000000001
                 
                 """
@@ -902,8 +905,7 @@ def availCalculator(df: pd.DataFrame, numberOfArray, quarter):
                 print(str(sMulti))
                 print(str(suMulti))
                 """
-            elif course_dictionary[df2.loc[i, "Courses"]].checkIfSequence():
-                df2.loc[i, "Value"] += 10
+            
             else:
                 df2.loc[i, "Value"] = df2.loc[i, "Value"] - fMulti - wMulti - sMulti - suMulti + limiter
                 """
@@ -1142,15 +1144,15 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
         finalYear = False
       
         # templines
-        numTermsPremade = 3
-        predetiermendCourses2 = ["MATH 201", "ENGL 102", "CI 102", "PHYS 101", "CIVC 101", "CS 172", "CS 171"]
-        predetiermendCourses3 = ["MATH 122", "ENGL 103", "CI 103", "CS 265","SE 181","CS 270", "UNIV CI101", "COOP 101"]
+        numTermsPremade = 1
+        #predetiermendCourses2 = ["MATH 201", "ENGL 102", "CI 102", "PHYS 101", "CIVC 101", "CS 172", "CS 171"]
+        #predetiermendCourses3 = ["MATH 122", "ENGL 103", "CI 103", "CS 265","SE 181","CS 270", "UNIV CI101", "COOP 101"]
         # -------- pre decided terms -----------------
         firstTermPremade = True
         predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
         #predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
 
-        predetiermendCourseArray = [predetiermendCourses, predetiermendCourses2, predetiermendCourses3]
+        predetiermendCourseArray = [predetiermendCourses]
 
         credits = 0.0
         for i in range(numTermsPremade):
@@ -1372,4 +1374,4 @@ def singularString(unprocessedString):
 #------------------------------- EVERYTHING BELLOW IS "Main"----------------------------------------------
 if __name__ == "__main__":
     electiveProcessing(process_requiremnt_html())
-    #getPlanOfStudy()
+    getPlanOfStudy(SPRINGSUMMERCOOP=False)
