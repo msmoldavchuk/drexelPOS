@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<title> CS</title>
+<title> Computer Science Major</title>
 
     <h1> Welcome to the CS POS page</h1>
     <form action="{{ url_for('csPOS') }}" method="post" id="form">
         <fieldset>
-            <legend>Select your major</legend>
+            <legend>Select Your Major </legend>
             <select name = "dropdown">
                 <option value = "CS" selected>Computer Science</option>
              </select>
         </fieldset>
         <fieldset>
-            <legend>pick a the type of degree</legend>
-            <input type="radio" name="degree" value="4">4 year<br>
-            <input type="radio" name="degree" value="5">5 year<br>
+            <legend>Please Select The Type Of Degree</legend>
+            <input type="radio" name="degree" value="4">4 Year<br>
+            <input type="radio" name="degree" value="5">5 Year<br>
         </fieldset>
         <fieldset>
-            <legend>pick a coop cycle</legend>
+            <legend>Please Select Co-op Cycle</legend>
             <input type="radio" name="coop" value="FW">Fall Winter<br>
             <input type="radio" name="coop" value="SS">Spring Summer<br>
         </fieldset>
         <fieldset>
-            <legend>pick a science sequence</legend>
-            <input type="radio" name="sequence" value="PHYS">physics<br>
-            <input type="radio" name="sequence" value="CHEM">chemistry<br>
-            <input type="radio" name="sequence" value="BIO">biology<br>
+            <legend>Please Select A Science Sequence</legend>
+            <input type="radio" name="sequence" value="PHYS">Physics<br>
+            <input type="radio" name="sequence" value="CHEM">Chemistry<br>
+            <input type="radio" name="sequence" value="BIO">Biology<br>
         </fieldset>
 
         <fieldset>  
@@ -144,3 +144,55 @@
     })
    </Script>
 
+
+
+<style>
+    .CSmajor{
+      margin: 10px 0;
+      padding: 10px;
+      
+    }
+    /* styles for legends */
+    legend {
+      font-weight: bold;
+      color: #292c3b;
+      font-size: 1.2em;
+    }
+    
+    /* styles for select and radio inputs */
+    select, input[type="radio"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for checkboxes */
+    input[type="checkbox"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for submit button */
+    input[type="submit"] {
+      background-color: #99a6cc;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    /* styles for the form */
+    #form {
+      background-color: #e5e4e5;
+      padding: 20px;
+      border-radius: 5px;
+      width: 500px;
+      margin: auto;
+    }
+    
+    /* styles for the fieldset borders based on selection */
+    fieldset:focus-within {
+      border: 1px solid #bfbab5;
+    }
+
+</style>
