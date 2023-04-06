@@ -348,10 +348,16 @@ def parseThroughClasses(dfList)-> d:
                 seqFlag = True  # if yes change modes
         else: #step 4 sequence procedure activated 
             if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
-                coursesParsed.append(courses[i])
-                creditsParsed.append(credits[i])
-                flagParsed.append(0)
-                descriptionsParsed.append(descriptorRequired)
+                if flagParsed[-1] == 3:
+                    ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
+                    coursesParsed[len(coursesParsed)-1] = ns
+                    descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                    flagParsed[len(flagParsed)-1] = 3
+                else:
+                    coursesParsed.append(courses[i])
+                    creditsParsed.append(credits[i])
+                    flagParsed.append(3)
+                    descriptionsParsed.append(descriptorRequired)
             elif courses[i][0:2].lower() == "or": #step 6 look for or keyword *different than prior
                 #Sequence ors get their own line
                 i += 1 #skip current line and go to next one
