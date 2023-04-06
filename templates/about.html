@@ -1,71 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta name="viewport"  content="with=device-width, initial-scale=1.0">
-    <title> About Us</title>
-    <!--css file link-->
-    <link rel="stylesheet" href="aboutstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aboutstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+
+    <title> Our Team </title>
 </head>
+
 <body>
+    <div class="container">
+        <div class="row">
+            <h1>Our Team</h1>
+        </div>
+        <div class="sub-container">
+            <div class="team1">      
+        <img src="{{ url_for('static', filename='Masonprofile.png') }}" height="150px" width="100px" >
+        <div class="name">Mason McClintic </div>
+        <div class="title">Back-end Developer</div>
+        <div class='bio'> Mason McClintic is a first year Computer Science student at Drexel University. His current focus is on web scrapping and website backend intergration</div>
+      </div>
 
-<!---------POS- an quick introduction---------->
-<section class="about">
-   <h1> Who are we?</h1>
-   <p> 
-     </p>
-   <div class="row">
+            <div class="team2">
+                <img src="{{ url_for('static', filename='Michaelprofile.jpg') }}" height="150px" width="100px" >
+                <div class="name">Michael Moldavchuk </div>
+                <div class="title">Back-end Developer</div>
+                <div class='bio'> Michael Moldavchuk is a first year Data Science student at Drexel University.  His current focus is on cleaning data and implemanting data into algorithms</div>
+        </div>            
 
-    <div class="mason-col">
-        <h3>Mason McClintic</h3>
-        <img src = "profile1.PNG" alt="mem1" style="width: 50%">
-        <p class="title">Back-end Developer</p>
-        <p>Mason McClintic is a first year Computer Science student at Drexel University. 
-        His current focus is on web scrapping and website backend intergration.
-        </p>
+            
+            <div class="team3">
+                <img src="{{ url_for('static', filename='sania.jpg') }}" height="150px" width="100px" >
+                <div class="name">Sania Mirza</div>
+                <div class="title">Front-end Developer</div>
+                <div class='bio'> Sania Mirza is a first-year software engineering student at Drexel University. Her current focus is on web development and software development </div>
+        </div>
+
+            <div class="team4">
+                <img src="{{ url_for('static', filename='ashley.jpg') }}" height="150px" width="100px" >
+                <div class="name">Ashley Phan</div>
+                <div class="title">UI/UX designer</div>
+                <div class='bio'> Ashley Phan is a first-year software engineering student at Drexel University. Her current focus on the front-end development which allow her to combine creativity and technical skills to build user-friendly, and visually appealing websites and applications.</div>
+        </div>
+
+            </div>
+        </div>
     </div>
-
-    <div class="michael-col">
-        <h3>Michael Moldavchuk </h3>
-        <img src = "Michaelprofile.jpeg" alt="mem1" style="width: 50%">
-        <p class="title">Back-end Developer</p>
-        <p>Michael Moldavchuk is a first year Data Science student at Drexel University. 
-        His current focus is on cleaning data and implemanting data into algorithms.
-        </p>
-    </div>
-
-    <div class="sania-col">
-        <h3>Sania Mirza</h3>
-        <p class="title">Front-end Developer</p>
-        <p>Sania Mirza is a first-year software engineering student at Drexel University.
-        Her current focus is on web development and software development </p>
-    </div>
-    
-    <div class="ashley-col">
-        <h3>Ashley Phan</h3>
-        <p class="title">Front-end Developer</p>
-        <p>Ashley Phan is a first-year software engineering student at Drexel University. 
-            Her current focus on the front-end development which allow her to combine creativity 
-            and technical skills to build user-friendly, and visually appealing websites and applications. 
-        </p>
-    </div>
-
-   </div>
-</section >
-
-
-
-<!--Javascript for the menu-->
-<script>
-    var navlinks = document.getElementById("navlinks");
-    function showMenu(){
-        navlinks.style.right = "0";
-    }
-    function hideMenu(){
-        navlinks.style.right  = "-200px";
-    }
-
-
-</script>
-
+</div>
 </body>
+
 </html>
