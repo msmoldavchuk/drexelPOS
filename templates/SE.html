@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<title> Software Engineering Major</title>
+
+
+    <form action="{{ url_for('temp') }}" method="post" id="form">
+        <div class="SEmajor">
+        <fieldset>
+           
+           <legend>Select Your Major  </legend>  
+            <select class = "dropdown">
+                <option value = "CS" selected> Software Engineering </option>
+             </select>
+        </fieldset>
+        <fieldset>
+            
+            <legend>Please Select The Type Of Degree </legend>
+            <input type="radio" name="degree" value="4">4 Year<br>
+            <input type="radio" name="degree" value="5">5 Year<br>
+        </fieldset>
+        <fieldset>
+            
+            <legend>Please Select Co-op Cycle </legend>
+            <input type="radio" name="coop" value="FW">Fall - Winter<br>
+            <input type="radio" name="coop" value="SS">Spring - Summer<br>
+        </fieldset>
+        <fieldset>
+            
+            <legend>Please Select A Science Sequence </legend>
+            <input type="radio" name="sequence" value="PHYS">Physics<br>
+            <input type="radio" name="sequence" value="CHEM">Chemistry<br>
+            <input type="radio" name="sequence" value="BIO">Biology<br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Please Select Two Of The Following </legend>  
+            <input type="checkbox" name="Business" value="ACCT 110" onclick="return ValidateBusinessSelection();">ACCT 110 - Accounting for Professionals <br>  
+            <input type="checkbox" name="Business" value="ECON 201" onclick="return ValidateBusinessSelection();">ECON 201 - Principles of Microeconomics	<br>  
+            <input type="checkbox" name="Business" value="ECON 202" onclick="return ValidateBusinessSelection();">ECON 202 - Principles of Macroeconomics	<br> 
+            <br>  
+            <input type="submit" value="Submit now">  
+    </div>
+    </form> 
+
+        
+        <script type="text/javascript">  
+        function ValidateBusinessSelection()  
+        {  
+            var checkboxes = document.getElementsByName("Business");  
+            var numberOfCheckedItems = 0;  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                if(checkboxes[i].checked)  
+                    numberOfCheckedItems++;  
+            }  
+            if(numberOfCheckedItems > 2)  
+            {  
+                alert("You can't select more than two business requirements!");  
+                return false;  
+            }  
+        }
+        function displaySubBusinessList() {
+            var label= document.createElement("label");
+            var description = document.createTextNode("");
+            var checkbox = document.createElement("input");
+        }
+        </script>
+    <p id="testing">
+        This is where the data will be displayed
+    </p>
+   <Script>
+    let data = document.getElementById("form");
+    data.addEventListener("submit", function(e){
+        e.preventDefault();
+        let year = data.elements.degree.value;
+        let major = data.elements.dropdown.value;
+        let business = [];
+        let coop = data.elements.coop.value;
+        if (coop == "FW") {
+            coop = false;
+        } else {
+            coop = true;
+        }
+        for (let i = 0; i < data.elements.Business.length; i++) {
+            if (data.elements.Business[i].checked) {
+                business.push(data.elements.Business[i].value);
+            }
+        }
+        let form = {
+            major: major,
+            coop : coop,
+            sequence : data.elements.sequence.value,
+            business1 : business[0],
+            business2 : business[1],
+            year : year
+
+        };
+
+        fetch('{{url_for("testfn2")}}', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+    .then((data) => {
+        text = document.getElementById("testing"); 
+        console.log(data);
+        text.innerHTML = "";
+        for (let term in data) {
+            text.innerHTML += term + ": " + data[term] + "<br>";
+        }
+        
+    })
+        .catch(err => console.log(err))
+
+        console.log(name);
+        console.log(major);
+    })
+   </Script>
+
+
+<style>
+    .SEmajor{
+      margin: 10px 0;
+      padding: 10px;
+      
+    }
+    /* styles for legends */
+    legend {
+      font-weight: bold;
+      color: #292c3b;
+      font-size: 1.2em;
+    }
+    
+    /* styles for select and radio inputs */
+    select, input[type="radio"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for checkboxes */
+    input[type="checkbox"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for submit button */
+    input[type="submit"] {
+      background-color: #99a6cc;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    /* styles for the form */
+    #form {
+      background-color: #e5e4e5;
+      padding: 20px;
+      border-radius: 5px;
+      width: 500px;
+      margin: auto;
+    }
+    
+    /* styles for the fieldset borders based on selection */
+    fieldset:focus-within {
+      border: 1px solid #bfbab5;
+    }
+
+</style>
