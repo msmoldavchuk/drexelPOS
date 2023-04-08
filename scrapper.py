@@ -15,6 +15,7 @@ import time
 import random # test line
 import csv 
 from ast import literal_eval
+import re
 # DATA CHANGES
 # MODIFY PHYS 101 SINCE DREXEL PREREQS ARE WRONG
 # MODIFY CI 492 and 493 aviability they are wrong
@@ -39,6 +40,20 @@ course_dictionary = {}
 course_int_dictionary = {}
 # i mean might as well make more globals
 filtered_prerequiste_ditctionary = {}
+
+keyword_descriptor = {
+        "Computer" : "CS",
+        "Data Science": "DS", 
+        "Software": "SE", 
+        "Computing": "CI", 
+        "Information": "IS", 
+        "Science": "SCI", 
+        "Mathematics":"MTH",
+        "Humanities": "HUM", 
+        "University": "Unv", 
+        "Statistics": "Stat",
+        "Programing": "Prg"
+    }
 
 #creditsInWrongPlaceBoolean = False
 LOC = ["Arts and Sciences","Bennett S. LeBow Coll. of Bus.","Center for Civic Engagement","Close Sch of Entrepreneurship","Col of Computing & Informatics","College of Engineering","Dornsife Sch of Public Health","Goodwin Coll of Prof Studies","Graduate College", "Miscellaneous","Nursing & Health Professions","Pennoni Honors College","Sch.of Biomed Engr,Sci & Hlth","School of Education","Thomas R. Kline School of Law"]
@@ -273,6 +288,9 @@ def parseThroughClasses(dfList)-> d:
     descriptionsParsed = []
     flagParsed = [] # 0 = no problem, 1 = elective, 2 = mandatory
 
+
+    electiveReqsDictonary = {}
+
     # support vars for looping
     seqFlag = False
     selectFlag = False
@@ -294,7 +312,28 @@ def parseThroughClasses(dfList)-> d:
         if checkForNoCredits(credits[i]) and i >= 1:   #step 2 check if the credits exist if not then get previous
             credits[i] = credits[i-inc]
         #courses[i] = cleanBrackets(courses[i])
-        if not seqFlag: # step 3 check if sequence mode
+
+        if selectFlag == True:
+            if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"))): #step 5 look for courses
+                if flagParsed[-1] == 6:
+                    ns = str(coursesParsed[len(coursesParsed)-1]) + " | " + str(courses[i])         #take previous parsed and add to the new line    
+                    coursesParsed[len(coursesParsed)-1] = ns
+                    descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                    flagParsed[len(flagParsed)-1] = 6
+                elif flagParsed[-1] == 1:
+                    coursesParsed[-1] = courses[1]
+                    creditsParsed[-1] = credits[i]
+                    flagParsed[-1] = 6
+                    descriptionsParsed[-1] = descriptorRequired
+                else:
+                    coursesParsed.append(courses[i])
+                    creditsParsed.append(credits[i])
+                    flagParsed.append(6) # 6 = sel flag
+                    descriptionsParsed.append(descriptorRequired)
+            else:
+                selectFlag = False
+
+        if not seqFlag and not selectFlag and not choseFlag: # step 3 check if sequence mode
             # NOT A SEQUENCE
 
             if courses[i][0:2] == "or": # step 4 check if the course contains or
@@ -321,7 +360,27 @@ def parseThroughClasses(dfList)-> d:
                     creditsParsed.append(credits[i])
                     descriptionsParsed.append(descriptorRequired)
                     flagParsed.append(0)
-            elif has_identifier(courses[i], "elective"): #step 6 check if the course has elective in it
+            elif "concentration" in courses[i]:
+                concBoolean = True
+                concCredits = credits[i]
+                concDF = getConcentration(dfList)
+            elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
+                seqFlag = True  # if yes change modes
+            elif "select" in courses[i] or "Select" in courses[i]:
+                listExpression = re.findall("[A-Z][A-Z][A-Z][A-Z],|[A-Z][A-Z][A-Z],|[A-Z][A-Z],|[A-Z][A-Z][A-Z][A-Z]\)|[A-Z][A-Z][A-Z]\)|[A-Z][A-Z]\)|[A-Z][A-Z][A-Z][A-Z]\.|[A-Z][A-Z][A-Z]\.|[A-Z][A-Z]\.", courses[i])
+                # SPECIAL CASE where an elective functions as a select
+                if listExpression:
+                    for j in range(len(listExpression)):
+                        listExpression[j] = listExpression[j][0:len(listExpression[j])-1]
+                    electiveReqsDictonary[descriptorRequired] = listExpression
+                    if flagParsed[-1] != 1:
+                        coursesParsed.append("elective")
+                        creditsParsed.append(credits[i])
+                        descriptionsParsed.append(reverseKeyWordSearcher(descriptorRequired))
+                        flagParsed.append(1)
+                else:
+                    selectFlag = True
+            elif has_identifier(courses[i], "elective") or has_identifier(courses[i], "Elective"): #step 6 check if the course has elective in it
                     flagParsed.append(1) #elective flag
                     if(has_identifier(courses[i], "Free")): #free electives = end of program
                         coursesParsed.append("Elective")
@@ -334,19 +393,15 @@ def parseThroughClasses(dfList)-> d:
                         descriptionsParsed.append("Special")
 
                     else: #not free elective then continue
-
-                        specialString = courses[i][:courses[i].find("elective")-1]
+                        if has_identifier(courses[i], "elective"):
+                            specialString = courses[i][:courses[i].find("elective")-1]
+                        else:
+                            specialString = courses[i][:courses[i].find("Elective")-1]
 
                         coursesParsed.append("Elective") 
                         creditsParsed.append(credits[i])
                         descriptionsParsed.append(specialString)
-            elif "concentration" in courses[i]:
-                concBoolean = True
-                concCredits = credits[i]
-                concDF = getConcentration(dfList)
-            elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
-                seqFlag = True  # if yes change modes
-        else: #step 4 sequence procedure activated 
+        elif seqFlag == True: #step 4 sequence procedure activated 
             if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
                 if flagParsed[-1] == 3:
                     ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
@@ -385,6 +440,8 @@ def parseThroughClasses(dfList)-> d:
             else:
                 inc = 1
                 seqFlag = False #emergancy way to end sequence
+       
+
     # final step
 
     
@@ -440,20 +497,6 @@ def checkForNoCredits(credit):
 def keyWordSearcher(course, initialDescription):
     descriptor = initialDescription
 
-    keyword_descriptor = {
-        "Computer" : "CS",
-        "Data": "DS", 
-        "Software": "SE", 
-        "Computing": "CI", 
-        "Information": "IS", 
-        "Science": "SCI", 
-        "Mathematics":"MTH",
-        "Humanities": "HUM", 
-        "University": "Unv", 
-        "Statistics": "Stat",
-        "Programing": "Prg"
-    }
-
     if "Requirements" in course:
         for keyword in keyword_descriptor.keys():
             if keyword in course:
@@ -462,6 +505,15 @@ def keyWordSearcher(course, initialDescription):
                 
     return descriptor
 
+def reverseKeyWordSearcher(descriptor):
+    keyword_descriptor_reverse = reverseDict(keyword_descriptor)
+    return keyword_descriptor_reverse[descriptor]
+
+def reverseDict(dict:dict):
+    dict2 = {}
+    for i in range(len(dict)):
+        dict2[list(dict.values())[i]] = list(dict.keys())[i]
+    return dict2
 #-----------------------------------------------------------------------------------------------------
 
 # sent a course object
@@ -897,7 +949,7 @@ def availCalculator(df: pd.DataFrame, numberOfArray, quarter):
                     limiter += .5
             """
             if course_dictionary[df2.loc[i, "Courses"]].checkIfSequence():
-                print("flag")
+                #print("flag")
                 df2.loc[i, "Value"] = 100
             elif (fMulti + wMulti + sMulti + suMulti) + limiter > df.loc[i, "Value"]:
                 df2.loc[i, "Value"] = .00000000001
@@ -1155,8 +1207,8 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
         #predetiermendCourses3 = ["MATH 122", "ENGL 103", "CI 103", "CS 265","SE 181","CS 270", "UNIV CI101", "COOP 101"]
         # -------- pre decided terms -----------------
         firstTermPremade = True
-        predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
-        #predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        #predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
 
         predetiermendCourseArray = [predetiermendCourses]
 
@@ -1292,12 +1344,13 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
 # Array of Concentrations format:
 #    [ ["Name", [Course 1, Course2]], [Conecentration]]
 #Returns the degree object
-def getCustomDegree(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "CHEM", CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]]):
+# TEMP CHANGE SE
+def getCustomDegree(NAME = "SE", COLLEGE = "CCI", SEQUENCES = ["CHEM"], CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]]):
     list_degree_frame = parseDegreeRequiremnts(NAME)
     degreeReq = parseThroughClasses(list_degree_frame)
     degreeReq.setDegreeName(NAME)
     degreeReq.setDegreeCollege(COLLEGE)
-    degreeReq.selectScienceSequence(SEQUENCELOCK, course_dictionary)
+    degreeReq.userChooseCourse(SEQUENCES, course_dictionary)
     #prereqDictionaryFill(degreeReq.getDegree())
     #concentration lines
     
@@ -1319,6 +1372,7 @@ def testPlanOfStudy(posArray, filteredDataFrame, degreeReq:d):
             counter += 1
     print("Failed: " + str(counter))
     
+    print(degreeReq)
     #degreeReq.displayDFMain()
     #displayDF(degreeReq.getElectives())
     
@@ -1333,7 +1387,8 @@ def testPlanOfStudy(posArray, filteredDataFrame, degreeReq:d):
 # coop type
 # how many credits they want per term
 # how many coops
-def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]], NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
+# TEMP CHANGE SE
+def getPlanOfStudy(NAME = "SE", COLLEGE = "CCI",  SEQUENCES = ["CHEM"], CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]], NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     # -------SCRAPING----------
     """
     scrapeCourseCatalog()
@@ -1344,7 +1399,7 @@ def getPlanOfStudy(NAME = "CS", COLLEGE = "CCI", SEQUENCELOCK = "PHYS", CONCENTR
     convertCSVToCourseObject()
     correctSequences()
     #-----SET UP DEGREE--------------------
-    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCELOCK, CONCENTRATIONARRAY)
+    degreeReq = getCustomDegree(NAME, COLLEGE, SEQUENCES, CONCENTRATIONARRAY)
     
     prereqDictionaryFill(degreeReq.getFullDegree())
     tempDf = filterPrereqDictionary(degreeReq.getFullDegree())
@@ -1379,5 +1434,20 @@ def singularString(unprocessedString):
     print(unprocessedString)
 #------------------------------- EVERYTHING BELLOW IS "Main"----------------------------------------------
 if __name__ == "__main__":
-    electiveProcessing(process_requiremnt_html())
-    getPlanOfStudy(SPRINGSUMMERCOOP=False)
+    #electiveProcessing(process_requiremnt_html())
+    
+
+
+    #list_degree_frame = parseDegreeRequiremnts("DS")
+    #degreeReq = parseThroughClasses(list_degree_frame)
+    #degreeReq.displayDFMain()
+    #print(degreeReq)
+    getPlanOfStudy(NAME = "SE", SEQUENCES=["CHEM", ["ACCT 110","ECON 201"]],SPRINGSUMMERCOOP=True, CONCENTRATIONARRAY=[])
+
+    """
+    convertCSVToCourseObject()
+    correctSequences()
+    #-----SET UP DEGREE--------------------
+    degreeReq = getCustomDegree("SE", "CCI", "CHEM", CONCENTRATIONARRAY = [])
+    print(degreeReq)
+    """

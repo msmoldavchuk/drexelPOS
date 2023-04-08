@@ -1,6 +1,13 @@
 from sequence import Sequence as s
 import pandas as pd
 import random
+
+# flags
+# 3 = seq
+# 6 = select
+# 9 = handeled
+
+
 class Degree():
     # constructor for degree object
     # recives arrays and converts them into a dataframe
@@ -49,7 +56,12 @@ class Degree():
                     return ["Free Elective" , credit]
         else:
             return ["No Class" , 0]
-        
+        return ["No Class", 0]
+
+    
+
+
+
     def checkCompletion(self, df:pd.DataFrame): 
         for i in range(len(self.degreeFrame.index)):
             if self.degreeFrame.loc[i, "Taken"] == False:
@@ -132,23 +144,52 @@ class Degree():
 
     def getFullDegree(self):
         return self.fullDegree
+    
+    def userChooseCourse(self, arrayOfChoice, dictonary):
+        for selection in arrayOfChoice:
+            for i in range(len(self.degreeFrame.index)):
+                if self.degreeFrame.loc[i,"Flag"] == 3:
+                    if self.degreeFrame.loc[i,"Type"] == "SCI":
+                        self.selectScienceSequence(selection, dictonary)
+                elif self.degreeFrame.loc[i,"Flag"] == 6:
+                    self.selectCourseList(selection)
 
-    def selectScienceSequence(self, choice, dictonary):
+    def selectCourseList(self, choiceSet):
+        newSeqSubset = ""
         for i in range(len(self.degreeFrame)):
-            if self.degreeFrame.loc[i, "Type"] == "SCI" and self.degreeFrame.loc[i, "Flag"] == 3:
+            if self.degreeFrame.loc[i, "Flag"] == 6:
                 for seqs in self.degreeFrame.loc[i, "Sequence"].getSequence():
                     seq = seqs.iterateThroughArray()
-                    #print(seq)
-                    if self.has_identifier(seq[0], choice):
-                        #print("DOES THIS OCCUR!!!!!!!!!!!!!!!!")
-                        self.degreeFrame.loc[i, "Sequence"] = s(seqs)
-                        credits = 0.0
-                        seqsTwo = seqs.iterateThroughArray()
-                        for seqTwo in seqsTwo:
-                             credits += dictonary[seqTwo.strip()].getCredits()
-                        self.degreeFrame.loc[i, "Credits"] = str(credits)
-                        self.setPostCredits(i)
-                        break
+                    for course in seq:
+                        if course.strip() in choiceSet:
+                            if newSeqSubset == "":
+                                newSeqSubset = course
+                            else:
+                                newSeqSubset += " & " + course
+                if newSeqSubset != "":
+                    self.degreeFrame.loc[i, "Sequence"] = s(newSeqSubset)
+                    self.degreeFrame.loc[i,"Flag"] = 9
+                    break
+                    
+
+    def selectScienceSequence(self, choice, dictonary):
+        if type(choice) == str: 
+            print("HEELOO")
+            for i in range(len(self.degreeFrame)):
+                if self.degreeFrame.loc[i, "Type"] == "SCI" and self.degreeFrame.loc[i, "Flag"] == 3:
+                    for seqs in self.degreeFrame.loc[i, "Sequence"].getSequence():
+                        seq = seqs.iterateThroughArray()
+                        #print(seq)
+                        if self.has_identifier(seq[0], choice):
+                            self.degreeFrame.loc[i, "Sequence"] = s(seqs)
+                            credits = 0.0
+                            seqsTwo = seqs.iterateThroughArray()
+                            for seqTwo in seqsTwo:
+                                credits += dictonary[seqTwo.strip()].getCredits()
+                            self.degreeFrame.loc[i, "Credits"] = str(credits)
+                            self.degreeFrame.loc[i,"Flag"] = 9
+                            self.setPostCredits(i)
+                            break
 
 
     # returns credits for a specfic sequence
@@ -219,6 +260,7 @@ class Degree():
                     credit = 4.0
                 else:
                     credit = 3.0
+                #print(elective)
                 self.degreeFrame.loc[i,"Credits"] = str(float(self.degreeFrame.loc[i,"Credits"]) - credit)
                 if float(self.degreeFrame.loc[i, "Credits"]) < 0:
                     counter = 0
@@ -235,6 +277,7 @@ class Degree():
             elif self.degreeFrame.loc[i, "Flag"] == 1 and self.degreeFrame.loc[i,"Type"] == "Special":
                 self.freeElectiveMode = True
                 return ["No Class", 0]
+        return ["No Class", 0]
 
     def setPostCredits(self, index):
         self.degreeFrame.loc[index + 1, "Credits"] = str(float(self.degreeFrame.loc[index+1, "Credits"]) - float(self.degreeFrame.loc[index, "Credits"]))
