@@ -457,7 +457,7 @@ def parseThroughClasses(dfList)-> d:
                 if checkForNoCredits(concDF.loc[i, "Concentration"].loc[j, "Credits"]):
                     concDF.loc[i, "Concentration"].loc[j, "Credits"] = course_dictionary[concDF.loc[i, "Concentration"].loc[j, "Sequence"]].getCredits()       
                 concDF.loc[i, "Concentration"].loc[j, "Sequence"] = s(concDF.loc[i, "Concentration"].loc[j, "Sequence"])
-        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concDF, concCredits)
+        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concDF, concCredits, requiredConcentration=True, requiredMinor=False)
         
     
     # make and return degree object
@@ -1207,8 +1207,8 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
         #predetiermendCourses3 = ["MATH 122", "ENGL 103", "CI 103", "CS 265","SE 181","CS 270", "UNIV CI101", "COOP 101"]
         # -------- pre decided terms -----------------
         firstTermPremade = True
-        #predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
-        predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        #predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
 
         predetiermendCourseArray = [predetiermendCourses]
 
@@ -1346,8 +1346,8 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
 #Returns the degree object
 # TEMP CHANGE SE
 def getCustomDegree(NAME = "SE", COLLEGE = "CCI", SEQUENCES = ["CHEM"], CONCENTRATIONARRAY =[["Algorithms and Theory", ["CS 457", "CS 300", "MATH 305"]], ["Artificial Intelligence and Machine Learning",["CS 380", "CS 383", "DSCI 351"]]]):
-    list_degree_frame = parseDegreeRequiremnts(NAME)
-    degreeReq = parseThroughClasses(list_degree_frame)
+    degreeReq = d()
+    degreeReq.convertCSVToDegree(NAME)
     degreeReq.setDegreeName(NAME)
     degreeReq.setDegreeCollege(COLLEGE)
     degreeReq.userChooseCourse(SEQUENCES, course_dictionary)
@@ -1432,17 +1432,27 @@ def electiveProcessing(unProcessedString: str):
     
 def singularString(unprocessedString):
     print(unprocessedString)
+
+def scrapingDegree(NAME):
+    convertCSVToCourseObject()
+    list_degree_frame = parseDegreeRequiremnts(NAME)
+    degreeReq = parseThroughClasses(list_degree_frame)
+    return degreeReq
+
 #------------------------------- EVERYTHING BELLOW IS "Main"----------------------------------------------
 if __name__ == "__main__":
     #electiveProcessing(process_requiremnt_html())
     
 
-
-    #list_degree_frame = parseDegreeRequiremnts("DS")
+    #convertCSVToCourseObject()
+    #list_degree_frame = parseDegreeRequiremnts("CS")
     #degreeReq = parseThroughClasses(list_degree_frame)
-    #degreeReq.displayDFMain()
+    
+
+    
+    #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq)
-    getPlanOfStudy(NAME = "SE", SEQUENCES=["CHEM", ["ACCT 110","ECON 201"]],SPRINGSUMMERCOOP=True, CONCENTRATIONARRAY=[])
+    getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True, CONCENTRATIONARRAY=[])
 
     """
     convertCSVToCourseObject()

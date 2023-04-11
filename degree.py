@@ -1,7 +1,8 @@
 from sequence import Sequence as s
 import pandas as pd
 import random
-
+import csv
+from ast import literal_eval 
 # flags
 # 3 = seq
 # 6 = select
@@ -12,7 +13,7 @@ class Degree():
     # constructor for degree object
     # recives arrays and converts them into a dataframe
     
-    def __init__(self, seq, credit, descriptor, flag, concDF = pd.DataFrame(), concCredits:float = 0):
+    def __init__(self, seq = [], credit = [], descriptor = [], flag = [], concDF = pd.DataFrame(), concCredits:float = 0,requiredConcentration = False, requiredMinor = False):
         self.degreeFrame = pd.DataFrame({"Sequence": seq, "Credits": credit, "Type": descriptor, "Flag": flag, "Taken": False})
         self.degreeName = ""
         self.degreeCollege = ""
@@ -21,10 +22,12 @@ class Degree():
             
         self.concentrationsDF:pd.DataFrame = concDF
         self.concentrationCredits = concCredits
-
+        self.requiredConcentration = requiredConcentration
+        self.requiredMinor = requiredMinor
         self.fullDegree = self.degreeFrame
 
         self.freeElectiveMode = True
+        
         #self.electiveDictonary = {} implemant latter w/ scrapping
 
     def getFreeElectiveMode(self):
@@ -59,6 +62,38 @@ class Degree():
         return ["No Class", 0]
 
     
+    def convertDegreeToCSV(self, name):
+        self.degreeFrame.to_csv(name+ "Degree.csv",index=False)
+        if self.requiredConcentration:
+            for i in range(len(self.concentrationsDF.loc[:,"Name"])):
+                try:
+                    if self.concentrationsDF.loc[i,"Concentration"].loc[1,"Sequence"] != "": #makes sure df isn't empty
+                        self.concentrationsDF.loc[i,"Concentration"].to_csv(name + "Concentrations" + str(i) + ".csv", index = False)
+                except:
+                    pass
+
+
+    def convertCSVToDegree(self, name):
+        df = pd.read_csv(name + "Degree.csv",converters={3:literal_eval})
+        df.columns = ['Sequence', 'Credits', 'Type', "Flag", "Taken"]
+        for i in range(len(df.index)):
+            df.loc[i,"Sequence"] = s(df.loc[i,"Sequence"])
+        self.degreeFrame = df
+        self.concentrationsDF = pd.DataFrame({"Concentration": [], "Name": []})
+        existenceIndex = -1
+        try:
+            for i in range(1,9999):
+                concentrationDf = pd.read_csv(name + "Concentrations" + str(i) + ".csv",converters={3:literal_eval})
+                concentrationDf.columns = ['Sequence', 'Credits', 'Type', "Flag", "Taken"]
+                for i in range(len(df.index)):
+                    concentrationDf.loc[i,"Sequence"] = s(concentrationDf.loc[i,"Sequence"])               
+                self.concentrationsDF.loc[len(self.concentrationsDF.index)] = [concentrationDf, concentrationDf.loc[1,"Type"]]
+                print(self.concentrationsDF)
+                existenceIndex = i
+        except:
+            if existenceIndex == -1:
+                self.concentrationsDF = pd.DataFrame()
+        self.fullDegree = df
 
 
 
@@ -88,9 +123,13 @@ class Degree():
 
     def printConcentrations(self):
         for i in range(len(self.concentrationsDF.loc[:,"Concentration"])):
-            desc = self.concentrationsDF.loc[i,"Name"] 
-            print(str(desc)+ " Concentration")
-            self.displayDF(self.concentrationsDF.loc[i,"Concentration"])
+            try:
+                desc = self.concentrationsDF.loc[i,"Name"] 
+                print(str(desc)+ " Concentration")
+                self.displayDF(self.concentrationsDF.loc[i,"Concentration"])
+            except:
+                pass
+
 
     def displayDF(self, df):
      with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
@@ -174,7 +213,6 @@ class Degree():
 
     def selectScienceSequence(self, choice, dictonary):
         if type(choice) == str: 
-            print("HEELOO")
             for i in range(len(self.degreeFrame)):
                 if self.degreeFrame.loc[i, "Type"] == "SCI" and self.degreeFrame.loc[i, "Flag"] == 3:
                     for seqs in self.degreeFrame.loc[i, "Sequence"].getSequence():
@@ -300,7 +338,7 @@ class Degree():
                 string += "\t" + self.degreeFrame.loc[i, "Type"] + " Elective: " + str(self.degreeFrame.loc[i, "Credits"]) + " Credits Needed\n"               
             else: #otherwise prints the sequence
                 #string += "\tCourse: " + str(self.degreeFrame.loc[i, "Sequence"])+"\tCredits: " + str(self.degreeFrame.loc[i, "Credits"]) + "\n" #temp unused cause ugly
-                string += "\tCourse: " + str(self.degreeFrame.loc[i, "Sequence"])+"\n"
+                string += "\tCourse: " + self.degreeFrame.loc[i, "Sequence"].printFormating()+"\n"
 
         return string
     
