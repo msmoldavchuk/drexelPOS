@@ -13,14 +13,14 @@ class Degree():
     # constructor for degree object
     # recives arrays and converts them into a dataframe
     
-    def __init__(self, seq = [], credit = [], descriptor = [], flag = [], concDF = pd.DataFrame(), concCredits:float = 0,requiredConcentration = False, requiredMinor = False):
+    def __init__(self, seq = [], credit = [], descriptor = [], flag = [], concList: list = [], concCredits:float = 0,requiredConcentration = False, requiredMinor = False):
         self.degreeFrame = pd.DataFrame({"Sequence": seq, "Credits": credit, "Type": descriptor, "Flag": flag, "Taken": False})
         self.degreeName = ""
         self.degreeCollege = ""
 
         
             
-        self.concentrationsDF:pd.DataFrame = concDF
+        self.concentrationsList = concList
         self.concentrationCredits = concCredits
         self.requiredConcentration = requiredConcentration
         self.requiredMinor = requiredMinor
@@ -65,10 +65,10 @@ class Degree():
     def convertDegreeToCSV(self, name):
         self.degreeFrame.to_csv(name+ "Degree.csv",index=False)
         if self.requiredConcentration:
-            for i in range(len(self.concentrationsDF.loc[:,"Name"])):
+            for i in range(len(self.concentrationsList[1])):
                 try:
-                    if self.concentrationsDF.loc[i,"Concentration"].loc[1,"Sequence"] != "": #makes sure df isn't empty
-                        self.concentrationsDF.loc[i,"Concentration"].to_csv(name + "Concentrations" + str(i) + ".csv", index = False)
+                    if self.concentrationsList[0][i].loc[1,"Sequence"] != "": #makes sure df isn't empty
+                        self.concentrationsList[0][i].to_csv(name + "Concentrations" + str(i) + ".csv", index = False)
                 except:
                     pass
 
@@ -79,20 +79,21 @@ class Degree():
         for i in range(len(df.index)):
             df.loc[i,"Sequence"] = s(df.loc[i,"Sequence"])
         self.degreeFrame = df
-        self.concentrationsDF = pd.DataFrame({"Concentration": [], "Name": []})
+        self.concentrationsList = [[],[]]
         existenceIndex = -1
         try:
             for i in range(1,9999):
                 concentrationDf = pd.read_csv(name + "Concentrations" + str(i) + ".csv",converters={3:literal_eval})
                 concentrationDf.columns = ['Sequence', 'Credits', 'Type', "Flag", "Taken"]
-                for i in range(len(df.index)):
-                    concentrationDf.loc[i,"Sequence"] = s(concentrationDf.loc[i,"Sequence"])               
-                self.concentrationsDF.loc[len(self.concentrationsDF.index)] = [concentrationDf, concentrationDf.loc[1,"Type"]]
-                print(self.concentrationsDF)
+                for j in range(len(concentrationDf.index)):
+                    concentrationDf.loc[j,"Sequence"] = s(concentrationDf.loc[j,"Sequence"])
+               
+                self.concentrationsList[0].append(concentrationDf)
+                self.concentrationsList[1].append(concentrationDf.loc[1,"Type"])
                 existenceIndex = i
         except:
             if existenceIndex == -1:
-                self.concentrationsDF = pd.DataFrame()
+                self.concentrationsList = [[],[]]
         self.fullDegree = df
 
 
@@ -122,11 +123,11 @@ class Degree():
                 break
 
     def printConcentrations(self):
-        for i in range(len(self.concentrationsDF.loc[:,"Concentration"])):
+        for i in range(len(self.concentrationsList[1])):
             try:
-                desc = self.concentrationsDF.loc[i,"Name"] 
+                desc = self.concentrationsList[1][i]
                 print(str(desc)+ " Concentration")
-                self.displayDF(self.concentrationsDF.loc[i,"Concentration"])
+                self.displayDF(self.concentrationsList[0][i])
             except:
                 pass
 
@@ -156,12 +157,12 @@ class Degree():
     #CLEAN LATER
     def selectConcentration(self, choice, courses):
         pos = 0
-        for i in range(len(self.concentrationsDF.loc[:,"Name"])):
-            if self.concentrationsDF.loc[i,"Name"] == choice:
+        for i in range(len(self.concentrationsList[1])):
+            if self.concentrationsList[1][i] == choice:
                 pos = i
                 break
         
-        x =self.concentrationsDF.loc[pos, "Concentration"]
+        x = self.concentrationsList[0][pos] 
         for i in range(len(x.index)):
             if str(x.loc[i, "Sequence"]) in courses:
                 self.addToFullDegreeSeries(x.loc[i])
@@ -276,13 +277,10 @@ class Degree():
     def setDegreeCollege(self, col):
         self.degreeCollege = col
 
-    def getMegaDegreeRequirments(self):
-        #tempDataFrame = self.degreeFrame.append(self.concentrationsDF)
-        tempDataFrame = pd.concat([self.degreeFrame, self.concentrationsDF],axis = 1)
-        return tempDataFrame
 
     def getConcentrationsTesting(self):
-        return self.concentrationsDF
+        return self.concentrationsList
+    
     def getElectives(self):
         electiveDataFrame = pd.DataFrame({"Sequence": [], "Credits": [],"Type": [], "Flag":[], "Taken": []})
         for i in range(len(self.degreeFrame.index)):

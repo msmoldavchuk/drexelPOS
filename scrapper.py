@@ -177,6 +177,7 @@ def getUrls() -> list:
 # returns a dataframe contaning a processed concentrartion
 def getConcentration(dfList)->pd.DataFrame:
     concentrationDF = pd.DataFrame({'Concentration':[], "Name":[]})
+    concentrationList = [[],[]]
     for df in dfList:
         coursesNotPrimary = df.loc[:,'Courses']
         courseDesc = df.loc[:,"Label"]
@@ -244,15 +245,16 @@ def getConcentration(dfList)->pd.DataFrame:
                 descriptionsParsed = []
                 flagParsed = []
                 
-                concentrationDF.loc[len(concentrationDF.index)] = [dfPart, descriptorRequired] 
+                concentrationList[0].append(dfPart)
+                concentrationList[1].append(descriptorRequired)
                 descriptorRequired = filterDescription(courses[i])
 
 
     
         dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Taken": False})
-        concentrationDF.loc[len(concentrationDF.index)] = [dfPart, descriptorRequired] 
-        
-    return concentrationDF
+        concentrationList[0].append(dfPart)
+        concentrationList[1].append(descriptorRequired)        
+    return concentrationList
 
 # A means of filtering the description for the concentrartion
 # it is sent a string and then returns the string containing everything before for "Concentration"
@@ -363,7 +365,7 @@ def parseThroughClasses(dfList)-> d:
             elif "concentration" in courses[i]:
                 concBoolean = True
                 concCredits = credits[i]
-                concDF = getConcentration(dfList)
+                concList = getConcentration(dfList)
             elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
                 seqFlag = True  # if yes change modes
             elif "select" in courses[i] or "Select" in courses[i]:
@@ -452,12 +454,12 @@ def parseThroughClasses(dfList)-> d:
     #displayDF(concDF)
 
     if concBoolean:
-        for i in range(len(concDF.index)):
-            for j in range(len(concDF.loc[i, "Concentration"].loc[:,"Sequence"].index)):
-                if checkForNoCredits(concDF.loc[i, "Concentration"].loc[j, "Credits"]):
-                    concDF.loc[i, "Concentration"].loc[j, "Credits"] = course_dictionary[concDF.loc[i, "Concentration"].loc[j, "Sequence"]].getCredits()       
-                concDF.loc[i, "Concentration"].loc[j, "Sequence"] = s(concDF.loc[i, "Concentration"].loc[j, "Sequence"])
-        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concDF, concCredits, requiredConcentration=True, requiredMinor=False)
+        for i in range(len(concList[1])):
+            for j in range(len(concList[0][i].loc[:,"Sequence"].index)):
+                if checkForNoCredits(concList[0][i].loc[j, "Credits"]):
+                    concList[0][i].loc[j, "Credits"] = course_dictionary[concList[0][i].loc[j, "Sequence"]].getCredits()       
+                concList[0][i].loc[j, "Sequence"] = s(concList[0][i].loc[j, "Sequence"])
+        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concList, concCredits, requiredConcentration=True, requiredMinor=False)
         
     
     # make and return degree object
@@ -1433,7 +1435,7 @@ def electiveProcessing(unProcessedString: str):
 def singularString(unprocessedString):
     print(unprocessedString)
 
-def scrapingDegree(NAME):
+def scrapingDegree(NAME)->d:
     convertCSVToCourseObject()
     list_degree_frame = parseDegreeRequiremnts(NAME)
     degreeReq = parseThroughClasses(list_degree_frame)
@@ -1443,16 +1445,13 @@ def scrapingDegree(NAME):
 if __name__ == "__main__":
     #electiveProcessing(process_requiremnt_html())
     
-
     #convertCSVToCourseObject()
     #list_degree_frame = parseDegreeRequiremnts("CS")
     #degreeReq = parseThroughClasses(list_degree_frame)
     
-
-    
     #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq)
-    getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True, CONCENTRATIONARRAY=[])
+    getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
 
     """
     convertCSVToCourseObject()
