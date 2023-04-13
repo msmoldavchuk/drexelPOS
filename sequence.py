@@ -158,6 +158,7 @@ class Sequence:
 
     # CONSTRUCTOR
     def __init__(self, courses):
+        self.courseString = courses
         self.courseArray = []
         if isinstance(courses, LinkedList):
             self.courseArray = [courses]
@@ -211,18 +212,21 @@ class Sequence:
         else:
             return False
 
-   
-
+    def getCourseString(self):
+        return self.courseString
+    
 
 #------------------------------------------PRINTING------------------------------
     def __str__(self):
+        return self.courseString
+    
+    def printFormating(self):
         string = ""
         for i in range (len(self.courseArray)):
             string += self.courseArray[i].iterateThroughSTR()
             if i + 1 < len(self.courseArray):          
                 string += "OR"
         return string
-
     # prints a formated version of the sequence
     def getFormatedSeqeuence(self):
         for course in self.courseArray:
