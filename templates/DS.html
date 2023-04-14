@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<title> Data Science Major</title>
+<nav>
+    <ul>
+        <li><a href = "{{ url_for('index') }}">Home</a></li>
+        <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
+    </ul>
+<h1> Welcome to Data Science's Plan of Study Page</h1>
+<body
+    <form action="{{ url_for('temp') }}" method="post" id="form">
+        <div class="DSmajor">
+        <fieldset>
+           
+           <legend>Your Selected Major </legend>  
+            <option value = "DS" selected> DATA SCIENCE </option>
+    
+        </fieldset>
+        <fieldset>
+            
+            <legend>Please Select The Type Of Degree </legend>
+            <input type="radio" name="degree" value="4">4 Year<br>
+            <input type="radio" name="degree" value="5">5 Year<br>
+        </fieldset>
+        <fieldset>
+            
+            <legend>Please Select Co-op Cycle </legend>
+            <input type="radio" name="coop" value="FW">Fall - Winter<br>
+            <input type="radio" name="coop" value="SS">Spring - Summer<br>
+        </fieldset>
 
+        <fieldset>
+            <legend>Please Select Two Of The Following </legend>  
+            <input type="checkbox" name="DataE" value="CS 270" onclick="return ValidateDataESelection();">CS 270 - Mathematical Foundations of Computer Science <br>  
+            <input type="checkbox" name="DataE" value="CS 380" onclick="return ValidateDataESelection();">CS 380 - Artificial Intelligences	<br>  
+            <input type="checkbox" name="DataE" value="CS 383" onclick="return ValidateDataESelection();">CS 383 - Machine Learning<br> 
+            <input type="checkbox" name="DataE" value="INFO 200" onclick="return ValidateDataESelection();">INFO 200 - Systems Analysis I <br>  
+            <input type="checkbox" name="DataE" value="INFO 300" onclick="return ValidateDataESelection();">INFO 300 - Information Retrieval Systems	<br>  
+            <input type="checkbox" name="DataE" value="INFO 315" onclick="return ValidateDataESelection();">INFO 315 - Advanced Database Management Systems	<br> 
+            <input type="checkbox" name="DataE" value="INFO 350" onclick="return ValidateDataESelection();">INFO 350 - Visual Analytics <br>  
+            <input type="checkbox" name="DataE" value="INFO 355" onclick="return ValidateDataESelection();">INFO 355 - Systems Analysis II	<br>  
+            <input type="checkbox" name="DataE" value="INFO 420" onclick="return ValidateDataESelection();">INFO 420 - Software Project Management	<br> 
+            <br>  
+            <input type="submit" value="Submit now">  
+    </div>
+    </form> 
+
+        
+        <script type="text/javascript">  
+        function ValidateDataESelection()  
+        {  
+            var checkboxes = document.getElementsByName("DataE");  
+            var numberOfCheckedItems = 0;  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                if(checkboxes[i].checked)  
+                    numberOfCheckedItems++;  
+            }  
+            if(numberOfCheckedItems > 2)  
+            {  
+                alert("You can't select more than two data electives!");  
+                return false;  
+            }  
+        }
+        function displaySubDataEList() {
+            var label= document.createElement("label");
+            var description = document.createTextNode("");
+            var checkbox = document.createElement("input");
+        }
+        </script>
+    <p id="testing">
+        This is where the data will be displayed
+    </p>
+   <Script>
+    let data = document.getElementById("form");
+    data.addEventListener("submit", function(e){
+        e.preventDefault();
+        let year = data.elements.degree.value;
+        let major = data.elements.dropdown.value;
+        let datascience = [];
+        let coop = data.elements.coop.value;
+        if (coop == "FW") {
+            coop = false;
+        } else {
+            coop = true;
+        }
+        for (let i = 0; i < data.elements.DataE.length; i++) {
+            if (data.elements.DataE[i].checked) {
+                datascience.push(data.elements.DataE[i].value);
+            }
+        }
+        let form = {
+            major: major,
+            coop : coop,
+            sequence : data.elements.sequence.value,
+            datascience1 : datasciences[0],
+            datascience2 : datasciences[1],
+            year : year
+
+        };
+
+        fetch('{{url_for("testfn2")}}', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+    .then((data) => {
+        text = document.getElementById("testing"); 
+        console.log(data);
+        text.innerHTML = "";
+        for (let term in data) {
+            text.innerHTML += term + ": " + data[term] + "<br>";
+        }
+        
+    })
+        .catch(err => console.log(err))
+
+        console.log(name);
+        console.log(major);
+    })
+   </Script>
+
+
+<style>
+    .body{
+        background-color: #e2f1bd;
+    }
+
+    .DSmajor{
+      margin: 10px 0;
+      padding: 10px;
+      
+    }
+    /* styles for legends */
+    legend {
+      font-weight: bold;
+      color: #4a5894;
+      font-size: 1.2em;
+    }
+    
+    /* styles for select and radio inputs */
+    select, input[type="radio"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for checkboxes */
+    input[type="checkbox"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for submit button */
+    input[type="submit"] {
+      background-color: #7c8bb7;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      
+    }
+    
+    /* styles for the form */
+    #form {
+      background-image: linear-gradient(#f8ecf7, #a5caf4) ;
+      padding: 20px;
+      border-radius: 5px;
+      width: 500px;
+      margin: auto;
+    }
+    
+    /* styles for the fieldset borders based on selection */
+    fieldset:focus-within {
+      border: 3px solid #bfbab5;
+    }
+    h1{
+        text-align: center;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #4a5894;
+    }
+nav {
+  overflow: hidden;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  display: block;
+  color: #7c8bb7;
+  text-align: right;
+  padding: 18px 20px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #d7defe;
+  color: rgb(91, 84, 179);
+}   
+</style>
