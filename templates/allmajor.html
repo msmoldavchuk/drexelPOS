@@ -9,42 +9,42 @@
 </head>
 <body>
 <div class="position-absolute top-left">
-<a href="CS.html">
+<a href = "{{ url_for('CS') }}">
 <button type="button"><span></span>Computer Science</button> </a>
 </div>   
 
 <div class="position-absolute top-right">
-<a href="SE.html">
+<a href = "{{ url_for('SE') }}">
 <button type="button"><span></span>Software Engineering</button> </a>
 </div>
 
 <div class="position-absolute mid-left">
-<a href="DS.html"> 
+<a href = "{{ url_for('DS') }}"> 
 <button type="button" ><span></span> Data Science</button> </a>
 </div>
 
 <div class="position-absolute mid-right">
-<a href="CST.html">
+<a href = "{{ url_for('CST') }}">
 <button type="button"><span></span> Computing and Security Technology</button></a>
 </div>
 
 <div class="position-absolute bottom-left">
-<a href="EDS.html">
+<a href = "{{ url_for('EDS') }}">
 <button type="button"><span></span> Economics and Data Science</button> </a>
 </div>
 
 <div class="position-absolute bottom-right">
-<a href="IS.html">
+<a href = "{{ url_for('IS') }}">
 <button type="button"><span></span>Information Systems</button></a>
 </div>
 
 <div class="position-absolute mid-center">
-    <img src="drexelsymbol.png" height="700px" width="1000px">
+<img src="{{ url_for('static', filename='drexelsymbol.png') }}"  height="700px" width="1000px >
 </div>
 
 <style>
 body{
-    background-image: url(drexelsymbol.png);
+    background-image: "{{ url_for('drexelsymbol.png') }}";
     background-image: linear-gradient(#f8ecf7, #a5caf4);
 }
 
