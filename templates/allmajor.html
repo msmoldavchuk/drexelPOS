@@ -3,38 +3,38 @@
   
 <head>
     <meta name="viewport" ontent="width=device-width, initial-scale=1; shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <title> Computing and Informatic Majors</title>
     <h2> Please Choose Your Major</h2>
 </head>
 <body>
 <div class="position-absolute top-left">
-<a href = "{{ url_for('CS') }}">
+<a href = url_for('degree', degreename='CS'>
 <button type="button"><span></span>Computer Science</button> </a>
 </div>   
 
 <div class="position-absolute top-right">
-<a href = "{{ url_for('SE') }}">
+<a href = url_for('degree', degreename='SE'>
 <button type="button"><span></span>Software Engineering</button> </a>
 </div>
 
 <div class="position-absolute mid-left">
-<a href = "{{ url_for('DS') }}"> 
+<a href = "url_for('degree', degreename='DS'> 
 <button type="button" ><span></span> Data Science</button> </a>
 </div>
 
 <div class="position-absolute mid-right">
-<a href = "{{ url_for('CST') }}">
+<a href = url_for('degree', degreename='CST'>
 <button type="button"><span></span> Computing and Security Technology</button></a>
 </div>
 
 <div class="position-absolute bottom-left">
-<a href = "{{ url_for('EDS') }}">
+<a href = url_for('degree', degreename='EDS'>
 <button type="button"><span></span> Economics and Data Science</button> </a>
 </div>
 
 <div class="position-absolute bottom-right">
-<a href = "{{ url_for('IS') }}">
+<a href = url_for('degree', degreename='IS'>
 <button type="button"><span></span>Information Systems</button></a>
 </div>
 
