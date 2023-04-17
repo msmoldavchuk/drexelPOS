@@ -13,8 +13,8 @@ class Degree():
     # constructor for degree object
     # recives arrays and converts them into a dataframe
     
-    def __init__(self, seq = [], credit = [], descriptor = [], flag = [], concList: list = [], concCredits:float = 0,requiredConcentration = False, requiredMinor = False):
-        self.degreeFrame = pd.DataFrame({"Sequence": seq, "Credits": credit, "Type": descriptor, "Flag": flag, "Taken": False})
+    def __init__(self, seq = [], credit = [], descriptor = [], flag = [], num = [], concList: list = [], concCredits:float = 0,requiredConcentration = False, requiredMinor = False):
+        self.degreeFrame = pd.DataFrame({"Sequence": seq, "Credits": credit, "Type": descriptor, "Flag": flag, "Num": num, "Taken": False})
         self.degreeName = ""
         self.degreeCollege = ""
 
@@ -75,7 +75,7 @@ class Degree():
 
     def convertCSVToDegree(self, name):
         df = pd.read_csv(name + "Degree.csv",converters={3:literal_eval})
-        df.columns = ['Sequence', 'Credits', 'Type', "Flag", "Taken"]
+        df.columns = ['Sequence', 'Credits', 'Type', "Flag","Num" "Taken"]
         for i in range(len(df.index)):
             df.loc[i,"Sequence"] = s(df.loc[i,"Sequence"])
         self.degreeFrame = df
@@ -84,7 +84,7 @@ class Degree():
         try:
             for i in range(1,9999):
                 concentrationDf = pd.read_csv(name + "Concentrations" + str(i) + ".csv",converters={3:literal_eval})
-                concentrationDf.columns = ['Sequence', 'Credits', 'Type', "Flag", "Taken"]
+                concentrationDf.columns = ['Sequence', 'Credits', 'Type', "Flag", "Num" "Taken"]
                 for j in range(len(concentrationDf.index)):
                     concentrationDf.loc[j,"Sequence"] = s(concentrationDf.loc[j,"Sequence"])
                
@@ -193,6 +193,17 @@ class Degree():
                         self.selectScienceSequence(selection, dictonary)
                 elif self.degreeFrame.loc[i,"Flag"] == 6:
                     self.selectCourseList(selection)
+                    
+    def getDataForWebsite(self):
+        dataArray = []
+        for i in range(len(self.degreeFrame.index)):
+            if self.degreeFrame.loc[i,"Flag"] == 3:
+                if self.degreeFrame.loc[i,"Type"] == "SCI":
+                    dataArray.append([self.degreeFrame.loc[i,"Sequence"],self.degreeFrame.loc[i,"Type"],self.degreeFrame.loc[i,"Num"]])
+            elif self.degreeFrame.loc[i,"Flag"] == 6:
+                dataArray.append([self.degreeFrame.loc[i,"Sequence"],self.degreeFrame.loc[i,"Type"],self.degreeFrame.loc[i,"Num"]])
+        return dataArray
+
 
     def selectCourseList(self, choiceSet):
         newSeqSubset = ""

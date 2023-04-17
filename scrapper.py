@@ -158,9 +158,27 @@ def goThroughCollege(driver, textlink,tables, intQuarter = 0):
         return "error"
 
 # get's all urls from the undergraduate course catalog
+def getUrlsMinors() -> list:
+    listofUrls = []
+    html = requests.get("https://catalog.drexel.edu/minors/undergraduate/").text
+
+    parsed_course_catalog = BeautifulSoup(html, 'html.parser')
+    parsed_course_catalog = parsed_course_catalog.find_all('div', class_="tab_content", id ="textcontainer")
+    #the two list
+
+
+    for list_courses in parsed_course_catalog:
+        #urls in each list
+        urls = list_courses.find_all('a')
+        for url in urls:
+            print("https://catalog.drexel.edu" + url.get('href'))
+            listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
+    return listofUrls
+
 def getUrls() -> list:
     listofUrls = []
     html = requests.get("https://catalog.drexel.edu/coursedescriptions/quarter/undergrad/").text
+
     parsed_course_catalog = BeautifulSoup(html, 'html.parser')
     parsed_course_catalog = parsed_course_catalog.find_all('div', class_="qugcourses")
     #the two list
@@ -171,12 +189,10 @@ def getUrls() -> list:
             print("https://catalog.drexel.edu" + url.get('href'))
             listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
     return listofUrls
-
 # processing algorithm for concentatrations
 # gets a list of dataframes as a paramaeter
 # returns a dataframe contaning a processed concentrartion
 def getConcentration(dfList)->pd.DataFrame:
-    concentrationDF = pd.DataFrame({'Concentration':[], "Name":[]})
     concentrationList = [[],[]]
     for df in dfList:
         coursesNotPrimary = df.loc[:,'Courses']
@@ -190,6 +206,7 @@ def getConcentration(dfList)->pd.DataFrame:
         creditsParsed = []
         descriptionsParsed = []
         flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
+        numParsed = []
 
         seqString = ""
 
@@ -210,9 +227,11 @@ def getConcentration(dfList)->pd.DataFrame:
                     creditsParsed.append(credits[i])
                     descriptionsParsed.append(descriptorRequired)
                     flagParsed.append(2)
+                    numParsed.append(0)
             elif len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"):
                 coursesParsed.append(courses[i])
                 creditsParsed.append(credits[i])
+                numParsed.append(0)
                 descriptionsParsed.append(descriptorRequired)
                 
                 if "*" in courseDesc[i]:
@@ -244,6 +263,7 @@ def getConcentration(dfList)->pd.DataFrame:
                 creditsParsed = []
                 descriptionsParsed = []
                 flagParsed = []
+                numParsed = []
                 
                 concentrationList[0].append(dfPart)
                 concentrationList[1].append(descriptorRequired)
@@ -251,7 +271,7 @@ def getConcentration(dfList)->pd.DataFrame:
 
 
     
-        dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Taken": False})
+        dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Num":numParsed, "Taken": False})
         concentrationList[0].append(dfPart)
         concentrationList[1].append(descriptorRequired)        
     return concentrationList
@@ -289,6 +309,7 @@ def parseThroughClasses(dfList)-> d:
     creditsParsed = []
     descriptionsParsed = []
     flagParsed = [] # 0 = no problem, 1 = elective, 2 = mandatory
+    numParsed = []
 
 
     electiveReqsDictonary = {}
@@ -298,10 +319,11 @@ def parseThroughClasses(dfList)-> d:
     selectFlag = False
     choseFlag = False
     descriptorRequired = ""
+    numberNeeded = 0
     inc = 1
     myiter = iter(range(0, len(courses)))
     strlength = 12 #temp value
-
+    
     # concentration vars
     concDF = pd.DataFrame()
     concBoolean = False
@@ -322,14 +344,17 @@ def parseThroughClasses(dfList)-> d:
                     coursesParsed[len(coursesParsed)-1] = ns
                     descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
                     flagParsed[len(flagParsed)-1] = 6
+                    numParsed[len(numParsed)-1] = numberNeeded
                 elif flagParsed[-1] == 1:
                     coursesParsed[-1] = courses[1]
                     creditsParsed[-1] = credits[i]
                     flagParsed[-1] = 6
+                    numParsed[-1] = numberNeeded
                     descriptionsParsed[-1] = descriptorRequired
                 else:
                     coursesParsed.append(courses[i])
                     creditsParsed.append(credits[i])
+                    numParsed.append(numberNeeded)
                     flagParsed.append(6) # 6 = sel flag
                     descriptionsParsed.append(descriptorRequired)
             else:
@@ -351,17 +376,20 @@ def parseThroughClasses(dfList)-> d:
                 coursesParsed[len(coursesParsed)-1] = coursesParsed[len(coursesParsed)-1] + " | " + courses[i][3:len(courses[i])]
                 descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
                 flagParsed[len(flagParsed)-1] = 4 #adds 4 for or flag
+                numParsed[len(numParsed)-1] = 0
             elif len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"): #step 5 check if the course is type ABC123
                 if has_identifier(courses[i],"*"):
                     coursesParsed.append(courses[i][:len(courses[i])])
                     creditsParsed.append(credits[i])
                     descriptionsParsed.append(descriptorRequired)
                     flagParsed.append(2)
+                    numParsed.append(0)
                 else:
                     coursesParsed.append(courses[i])
                     creditsParsed.append(credits[i])
                     descriptionsParsed.append(descriptorRequired)
                     flagParsed.append(0)
+                    numParsed.append(0)
             elif "concentration" in courses[i]:
                 concBoolean = True
                 concCredits = credits[i]
@@ -374,22 +402,32 @@ def parseThroughClasses(dfList)-> d:
                 if listExpression:
                     for j in range(len(listExpression)):
                         listExpression[j] = listExpression[j][0:len(listExpression[j])-1]
+                    
+                    numberNeeded = numFinder(courses[i])
                     electiveReqsDictonary[descriptorRequired] = listExpression
                     if flagParsed[-1] != 1:
                         coursesParsed.append("elective")
                         creditsParsed.append(credits[i])
                         descriptionsParsed.append(reverseKeyWordSearcher(descriptorRequired))
                         flagParsed.append(1)
+                        numParsed.append(0)
+
                 else:
+                    numberNeeded = numFinder(courses[i])
+
                     selectFlag = True
             elif has_identifier(courses[i], "elective") or has_identifier(courses[i], "Elective"): #step 6 check if the course has elective in it
                     flagParsed.append(1) #elective flag
+                    numParsed.append(0)
+
                     if(has_identifier(courses[i], "Free")): #free electives = end of program
                         coursesParsed.append("Elective")
                         creditsParsed.append(credits[i]) 
                         descriptionsParsed.append("Special") #special internal descriptor 
 
                         flagParsed.append(1)
+                        numParsed.append(0)
+
                         coursesParsed.append("Total")
                         creditsParsed.append(credits[i+1]) 
                         descriptionsParsed.append("Special")
@@ -410,11 +448,14 @@ def parseThroughClasses(dfList)-> d:
                     coursesParsed[len(coursesParsed)-1] = ns
                     descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
                     flagParsed[len(flagParsed)-1] = 3
+                    numParsed[len(numParsed)-1] = 0
                 else:
                     coursesParsed.append(courses[i])
                     creditsParsed.append(credits[i])
                     flagParsed.append(3)
                     descriptionsParsed.append(descriptorRequired)
+                    numParsed.append(0)
+
             elif courses[i][0:2].lower() == "or": #step 6 look for or keyword *different than prior
                 #Sequence ors get their own line
                 i += 1 #skip current line and go to next one
@@ -422,7 +463,9 @@ def parseThroughClasses(dfList)-> d:
                 ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
                 coursesParsed[len(coursesParsed)-1] = ns
                 descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
-                flagParsed[len(flagParsed)-1] = 3 # 3 = sequence flag                                        
+                flagParsed[len(flagParsed)-1] = 3 # 3 = sequence flag 
+                numParsed[len(numParsed)-1] = 0
+                                       
                 next(myiter, None) #iterates loop   
                 """
                 Sample
@@ -438,6 +481,8 @@ def parseThroughClasses(dfList)-> d:
                 creditsParsed.append(credits[i])
                 descriptionsParsed.append(specialString)
                 flagParsed.append(1)
+                numParsed.append(0)
+
                 seqFlag = False       # elective marks end of sequence         
             else:
                 inc = 1
@@ -459,11 +504,11 @@ def parseThroughClasses(dfList)-> d:
                 if checkForNoCredits(concList[0][i].loc[j, "Credits"]):
                     concList[0][i].loc[j, "Credits"] = course_dictionary[concList[0][i].loc[j, "Sequence"]].getCredits()       
                 concList[0][i].loc[j, "Sequence"] = s(concList[0][i].loc[j, "Sequence"])
-        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed, concList, concCredits, requiredConcentration=True, requiredMinor=False)
+        return d(seqArray, creditsParsed, descriptionsParsed, flagParsed,numParsed, concList, concCredits, requiredConcentration=True, requiredMinor=False)
         
     
     # make and return degree object
-    return d(seqArray, creditsParsed, descriptionsParsed, flagParsed)    
+    return d(seqArray, creditsParsed, descriptionsParsed, flagParsed ,numParsed)    
 
 #---------------------------------------------------HELPER METHODS FOR CLEANING DATA---------------------------------------
 
@@ -476,7 +521,21 @@ def has_identifier(inputString, identifier):
         return True
     else:
         return False
-
+    
+def numFinder(string:str):
+    dictNumbers = {"one":1,
+                   "two":2,
+                   "three":3,
+                   "four":4,
+                   "five":5,
+                   "six":6,
+                   "seven":7,
+                   "eight":8,
+                   "nine":9}
+    for key in dictNumbers.keys():
+        if key in string.lower():
+            return dictNumbers[key] 
+    return 0
 def cleanBrackets(string)->str:
     while(has_identifier(string, "[") or has_identifier(string, "]")):
         x = string[string.index('['):string.index(']')+1]
@@ -1445,13 +1504,30 @@ def scrapingDegree(NAME)->d:
 if __name__ == "__main__":
     #electiveProcessing(process_requiremnt_html())
     
-    #convertCSVToCourseObject()
-    #list_degree_frame = parseDegreeRequiremnts("CS")
-    #degreeReq = parseThroughClasses(list_degree_frame)
-    
+    convertCSVToCourseObject()
+    list_degree_frame = parseDegreeRequiremnts("SE")
+    degreeReq = parseThroughClasses(list_degree_frame)
+    degreeReq.convertDegreeToCSV("SE")
+    #print(degreeReq.getDataForWebsite())
+
+
     #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq)
-    getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
+#    getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
+
+
+
+    """
+    TEST = "https://catalog.drexel.edu/undergraduate/schoolofeconomics/economicsminor/index.html"
+    course_catalog = requests.get(TEST).text
+    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+    course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
+    for url in getUrlsMinors():
+        print(url)
+    degreeReq = pd.read_html(str(course_list))
+    """
+
+
 
     """
     convertCSVToCourseObject()

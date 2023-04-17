@@ -1,0 +1,46 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CS 260,3.0,DS,0,0,False
+DSCI 351,3.0,DS,0,0,False
+DSCI 471,3.0,DS,0,0,False
+INFO 101,3.0,DS,0,0,False
+INFO 102,3.0,DS,0,0,False
+INFO 103,3.0,DS,0,0,False
+INFO 202,3.0,DS,0,0,False
+INFO 210 | CS 461,3.0,DS,4,0,False
+INFO 212,3.0,DS,0,0,False
+INFO 213,3.0,DS,0,0,False
+INFO 215,3.0,DS,0,0,False
+INFO 250,3.0,DS,0,0,False
+INFO 323,3.0,DS,0,0,False
+INFO 332,3.0,DS,0,0,False
+INFO 432,3.0,DS,0,0,False
+INFO 440,3.0,DS,0,0,False
+INFO 442,3.0,DS,0,0,False
+Elective,6.0,CCI,1,0,False
+CS 260 | CS 380 | CS 383 | INFO 200 | INFO 300 | INFO 315 | INFO 350 | INFO 355 | INFO 420,6.0,DS,6,0,False
+CI 101,2.0,CI,0,0,False
+CI 102,2.0,CI,0,0,False
+CI 103,2.0,CI,0,0,False
+CI 491 [WI],3.0,CI,0,0,False
+CI 492 [WI],3.0,CI,0,0,False
+CI 493 [WI],3.0,CI,0,0,False
+CS 171,3.0,CI,0,0,False
+CS 172,3.0,CI,0,0,False
+CS 265,3.0,CI,0,0,False
+MATH 121,4.0,MTH,0,0,False
+MATH 122,4.0,MTH,0,0,False
+MATH 180,4.0,MTH,0,0,False
+MATH 201,4.0,MTH,0,0,False
+STAT 201,4.0,Stat,0,0,False
+STAT 202,4.0,Stat,0,0,False
+elective,8.0,Science,1,0,False
+ENGL 101 | ENGL 111,3.0,HUM,4,0,False
+ENGL 102 | ENGL 112,3.0,HUM,4,0,False
+ENGL 103 | ENGL 113,3.0,HUM,4,0,False
+COM 230 | COM 310,3.0,HUM,4,0,False
+Elective,6.0,"Arts & Humanities, Business, or Social Studies",1,0,False
+CIVC 101,1.0,Unv,0,0,False
+COOP 101,1.0,Unv,0,0,False
+UNIV CI101 | CI 120,2.0,Unv,4,0,False
+Elective,21.0,Special,1,0,False
+Total,186.0,Special,1,0,False

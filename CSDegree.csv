@@ -1,41 +1,41 @@
-Sequence,Credits,Type,Flag,Taken
-CS 164,3.0,CS,0,False
-CS 171 | CS 175,3.0,CS,4,False
-CS 172 | CS 176,3.0,CS,4,False
-CS 260,3.0,CS,0,False
-CS 265,3.0,CS,0,False
-CS 270,3.0,CS,0,False
-CS 277,3.0,CS,0,False
-CS 281,4.0,CS,0,False
-CS 283,3.0,CS,0,False
-CS 360,3.0,CS,0,False
-SE 181,3.0,CS,0,False
-SE 310,3.0,CS,0,False
-Elective,6.0,Computer Science,1,False
-CI 101,2.0,CI,0,False
-CI 102,2.0,CI,0,False
-CI 103,2.0,CI,0,False
-CI 491 [WI],3.0,CI,0,False
-CI 492 [WI],3.0,CI,0,False
-CI 493 [WI],3.0,CI,0,False
-MATH 121,4.0,MTH,0,False
-MATH 122,4.0,MTH,0,False
-MATH 123,4.0,MTH,0,False
-MATH 200,4.0,MTH,0,False
-MATH 201,4.0,MTH,0,False
-MATH 221,3.0,MTH,0,False
-MATH 311,4.0,MTH,0,False
-BIO 131 & BIO 134 & BIO 132 & BIO 135 & BIO 133 & BIO 136 ^ CHEM 101 & CHEM 102 & CHEM 103 ^ PHYS 101 & PHYS 102 & PHYS 201,19.0,SCI,3,False
-Elective,19.0,Additional science,1,False
-COM 230,3.0,HUM,0,False
-ENGL 101 | ENGL 111,3.0,HUM,4,False
-ENGL 102 | ENGL 112,3.0,HUM,4,False
-ENGL 103 | ENGL 113,3.0,HUM,4,False
-PHIL 311,3.0,HUM,0,False
-Elective,6.0,Writing & Communication,1,False
-Elective,18.0,"Arts & Humanities, Business, or Social Studies",1,False
-UNIV CI101 | CI 120,2.0,Unv,4,False
-CIVC 101,1.0,Unv,0,False
-COOP 101,1.0,Unv,0,False
-Elective,21.5,Special,1,False
-Total,186.5,Special,1,False
+Sequence,Credits,Type,Flag,Num,Taken
+CS 164,3.0,CS,0,0,False
+CS 171 | CS 175,3.0,CS,4,0,False
+CS 172 | CS 176,3.0,CS,4,0,False
+CS 260,3.0,CS,0,0,False
+CS 265,3.0,CS,0,0,False
+CS 270,3.0,CS,0,0,False
+CS 277,3.0,CS,0,0,False
+CS 281,4.0,CS,0,0,False
+CS 283,3.0,CS,0,0,False
+CS 360,3.0,CS,0,0,False
+SE 181,3.0,CS,0,0,False
+SE 310,3.0,CS,0,0,False
+Elective,6.0,Computer Science,1,0,False
+CI 101,2.0,CI,0,0,False
+CI 102,2.0,CI,0,0,False
+CI 103,2.0,CI,0,0,False
+CI 491 [WI],3.0,CI,0,0,False
+CI 492 [WI],3.0,CI,0,0,False
+CI 493 [WI],3.0,CI,0,0,False
+MATH 121,4.0,MTH,0,0,False
+MATH 122,4.0,MTH,0,0,False
+MATH 123,4.0,MTH,0,0,False
+MATH 200,4.0,MTH,0,0,False
+MATH 201,4.0,MTH,0,0,False
+MATH 221,3.0,MTH,0,0,False
+MATH 311,4.0,MTH,0,0,False
+BIO 131 & BIO 134 & BIO 132 & BIO 135 & BIO 133 & BIO 136 ^ CHEM 101 & CHEM 102 & CHEM 103 ^ PHYS 101 & PHYS 102 & PHYS 201,19.0,SCI,3,0,False
+Elective,19.0,Additional science,1,0,False
+COM 230,3.0,HUM,0,0,False
+ENGL 101 | ENGL 111,3.0,HUM,4,0,False
+ENGL 102 | ENGL 112,3.0,HUM,4,0,False
+ENGL 103 | ENGL 113,3.0,HUM,4,0,False
+PHIL 311,3.0,HUM,0,0,False
+Elective,6.0,Writing & Communication,1,0,False
+Elective,18.0,"Arts & Humanities, Business, or Social Studies",1,0,False
+UNIV CI101 | CI 120,2.0,Unv,4,0,False
+CIVC 101,1.0,Unv,0,0,False
+COOP 101,1.0,Unv,0,0,False
+Elective,21.5,Special,1,0,False
+Total,186.5,Special,1,0,False
