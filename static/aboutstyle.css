@@ -6,8 +6,6 @@
 
 .container {
     text-align: center;
-    background-image: linear-gradient(#eeeeee, #d3d0c9 );
-
 }
 
 .row {
@@ -44,14 +42,6 @@
     box-sizing: border-box;
 }
 
-.team3 {
-    margin: 10px;
-    padding: 22px;
-    max-width: 30%;
-    cursor: pointer;
-    transition: 0.4s;
-    box-sizing: border-box;
-}
 
 .team4 {
     margin: 10px;
@@ -69,18 +59,16 @@
 }
 
 .team2:hover {
-    background: #aebcc4;
+    background: #d7c7ff;
     border-radius: 12px;
+    box-shadow: 0px 0px 10px #825fd3;
 }
 
-.team3:hover {
-    background: #d3cbc7;
-    border-radius: 12px;
-}
 
 .team4:hover {
-    background: #c1ccca;
+    background: #d7eaff;
     border-radius: 12px;
+    box-shadow: 0px 0px 10px #8ddbf9;
 }
 .team1 img {
     width: 180px;
@@ -90,12 +78,9 @@
     width: 180px;
     height: 200px;
 }
-.team3 img {
-    width: 180px;
-    height: 200px;
-}
+
 .team4 img {
-    width: 180px;
+    width: 175px;
     height: 200px;
 }
 .name {
@@ -103,6 +88,7 @@
     font-weight: bold;
     font-size: 16px;
     text-transform: uppercase;
+    color: #4a5894;
 }
 
 .title {
@@ -115,3 +101,32 @@
     font-weight: lighter;
     color: #4e4e4e;
 }
+
+nav {
+    overflow: hidden;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  nav li {
+    margin: 0 10px;
+  }
+  
+  nav a {
+    display: block;
+    color: #7c8bb7;
+    text-align: right;
+    padding: 18px 20px;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    background-color: #d7defe;
+    color: rgb(91, 84, 179);
+  }   
