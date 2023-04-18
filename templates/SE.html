@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <title> Software Engineering Major</title>
-
-
+<ul>
+        <li><a href = "{{ url_for('index') }}">Home</a></li>
+        <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
+    </ul>
+    <h1> Welcome to Software Engineering's Plan of Study Page </h1>
+    <body
     <form action="{{ url_for('temp') }}" method="post" id="form">
         <div class="SEmajor">
         <fieldset>
            
-           <legend>Select Your Major  </legend>  
-            <select class = "dropdown">
-                <option value = "CS" selected> Software Engineering </option>
+           <legend>Select Your Major</legend>  
+                <option value = "SE" selected> SOFTWARE ENGINEERING </option>
              </select>
         </fieldset>
         <fieldset>
@@ -119,9 +122,12 @@
         console.log(major);
     })
    </Script>
-
+</body>
 
 <style>
+    .body{
+        background-color: #e2f1bd;
+    }
     .SEmajor{
       margin: 10px 0;
       padding: 10px;
@@ -130,7 +136,7 @@
     /* styles for legends */
     legend {
       font-weight: bold;
-      color: #292c3b;
+      color: #4a5894;
       font-size: 1.2em;
     }
     
@@ -146,7 +152,7 @@
     
     /* styles for submit button */
     input[type="submit"] {
-      background-color: #99a6cc;
+      background-color: #7c8bb7;
       border: none;
       color: #fff;
       padding: 10px 20px;
@@ -154,11 +160,12 @@
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
+      
     }
     
     /* styles for the form */
     #form {
-      background-color: #e5e4e5;
+      background-image: linear-gradient(#f8f4f8, #b5d4f9) ;
       padding: 20px;
       border-radius: 5px;
       width: 500px;
@@ -167,7 +174,39 @@
     
     /* styles for the fieldset borders based on selection */
     fieldset:focus-within {
-      border: 1px solid #bfbab5;
+      border: 3px solid #bfbab5;
     }
+    h1{
+        text-align: center;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #4a5894;
+    }
+nav {
+  overflow: hidden;
+}
 
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  display: block;
+  color: #7c8bb7;
+  text-align: right;
+  padding: 18px 20px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #d7defe;
+  color: rgb(91, 84, 179);
+}   
 </style>
