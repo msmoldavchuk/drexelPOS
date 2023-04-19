@@ -10,25 +10,27 @@
         <nav>
         <div class="nav-links" id = "navLinks">
             <i class = "fa fa-times" onclick="hideMenu()"></i>
-            <div style = "text-align:left;"><img src= "{{ url_for('static', filename='mainlogo.png') }}" class="logo"></div>
+            <div style = "text-align:left;"><img src= "{{ url_for('static', filename='logo_yellow.png') }}" class="logo"></div>
             <ul>
                 <link rel="stylesheet" href="{{ url_for ('static' ,filename='style.css') }}">
                 <li class="active"><a href = "{{ url_for('index') }}">Home</a></li> 
-               <li><a href=''>POS</a></li> 
-               <li><a href=''>Plan</a></li>
-               <li><a href=''>Degreework</a></li>
+                <li class="active"><a href = "{{ url_for('allmajor') }}">POS</a></li> 
                <li class="active"><a href = "{{ url_for('about') }}">About Us</a></li>
             </ul>
         </div>
+
+        <div style="display: flex; justify-content: center;">
         <i class = "fa fa-times" onclick= "showMenu()"></i>
         <div class="degreework">
             <h1>POS. CAUSE PLANNING IS HARD</h1>
             <p>Transform Your Study Habits with the Power of Planning. We're Here to Help </p>
         <div>
-            <a href="{{ url_for('cs') }}">
+            <a href="{{ url_for('allmajor') }}">
                 <button type="button"><span></span>Generate POS</button>
             </a>
-            <button type="button"><span></span>Degree Requirements</button>
+            <a href="{{ url_for('advising')}}">
+            <button type="button"><span></span>Extra Resources</button>
+            </a>
         </div>
         </nav>
      </section>
@@ -75,56 +77,12 @@
    </div>
 </section >
 
-
-
-<!------Extra resources from advising CCI------->
-<section class="Academic">
-    <h1>Academic Planning</h1>
-    <div class="row">
-
-        <div class="planning-col">
-            <h3>Transfer in Courses</h3>
-            <p> In certain situations, students can take courses outside of Drexel and have  them transfer back to Drexel.   </p>
-            <h4>Policies for transfer of undergraduate credit:</h4>
-            <p>
-        + Transfer credit will be given for any pre-approved course for which you received a grade of "C" or better.<br>
-        + A maxium of 90 transfer credits earned at an outside institution can count towards CCI degree. </p>
-        </div>
-    
-        <div class="planning-col">
-            <h3> Registration</h3>
-            <h4>Waitlists</h4>
-            <p>
-            + Students should always add themselves to a waitlist if possible.<br>
-            + Students cannot waitlist for different sections of course they are already registered for.<br>
-            + Waitlists are removed from all courses University-wide on Tuesday before week 1. 
-            At this point, the first eligible person to see an available seat can grab it.
-            </p>
-            <h4>Overrides</h4>
-            <p>
-            There is not guaranteed, even for seniors. Please see below for more information on NEED vs. WANT<br>
-            + Need = you have NO OTHER course options or times when you can take the course without pushing out graduation.<br>
-            + Want = your prefer it, but have other options<br>
-            If you determined NEED a course and you are encountering an error when you try to register or add ourself to the waitlist, please complette the ______
-            
-            </p>
-        </div>
-    
-        <div class="planning-col">
-            <h3>Minor</h3>
-            <p>In order to declare a minor, studnets must:<br>
-                +Have completed a minimum of 30 credits<br>
-                +Demonstrate that completion of the minor will be achieved at or before the time of graduation<br>
-            Once you have determined that you want to move forward with adding the major, you will need email the minor
-            advisor to request the minor.
-
-            </p>
-        </div>
-    
-       </div>
-
-
-</section>
+<style>
+    body{
+      border: 9px solid #dbd2fd;
+      
+ }
+</style>
 
 <!--Javascript for the menu-->
 <script>

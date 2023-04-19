@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <title> Computer Science Major</title>
+<ul>
+        <li><a href = "{{ url_for('index') }}">Home</a></li>
+        <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
+    </ul>
 
-    <h1> Welcome to the CS POS page</h1>
+    <h1> Welcome to Computer Science's Plan of Study Page</h1>
+    <body
     <form action="{{ url_for('csPOS') }}" method="post" id="form">
         <fieldset>
-            <legend>Select Your Major </legend>
-            <select name = "dropdown">
-                <option value = "CS" selected>Computer Science</option>
-             </select>
+            <legend> Your Selected Major  </legend>  
+            <option value = "CS" selected> COMPUTER SCIENCE </option>
         </fieldset>
         <fieldset>
-            <legend>Please Select The Type Of Degree</legend>
+            <legend>Please Select The Type Of Degree </legend>
             <input type="radio" name="degree" value="4">4 Year<br>
             <input type="radio" name="degree" value="5">5 Year<br>
         </fieldset>
         <fieldset>
-            <legend>Please Select Co-op Cycle</legend>
-            <input type="radio" name="coop" value="FW">Fall Winter<br>
-            <input type="radio" name="coop" value="SS">Spring Summer<br>
+            
+            <legend>Please Select Co-op Cycle </legend>
+            <input type="radio" name="coop" value="FW">Fall - Winter<br>
+            <input type="radio" name="coop" value="SS">Spring - Summer<br>
         </fieldset>
         <fieldset>
-            <legend>Please Select A Science Sequence</legend>
+            
+            <legend>Please Select A Science Sequence </legend>
             <input type="radio" name="sequence" value="PHYS">Physics<br>
             <input type="radio" name="sequence" value="CHEM">Chemistry<br>
             <input type="radio" name="sequence" value="BIO">Biology<br>
         </fieldset>
 
         <fieldset>  
-            <legend>Pick 2 concentrations</legend>  
+            <legend>Pick Two Concentrations</legend>  
             <input type="checkbox" name="Concentration" value="Algorithms and Theory" onclick="return ValidateConcentrationSelection();">Algorithms and Theory<br>  
             <input type="checkbox" name="Concentration" value="Artificial Intelligence and Machine Learning" onclick="return ValidateConcentrationSelection();">Artificial Intelligence and Machine Learning<br>  
             <input type="checkbox" name="Concentration" value="Computer Graphics, Vision, and Interaction" onclick="return ValidateConcentrationSelection();">Computer Graphics, Vision, and Interaction<br>  
@@ -37,9 +42,12 @@
             <input type="checkbox" name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br>  
             <input type="checkbox" name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br>
             <br>  
-            <input type="submit" value="Submit now">  
+            <input type="submit" value="Submit now"> 
         </fieldset>  
-    </form>  
+    </div>
+    
+    </form> 
+</body>
         
         <script type="text/javascript">  
         function ValidateConcentrationSelection()  
@@ -147,6 +155,9 @@
 
 
 <style>
+    .body{
+        background-color: #e2f1bd;
+    }
     .CSmajor{
       margin: 10px 0;
       padding: 10px;
@@ -155,7 +166,7 @@
     /* styles for legends */
     legend {
       font-weight: bold;
-      color: #292c3b;
+      color: #4a5894;
       font-size: 1.2em;
     }
     
@@ -171,7 +182,7 @@
     
     /* styles for submit button */
     input[type="submit"] {
-      background-color: #99a6cc;
+      background-color: #7c8bb7;
       border: none;
       color: #fff;
       padding: 10px 20px;
@@ -179,11 +190,12 @@
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
+      
     }
     
     /* styles for the form */
     #form {
-      background-color: #e5e4e5;
+      background-image: linear-gradient(#f8ecf7, #a5caf4) ;
       padding: 20px;
       border-radius: 5px;
       width: 500px;
@@ -192,7 +204,39 @@
     
     /* styles for the fieldset borders based on selection */
     fieldset:focus-within {
-      border: 1px solid #bfbab5;
+      border: 3px solid #bfbab5;
     }
+    h1{
+        text-align: center;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #4a5894;
+    }
+nav {
+  overflow: hidden;
+}
 
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  display: block;
+  color: #7c8bb7;
+  text-align: right;
+  padding: 18px 20px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #d7defe;
+  color: rgb(91, 84, 179);
+}   
 </style>

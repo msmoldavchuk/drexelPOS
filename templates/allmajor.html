@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <meta name="viewport" ontent="width=device-width, initial-scale=1; shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <title> Computing and Informatic Majors</title>
+    <h2> Please Choose Your Major</h2>
+</head>
+<body>
+<div class="position-absolute top-left">
+<a href = url_for('degree', degreename='CS'>
+<button type="button"><span></span>Computer Science</button> </a>
+</div>   
+
+<div class="position-absolute top-right">
+<a href = url_for('degree', degreename='SE'>
+<button type="button"><span></span>Software Engineering</button> </a>
+</div>
+
+<div class="position-absolute mid-left">
+<a href = "url_for('degree', degreename='DS'> 
+<button type="button" ><span></span> Data Science</button> </a>
+</div>
+
+<div class="position-absolute mid-right">
+<a href = url_for('degree', degreename='CST'>
+<button type="button"><span></span> Computing and Security Technology</button></a>
+</div>
+
+<div class="position-absolute bottom-left">
+<a href = url_for('degree', degreename='EDS'>
+<button type="button"><span></span> Economics and Data Science</button> </a>
+</div>
+
+<div class="position-absolute bottom-right">
+<a href = url_for('degree', degreename='IS'>
+<button type="button"><span></span>Information Systems</button></a>
+</div>
+
+<div class="position-absolute mid-center">
+<img src="{{ url_for('static', filename='drexelsymbol.png') }}"  height="700px" width="1000px >
+</div>
+
+<style>
+body{
+    background-image: "{{ url_for('drexelsymbol.png') }}";
+    background-image: linear-gradient(#f8ecf7, #a5caf4);
+}
+
+h2 {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+    color: #002f6c;
+    font-family: 'Mixa Semi Bold';
+}
+button{
+       width: 300px;
+       padding: 20px 0;
+       text-align: center;
+       margin: 20px 10px;
+       border-radius: 30px;
+       font-weight: bold;
+       border: 3px solid #99a6cc;
+       background: #d7def1;
+       color: #1d365a;
+       cursor: pointer;
+       position: relative;
+       overflow: hidden;
+}
+/* #99a6cc
+#d7def1    */
+
+.top-left {
+            top: 10;
+            left: 0;
+        }
+.top-right {
+            top: 10;
+            right: 0;
+        }
+
+.mid-left {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+.mid-right {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+.bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+.bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+.mid-center {
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+</style>

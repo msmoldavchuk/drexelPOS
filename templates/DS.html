@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<title> Software Engineering Major</title>
-<ul>
+<title> Data Science Major</title>
+<nav>
+    <ul>
         <li><a href = "{{ url_for('index') }}">Home</a></li>
         <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
     </ul>
-    <h1> Welcome to Software Engineering's Plan of Study Page </h1>
-    <body
+<h1> Welcome to Data Science's Plan of Study Page</h1>
+<body
     <form action="{{ url_for('temp') }}" method="post" id="form">
-        <div class="SEmajor">
+        <div class="DSmajor">
         <fieldset>
            
-           <legend>Select Your Major</legend>  
-                <option value = "SE" selected> SOFTWARE ENGINEERING </option>
-             </select>
+           <legend>Your Selected Major </legend>  
+            <option value = "DS" selected> DATA SCIENCE </option>
+    
         </fieldset>
         <fieldset>
             
@@ -26,19 +27,18 @@
             <input type="radio" name="coop" value="FW">Fall - Winter<br>
             <input type="radio" name="coop" value="SS">Spring - Summer<br>
         </fieldset>
-        <fieldset>
-            
-            <legend>Please Select A Science Sequence </legend>
-            <input type="radio" name="sequence" value="PHYS">Physics<br>
-            <input type="radio" name="sequence" value="CHEM">Chemistry<br>
-            <input type="radio" name="sequence" value="BIO">Biology<br>
-        </fieldset>
 
         <fieldset>
             <legend>Please Select Two Of The Following </legend>  
-            <input type="checkbox" name="Business" value="ACCT 110" onclick="return ValidateBusinessSelection();">ACCT 110 - Accounting for Professionals <br>  
-            <input type="checkbox" name="Business" value="ECON 201" onclick="return ValidateBusinessSelection();">ECON 201 - Principles of Microeconomics	<br>  
-            <input type="checkbox" name="Business" value="ECON 202" onclick="return ValidateBusinessSelection();">ECON 202 - Principles of Macroeconomics	<br> 
+            <input type="checkbox" name="DataE" value="CS 270" onclick="return ValidateDataESelection();">CS 270 - Mathematical Foundations of Computer Science <br>  
+            <input type="checkbox" name="DataE" value="CS 380" onclick="return ValidateDataESelection();">CS 380 - Artificial Intelligences	<br>  
+            <input type="checkbox" name="DataE" value="CS 383" onclick="return ValidateDataESelection();">CS 383 - Machine Learning<br> 
+            <input type="checkbox" name="DataE" value="INFO 200" onclick="return ValidateDataESelection();">INFO 200 - Systems Analysis I <br>  
+            <input type="checkbox" name="DataE" value="INFO 300" onclick="return ValidateDataESelection();">INFO 300 - Information Retrieval Systems	<br>  
+            <input type="checkbox" name="DataE" value="INFO 315" onclick="return ValidateDataESelection();">INFO 315 - Advanced Database Management Systems	<br> 
+            <input type="checkbox" name="DataE" value="INFO 350" onclick="return ValidateDataESelection();">INFO 350 - Visual Analytics <br>  
+            <input type="checkbox" name="DataE" value="INFO 355" onclick="return ValidateDataESelection();">INFO 355 - Systems Analysis II	<br>  
+            <input type="checkbox" name="DataE" value="INFO 420" onclick="return ValidateDataESelection();">INFO 420 - Software Project Management	<br> 
             <br>  
             <input type="submit" value="Submit now">  
     </div>
@@ -46,9 +46,9 @@
 
         
         <script type="text/javascript">  
-        function ValidateBusinessSelection()  
+        function ValidateDataESelection()  
         {  
-            var checkboxes = document.getElementsByName("Business");  
+            var checkboxes = document.getElementsByName("DataE");  
             var numberOfCheckedItems = 0;  
             for(var i = 0; i < checkboxes.length; i++)  
             {  
@@ -57,11 +57,11 @@
             }  
             if(numberOfCheckedItems > 2)  
             {  
-                alert("You can't select more than two business requirements!");  
+                alert("You can't select more than two data electives!");  
                 return false;  
             }  
         }
-        function displaySubBusinessList() {
+        function displaySubDataEList() {
             var label= document.createElement("label");
             var description = document.createTextNode("");
             var checkbox = document.createElement("input");
@@ -76,24 +76,24 @@
         e.preventDefault();
         let year = data.elements.degree.value;
         let major = data.elements.dropdown.value;
-        let business = [];
+        let datascience = [];
         let coop = data.elements.coop.value;
         if (coop == "FW") {
             coop = false;
         } else {
             coop = true;
         }
-        for (let i = 0; i < data.elements.Business.length; i++) {
-            if (data.elements.Business[i].checked) {
-                business.push(data.elements.Business[i].value);
+        for (let i = 0; i < data.elements.DataE.length; i++) {
+            if (data.elements.DataE[i].checked) {
+                datascience.push(data.elements.DataE[i].value);
             }
         }
         let form = {
             major: major,
             coop : coop,
             sequence : data.elements.sequence.value,
-            business1 : business[0],
-            business2 : business[1],
+            datascience1 : datasciences[0],
+            datascience2 : datasciences[1],
             year : year
 
         };
@@ -122,13 +122,14 @@
         console.log(major);
     })
    </Script>
-</body>
+
 
 <style>
     .body{
         background-color: #e2f1bd;
     }
-    .SEmajor{
+
+    .DSmajor{
       margin: 10px 0;
       padding: 10px;
       
@@ -165,7 +166,7 @@
     
     /* styles for the form */
     #form {
-      background-image: linear-gradient(#f8f4f8, #b5d4f9) ;
+      background-image: linear-gradient(#f8ecf7, #a5caf4) ;
       padding: 20px;
       border-radius: 5px;
       width: 500px;
