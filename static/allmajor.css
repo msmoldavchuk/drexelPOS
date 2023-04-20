@@ -17,7 +17,6 @@ button{
        border-radius: 30px;
        font-weight: bold;
        border: 3px solid #99a6cc;
-       background: #d7def1;
        color: #1d365a;
        cursor: pointer;
        position: relative;
@@ -52,4 +51,31 @@ button{
             bottom: 0;
             right: 0;
         }
-
+nav {
+    overflow: hidden;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  nav li {
+    margin: 0 10px;
+  }
+  
+  nav a {
+    display: block;
+    color: #7c8bb7;
+    text-align: right;
+    padding: 18px 20px;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    background-color: #d7defe;
+    color: rgb(91, 84, 179);
+  }   
