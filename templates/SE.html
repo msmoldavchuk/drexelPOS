@@ -5,7 +5,7 @@
         <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
     </ul>
     <h1> Welcome to Software Engineering's Plan of Study Page </h1>
-    <body
+    <body>
     <form action="{{ url_for('sePOS') }}" method="post" id="form">
         <div class="SEmajor">
         <fieldset>
@@ -74,10 +74,9 @@
     let data = document.getElementById("form");
     data.addEventListener("submit", function(e){
         e.preventDefault();
-        let year = data.elements.degree.value;
-        let major = data.elements.dropdown.value;
         let business = [];
         let coop = data.elements.coop.value;
+        let year = data.elements.degree.value;
         if (coop == "FW") {
             coop = false;
         } else {
@@ -89,7 +88,6 @@
             }
         }
         let form = {
-            major: major,
             coop : coop,
             sequence : data.elements.sequence.value,
             business: business,
@@ -119,13 +117,13 @@
         .catch(err => console.log(err))
 
         console.log(name);
-        console.log(major);
+
     })
    </Script>
 </body>
 
 <style>
-    .body{
+    body{
         background-color: #e2f1bd;
     }
     .SEmajor{
