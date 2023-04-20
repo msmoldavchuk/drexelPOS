@@ -25,23 +25,23 @@ button{
 
 
 .top-left {
-            top: 10%;
+            top: 10;
             left: 0;
         }
 .top-right {
-            top: 10%;
+            top: 10;
             right: 0;
         }
 
 .mid-left {
-            top: 50%;
+            top: 30;
             left: 0;
-            transform: translateY(-50%);
+           
         }
 .mid-right {
-            top: 50%;
+            top: 30;
             right: 0;
-            transform: translateY(-50%);
+            
         }
 .bottom-left {
             bottom: 0;
@@ -51,6 +51,7 @@ button{
             bottom: 0;
             right: 0;
         }
+        
 nav {
     overflow: hidden;
   }
