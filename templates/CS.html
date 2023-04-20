@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <title> Computer Science Major</title>
-<ul>
+    <ul>
         <li><a href = "{{ url_for('index') }}">Home</a></li>
         <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
     </ul>
 
     <h1> Welcome to Computer Science's Plan of Study Page</h1>
-    <body
-    <form action="{{ url_for('csPOS') }}" method="post" id="form">
+<body>
+    <form action='/csPOS/data' method="post" id="form">
         <fieldset>
             <legend> Your Selected Major  </legend>  
             <option value = "CS" selected> COMPUTER SCIENCE </option>
@@ -41,11 +41,12 @@
             <input type="checkbox" name="Concentration" value="Game Programming and Development" onclick="return ValidateConcentrationSelection();">Game Programming and Development<br>  
             <input type="checkbox" name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br>  
             <input type="checkbox" name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br>
-            
-        </fieldset>  
-        <br>  
+            <br>  
             <input type="submit" value="Submit now"> 
-    </div>
+        </div>
+        </fieldset>  
+       
+    
     
     </form> 
 </body>
@@ -78,12 +79,13 @@
         </tr>
 
     </p>
+
    <Script>
     let data = document.getElementById("form");
     data.addEventListener("submit", function(e){
         e.preventDefault();
         let year = data.elements.degree.value;
-        let major = data.elements.dropdown.value;
+
         let concentrations = [];
         let coop = data.elements.coop.value;
         if (coop == "FW") {
@@ -97,7 +99,7 @@
             }
         }
         let form = {
-            major: major,
+            major: "CS",
             coop : coop,
             sequence : data.elements.sequence.value,
             concentration1 : concentrations[0],
@@ -106,10 +108,10 @@
 
         };
 
-        fetch('{{url_for("csPOS")}}', {
+        fetch('/csPOS/data', {
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json' 
             },
             method: 'POST',
             body: JSON.stringify(form)
@@ -149,14 +151,14 @@
         
     }).catch(err => console.log(err))
         console.log(name);
-        console.log(major);
+
     })
    </Script>
 
 
 
 <style>
-    .body{
+    body{
         background-color: #e2f1bd;
     }
     .CSmajor{
