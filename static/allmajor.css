@@ -1,5 +1,4 @@
 body{
-    background-image: {{ url_for('static', filename='drexelsymbol.png') }};
     background-image: linear-gradient(#f8ecf7, #a5caf4);
 }
 
@@ -27,11 +26,11 @@ button{
 
 
 .top-left {
-            top: 10;
+            top: 10%;
             left: 0;
         }
 .top-right {
-            top: 10;
+            top: 10%;
             right: 0;
         }
 
@@ -53,8 +52,4 @@ button{
             bottom: 0;
             right: 0;
         }
-.mid-center {
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-        }
+
