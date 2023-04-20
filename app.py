@@ -37,10 +37,14 @@ def csPOS():
         conc1 = data.get('concentration1')
         conc2 = data.get('concentration2')
         concentrationArray = [[conc1, hardCodeDictoanary.get(conc1)], [conc2, hardCodeDictoanary.get(conc2)]]
-        data = scrapper.getPlanOfStudy(NAME=data.get('major'),SPRINGSUMMERCOOP=data.get('coop'),SEQUENCES=[data.get('sequence')], CONCENTRATIONARRAY=concentrationArray)
+        data = scrapper.getPlanOfStudy("CS",SPRINGSUMMERCOOP=data.get('coop'),SEQUENCES=[data.get('sequence')], CONCENTRATIONARRAY=concentrationArray)
         return jsonify(data)
 
-   
+@app.route('/sePOS', methods=['GET', 'POST'])
+def sePOS():
+    if request.method == 'POST':
+        major = "SE"
+        data = request.get_json()
 #@app.route('/CS', methods=['GET', 'POST'])
 #def cs():
 #    return render_template('CS.html')
