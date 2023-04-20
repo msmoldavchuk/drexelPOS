@@ -45,6 +45,7 @@ def sePOS():
     if request.method == 'POST':
         major = "SE"
         data = request.get_json()
+        output = scrapper.getPlanOfStudy(major, SPRINGSUMMERCOOP=data.get('coop'), SEQUENCES=[data.get('sequence'),data.get('business')], CONCENTRATIONARRAY=[["Software Engineering",["SE 320","SE 410","SE 450"]]])
 #@app.route('/CS', methods=['GET', 'POST'])
 #def cs():
 #    return render_template('CS.html')
