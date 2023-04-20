@@ -169,10 +169,12 @@ def getUrlsMinors() -> list:
 
     for list_courses in parsed_course_catalog:
         #urls in each list
-        urls = list_courses.find_all('a')
-        for url in urls:
-            print("https://catalog.drexel.edu" + url.get('href'))
-            listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
+        div_list_courses_p = list_courses.find_all('p')
+        for pItem in div_list_courses_p:
+            urls = pItem.find_all('a')
+            for url in urls:
+                print("https://catalog.drexel.edu" + url.get('href'))
+                listofUrls.append("https://catalog.drexel.edu" + url.get('href'))
     return listofUrls
 
 def getUrls() -> list:
@@ -1521,7 +1523,7 @@ if __name__ == "__main__":
     #print(degreeReq)
     #getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
 
-    
+    """
     degreeReq = d()
     degreeReq.convertCSVToDegree("CS")
     print(degreeReq.getDataForWebsite())
@@ -1536,7 +1538,7 @@ if __name__ == "__main__":
                 print(concentration.loc[0,"Type"]) # line for visual clarity
                 for line in range(len(concentration.index)):
                     print(concentration.loc[line,"Sequence"])
-
+    """
     """
     TEST = "https://catalog.drexel.edu/undergraduate/schoolofeconomics/economicsminor/index.html"
     course_catalog = requests.get(TEST).text
@@ -1545,9 +1547,13 @@ if __name__ == "__main__":
     for url in getUrlsMinors():
         print(url)
     degreeReq = pd.read_html(str(course_list))
-    
     """
-
+    listUrl = getUrlsMinors()
+    course_catalog = requests.get(listUrl[0]).text
+    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+    course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
+    degreeReq = pd.read_html(str(course_list))
+    print(degreeReq)
 
     """
     convertCSVToCourseObject()
