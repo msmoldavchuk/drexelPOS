@@ -14,7 +14,9 @@ if __name__ == "__main__":
 @app.route('/')
 def index():
     return render_template('index.html')
-
+@app.route('/allmajors')
+def allmajors():
+    return render_template('allmajors.html')
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -22,7 +24,9 @@ def about():
 @app.route('/Plan')
 def plan():
     return render_template('plan.html')
-
+@app.route('/allmajor')
+def allmajor():
+    return render_template('allmajor.html')
 #routes for CS pos generation 
 @app.route('/csPOS/data', methods=['GET', 'POST'])
 def csPOS():
@@ -37,9 +41,12 @@ def csPOS():
         return jsonify(data)
 
    
-@app.route('/CS', methods=['GET', 'POST'])
-def cs():
-    return render_template('CS.html')
+#@app.route('/CS', methods=['GET', 'POST'])
+#def cs():
+#    return render_template('CS.html')
+@app.route('/degree/<degreename>', methods=['GET', 'POST'])
+def degree(degreename):
+    return render_template(f'{degreename}.html')
 
 
 #test routes
