@@ -4,35 +4,37 @@
     <meta name="viewport"  content="with=device-width, initial-scale=1.0">
     <title> Drexel University's Plan of Study</title>
 </head>
-<body>
+
+<body style="background-image: linear-gradient( #f8ecf7, #a5caf4);"> 
 <!---header section starts right here-->
+
      <section class="header">
         <nav>
         <div class="nav-links" id = "navLinks">
             <i class = "fa fa-times" onclick="hideMenu()"></i>
             <div style = "text-align:left;"><img src= "{{ url_for('static', filename='logo_yellow.png') }}" class="logo"></div>
+
             <ul>
                 <link rel="stylesheet" href="{{ url_for ('static' ,filename='style.css') }}">
                 <li class="active"><a href = "{{ url_for('index') }}">Home</a></li> 
                 <li class="active"><a href = "{{ url_for('allmajor') }}">POS</a></li> 
                <li class="active"><a href = "{{ url_for('about') }}">About Us</a></li>
             </ul>
-        </div>
+         </nav>
 
+        </div>
+        
         <div style="display: flex; justify-content: center;">
         <i class = "fa fa-times" onclick= "showMenu()"></i>
         <div class="degreework">
             <h1>POS. CAUSE PLANNING IS HARD</h1>
-            <p>Transform Your Study Habits with the Power of Planning. We're Here to Help </p>
+            <p>Transform Your Study Habits with the Power of Planning We're Here to Help </p>
         <div>
             <a href="{{ url_for('allmajor') }}">
                 <button type="button"><span></span>Generate POS</button>
             </a>
-            <a href="{{ url_for('advising')}}">
-            <button type="button"><span></span>Extra Resources</button>
-            </a>
         </div>
-        </nav>
+    </div> 
      </section>
 
 <!---------POS------------>
