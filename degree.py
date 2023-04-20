@@ -75,7 +75,7 @@ class Degree():
 
     def convertCSVToDegree(self, name):
         df = pd.read_csv(name + "Degree.csv",converters={3:literal_eval})
-        df.columns = ['Sequence', 'Credits', 'Type', "Flag","Num" "Taken"]
+        df.columns = ['Sequence', 'Credits', 'Type', "Flag","Num", "Taken"]
         for i in range(len(df.index)):
             df.loc[i,"Sequence"] = s(df.loc[i,"Sequence"])
         self.degreeFrame = df
@@ -84,7 +84,7 @@ class Degree():
         try:
             for i in range(1,9999):
                 concentrationDf = pd.read_csv(name + "Concentrations" + str(i) + ".csv",converters={3:literal_eval})
-                concentrationDf.columns = ['Sequence', 'Credits', 'Type', "Flag", "Num" "Taken"]
+                concentrationDf.columns = ['Sequence', 'Credits', 'Type', "Flag", "Num", "Taken"]
                 for j in range(len(concentrationDf.index)):
                     concentrationDf.loc[j,"Sequence"] = s(concentrationDf.loc[j,"Sequence"])
                
@@ -94,6 +94,9 @@ class Degree():
         except:
             if existenceIndex == -1:
                 self.concentrationsList = [[],[]]
+                self.requiredConcentration = False
+            else:
+                self.requiredConcentration = True
         self.fullDegree = df
 
 
@@ -193,7 +196,13 @@ class Degree():
                         self.selectScienceSequence(selection, dictonary)
                 elif self.degreeFrame.loc[i,"Flag"] == 6:
                     self.selectCourseList(selection)
-                    
+
+    # MASON READ THIS
+    # Returns an array containting arrays
+    # the sub arrays either contain
+    #   [Sequence object, Type(integer), number needed]
+    # or
+    #   [list of concentrations] (each item in the list is a dataframe and you want to display all the courses in the data frame)                
     def getDataForWebsite(self):
         dataArray = []
         for i in range(len(self.degreeFrame.index)):
@@ -202,6 +211,8 @@ class Degree():
                     dataArray.append([self.degreeFrame.loc[i,"Sequence"],self.degreeFrame.loc[i,"Type"],self.degreeFrame.loc[i,"Num"]])
             elif self.degreeFrame.loc[i,"Flag"] == 6:
                 dataArray.append([self.degreeFrame.loc[i,"Sequence"],self.degreeFrame.loc[i,"Type"],self.degreeFrame.loc[i,"Num"]])
+        if self.requiredConcentration:
+            dataArray.append([self.concentrationsList])
         return dataArray
 
 

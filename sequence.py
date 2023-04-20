@@ -11,6 +11,7 @@ class LinkedList:
             current.next = new_node
         else:
             self.head = new_node 
+
     def __str__(self):
         return str(self.head.data)
     def iterateThroughPrint(self):
@@ -50,6 +51,16 @@ class LinkedList:
             x = string[string.index('['):string.index(']')+1]
             string = string.replace(x,"")    
         return string
+
+    def websiteString(self):
+        cur = self.head
+        string = ""
+        while(True):
+            string += str(cur) + " +" 
+            if(cur.next is None):
+                break
+            cur = cur.next
+        return string[:len(string)-2]
 
 
     def checkForNull(self):
@@ -173,6 +184,12 @@ class Sequence:
     def getSequence(self):
         return self.courseArray
 
+    def displayWebsite(self):
+        displayArray = []
+        for course in self.courseArray:
+            displayArray.append(course.websiteString())
+        return displayArray
+        
 
 #-------------------------------------FORMATS SEQUENCE-----------------------------
     # recursivly formats courses
@@ -232,5 +249,7 @@ class Sequence:
         for course in self.courseArray:
             course.iterateThroughPrint()
             print("or")
+
+
 
 

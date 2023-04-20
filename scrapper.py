@@ -192,7 +192,7 @@ def getUrls() -> list:
 # processing algorithm for concentatrations
 # gets a list of dataframes as a paramaeter
 # returns a dataframe contaning a processed concentrartion
-def getConcentration(dfList)->pd.DataFrame:
+def getConcentration(dfList, name = "")->pd.DataFrame:
     concentrationList = [[],[]]
     for df in dfList:
         coursesNotPrimary = df.loc[:,'Courses']
@@ -208,6 +208,12 @@ def getConcentration(dfList)->pd.DataFrame:
         flagParsed = [] # 0 = no problem, 1 = elective, 2 = choose, 3 = sequence, 4 = or
         numParsed = []
 
+
+        gatheredData = {"CS":3}
+        try:
+            num = gatheredData[name]
+        except:
+            num = 0
         seqString = ""
 
         descriptorRequired = filterDescription(courses[0])
@@ -227,11 +233,11 @@ def getConcentration(dfList)->pd.DataFrame:
                     creditsParsed.append(credits[i])
                     descriptionsParsed.append(descriptorRequired)
                     flagParsed.append(2)
-                    numParsed.append(0)
+                    numParsed.append(num)
             elif len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"):
                 coursesParsed.append(courses[i])
                 creditsParsed.append(credits[i])
-                numParsed.append(0)
+                numParsed.append(num)
                 descriptionsParsed.append(descriptorRequired)
                 
                 if "*" in courseDesc[i]:
@@ -258,7 +264,7 @@ def getConcentration(dfList)->pd.DataFrame:
                 """   
                 seqFlag = True     
             else:               
-                dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Taken": False})
+                dfPart = pd.DataFrame({"Sequence": coursesParsed, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed,"Num":numParsed, "Taken": False})
                 coursesParsed = []
                 creditsParsed = []
                 descriptionsParsed = []
@@ -291,7 +297,7 @@ def filterDescription(string):
 # Filters through scrapped degree data 
 # Paramater is a list of dataframes formated with ("Courses", "Credits")
 # returns a degree object
-def parseThroughClasses(dfList)-> d: 
+def parseThroughClasses(dfList, name = "CS")-> d: 
 
     # turn columns of data frame into arrays
     coursesNotPrimary = dfList[0].loc[:,'Courses']
@@ -393,7 +399,7 @@ def parseThroughClasses(dfList)-> d:
             elif "concentration" in courses[i]:
                 concBoolean = True
                 concCredits = credits[i]
-                concList = getConcentration(dfList)
+                concList = getConcentration(dfList, name)
             elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
                 seqFlag = True  # if yes change modes
             elif "select" in courses[i] or "Select" in courses[i]:
@@ -1504,18 +1510,32 @@ def scrapingDegree(NAME)->d:
 if __name__ == "__main__":
     #electiveProcessing(process_requiremnt_html())
     
-    convertCSVToCourseObject()
-    list_degree_frame = parseDegreeRequiremnts("SE")
-    degreeReq = parseThroughClasses(list_degree_frame)
-    degreeReq.convertDegreeToCSV("SE")
+    #convertCSVToCourseObject()
+    #list_degree_frame = parseDegreeRequiremnts("CS")
+    #degreeReq = parseThroughClasses(list_degree_frame)
+    #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq.getDataForWebsite())
 
 
     #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq)
-#    getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
+    #getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
 
-
+    
+    degreeReq = d()
+    degreeReq.convertCSVToDegree("CS")
+    print(degreeReq.getDataForWebsite())
+    for data in degreeReq.getDataForWebsite():
+        if type(data[0]) == s:
+            for line in data[0].displayWebsite():
+                print(line.strip())
+            # data[1] is an internal flag (ask me questions)
+            # data[2] is the number they have to chose
+        else:
+            for concentration in data[0][0]:
+                print(concentration.loc[0,"Type"]) # line for visual clarity
+                for line in range(len(concentration.index)):
+                    print(concentration.loc[line,"Sequence"])
 
     """
     TEST = "https://catalog.drexel.edu/undergraduate/schoolofeconomics/economicsminor/index.html"
@@ -1525,8 +1545,8 @@ if __name__ == "__main__":
     for url in getUrlsMinors():
         print(url)
     degreeReq = pd.read_html(str(course_list))
+    
     """
-
 
 
     """

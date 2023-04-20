@@ -1,8 +1,8 @@
-Sequence,Credits,Type,Flag,Taken
-CS 300,3.0,Computer Security and Privacy,0,False
-CS 303,3.0,Computer Security and Privacy,0,False
-CS 377,3.0,Computer Security and Privacy,7,False
-CS 465,3.0,Computer Security and Privacy,0,False
-CS 475,3.0,Computer Security and Privacy,7,False
-CS 479,3.0,Computer Security and Privacy,0,False
-MATH 475,3.0,Computer Security and Privacy,0,False
+Sequence,Credits,Type,Flag,Num,Taken
+CS 300,3.0,Computer Security and Privacy,0,3,False
+CS 303,3.0,Computer Security and Privacy,0,3,False
+CS 377,3.0,Computer Security and Privacy,7,3,False
+CS 465,3.0,Computer Security and Privacy,0,3,False
+CS 475,3.0,Computer Security and Privacy,7,3,False
+CS 479,3.0,Computer Security and Privacy,0,3,False
+MATH 475,3.0,Computer Security and Privacy,0,3,False

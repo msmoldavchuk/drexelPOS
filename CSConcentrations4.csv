@@ -1,15 +1,15 @@
-Sequence,Credits,Type,Flag,Taken
-CS 314,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 338,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 341,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 342,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 345,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 375,3.0,"Computer Graphics, Vision, and Interaction",7,False
-CS 387,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 430,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 431,3.0,"Computer Graphics, Vision, and Interaction",0,False
-CS 432,3.0,"Computer Graphics, Vision, and Interaction",7,False
-CS 435,3.0,"Computer Graphics, Vision, and Interaction",0,False
-GMAP 377,3.0,"Computer Graphics, Vision, and Interaction",0,False
-GMAP 378,3.0,"Computer Graphics, Vision, and Interaction",0,False
-INFO 310,3.0,"Computer Graphics, Vision, and Interaction",0,False
+Sequence,Credits,Type,Flag,Num,Taken
+CS 314,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 338,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 341,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 342,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 345,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 375,3.0,"Computer Graphics, Vision, and Interaction",7,3,False
+CS 387,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 430,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 431,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+CS 432,3.0,"Computer Graphics, Vision, and Interaction",7,3,False
+CS 435,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+GMAP 377,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+GMAP 378,3.0,"Computer Graphics, Vision, and Interaction",0,3,False
+INFO 310,3.0,"Computer Graphics, Vision, and Interaction",0,3,False

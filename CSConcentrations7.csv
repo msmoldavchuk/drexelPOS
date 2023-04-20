@@ -1,8 +1,8 @@
-Sequence,Credits,Type,Flag,Taken
-CS 338,3.0,Software Engineering,0,False
-CS 375,3.0,Software Engineering,0,False
-INFO 420,3.0,Software Engineering,0,False
-SE 311,3.0,Software Engineering,7,False
-SE 320,3.0,Software Engineering,7,False
-SE 410,3.0,Software Engineering,0,False
-SE 420,3.0,Software Engineering,0,False
+Sequence,Credits,Type,Flag,Num,Taken
+CS 338,3.0,Software Engineering,0,3,False
+CS 375,3.0,Software Engineering,0,3,False
+INFO 420,3.0,Software Engineering,0,3,False
+SE 311,3.0,Software Engineering,7,3,False
+SE 320,3.0,Software Engineering,7,3,False
+SE 410,3.0,Software Engineering,0,3,False
+SE 420,3.0,Software Engineering,0,3,False
