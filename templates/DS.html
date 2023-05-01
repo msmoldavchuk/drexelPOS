@@ -5,9 +5,10 @@
         <li><a href = "{{ url_for('index') }}">Home</a></li>
         <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
     </ul>
+</nav>
 <h1> Welcome to Data Science's Plan of Study Page</h1>
-<body
-    <form action="{{ url_for('temp') }}" method="post" id="form">
+<body>
+    <form action='/dsPOS/data' method="post" id="form">
         <div class="DSmajor">
         <fieldset>
            
@@ -126,7 +127,7 @@
 
 <style>
     .body{
-        background-color: #e2f1bd;
+        background-color: #dee2f3;
     }
 
     .DSmajor{

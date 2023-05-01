@@ -9,10 +9,16 @@
 <head>
     <meta name="viewport" ontent="width=device-width, initial-scale=1; shrink-to-fit=no">
     <link rel="stylesheet" href="{{ url_for ('static' ,filename='allmajor.css') }}">
+    <div style = "text-align:left;"><src="{{ url_for('static', filename="mainlogo.png" class="logo"></div> 
     <title> Computing and Informatic Majors</title>
     <h2> Please Choose Your Major</h2>
 </head>
-<body>
+<style>
+    div{
+        text-align: center;
+    }
+</style>
+
 <div class=" top-left">
 <a href ="{{ url_for('degree', degreename='CS')}}">
 <button type="button"><span></span>Computer Science</button> </a>

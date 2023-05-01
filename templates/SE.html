@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <title> Software Engineering Major</title>
+<nav>
 <ul>
         <li><a href = "{{ url_for('index') }}">Home</a></li>
         <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
     </ul>
+</nav>
     <h1> Welcome to Software Engineering's Plan of Study Page </h1>
     <body>
-    <form action="{{ url_for('sePOS') }}" method="post" id="form">
+    <form action= '/sePOS/data' method="post" id="form">
         <div class="SEmajor">
         <fieldset>
            
@@ -124,7 +126,7 @@
 
 <style>
     body{
-        background-color: #e2f1bd;
+        background-color: #dee2f3;
     }
     .SEmajor{
       margin: 10px 0;

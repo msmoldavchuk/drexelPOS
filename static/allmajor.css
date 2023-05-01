@@ -23,7 +23,16 @@ button{
        overflow: hidden;
 }
 
+.flex-parent {
+  display: flex;
+}
+.jc-center {
+  justify-content: center;
+}
 
+button.margin-right{
+    margin-right: 50px;
+}
 .top-left {
             top: 10;
             left: 0;
@@ -79,4 +88,9 @@ nav {
   nav a:hover {
     background-color: #d7defe;
     color: rgb(91, 84, 179);
-  }   
+  }  
+
+  .logo{
+    width: 230px;
+    align-items: left;
+} 
