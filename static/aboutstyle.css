@@ -7,7 +7,9 @@
 .container {
     text-align: center;
 }
-
+body {
+    background-image: linear-gradient(#f8ecf7, #a5caf4);
+}
 .row {
     padding-top: 30px;
     color: #444;
