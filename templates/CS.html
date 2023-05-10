@@ -33,14 +33,16 @@
 
         <fieldset>  
             <legend>Pick Two Concentrations</legend>  
-            <input type="checkbox" name="Concentration" value="Algorithms and Theory" onclick="return ValidateConcentrationSelection();">Algorithms and Theory<br>  
-            <input type="checkbox" name="Concentration" value="Artificial Intelligence and Machine Learning" onclick="return ValidateConcentrationSelection();">Artificial Intelligence and Machine Learning<br>  
-            <input type="checkbox" name="Concentration" value="Computer Graphics, Vision, and Interaction" onclick="return ValidateConcentrationSelection();">Computer Graphics, Vision, and Interaction<br>  
-            <input type="checkbox" name="Concentration" value="Computer Security and Privacy" onclick="return ValidateConcentrationSelection();">Computer Security and Privacy<br>  
-            <input type="checkbox" name="Concentration" value="Computer Systems & Architecture" onclick="return ValidateConcentrationSelection();">Computer Systems & Architecture<br>  
-            <input type="checkbox" name="Concentration" value="Game Programming and Development" onclick="return ValidateConcentrationSelection();">Game Programming and Development<br>  
-            <input type="checkbox" name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br>  
-            <input type="checkbox" name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br>
+            <ul>
+            <li><input type="checkbox"  name="Concentration" value="Algorithms and Theory" onclick="return ValidateConcentrationSelection();">Algorithms and Theory<br> </li>
+            <Li><input type="checkbox"  name="Concentration" value="Artificial Intelligence and Machine Learning" onclick="return ValidateConcentrationSelection();">Artificial Intelligence and Machine Learning<br> </li>
+            <li><input type="checkbox"  name="Concentration" value="Computer Graphics, Vision, and Interaction" onclick="return ValidateConcentrationSelection();">Computer Graphics, Vision, and Interaction<br> </li>
+            <li><input type="checkbox"  name="Concentration" value="Computer Security and Privacy" onclick="return ValidateConcentrationSelection();">Computer Security and Privacy<br> </li>
+            <li><input type="checkbox"  name="Concentration" value="Computer Systems & Architecture" onclick="return ValidateConcentrationSelection();">Computer Systems & Architecture<br> </li>
+            <li><input type="checkbox"  name="Concentration" value="Game Programming and Development" onclick="return ValidateConcentrationSelection();">Game Programming and Development<br> </li>
+            <li><input type="checkbox"  name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br> </li>
+            <li><input type="checkbox"  name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br> </li>
+            </ul>
             <br>  
         </fieldset>
         <fieldset>
@@ -141,8 +143,85 @@
 
 
   <script type="text/javascript">  
+    <Script type="text/javascript">  
+        function addSubElements(){
+            var checkboxes = document.getElementsByName("Concentration");  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                console.log(checkboxes[i].checked);
+                if(checkboxes[i].checked && checkboxes[i].parentElement.childElementCount == 2) {
+                    createSubElement(checkboxes[i].parentElement, checkboxes[i].value);
+                    console.log(checkboxes[i].value);
+                    console.log(checkboxes[i].parentElement);
+                }
+                if(checkboxes[i].checked == false && checkboxes[i].parentElement.childElementCount > 2){
+                    while(checkboxes[i].parentElement.childElementCount > 2){
+                        checkboxes[i].parentElement.removeChild(checkboxes[i].parentElement.lastChild);
+                    }
+                }
+            }
+
+          
+            
+        }
+        function createSubElement(parentElement, elementName){
+                    console.log("here we go again");
+                    console.log(parentElement);
+                    try{
+                        console.log(elementName);
+                        console.log("hello you are  bad");
+                    }
+                    catch(err){
+                        console.log(err);
+                    }
+                    
+                    
+                    fetch('/getSequence/', {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify({
+                            'name': elementName
+                        })
+                        
+                        })
+                        .then(response => response.json())
+                        .then((data) => {
+                            console.log(data);
+                            let subClasses = data.Subconcentrations;
+                            console.log(subClasses);
+                            let subListCore = document.createElement("ul");
+                            let subListOther = document.createElement("ul");
+                            for (var i = 0; i < data.Subconcentrations.length; i++) {
+                                var subElement = document.createElement("input");
+                                subElement.type = "checkbox";
+                                subElement.name = "subConcentration";
+                                subElement.value = subClasses[i];
+                                subElement.id = elementName;
+                                var label = document.createElement("label");
+                                label.htmlFor = subClasses[i];
+                                if(data.flags[i] == 7){
+                                    label.appendChild(document.createTextNode(subClasses[i]));
+                                    subListCore.appendChild(label);
+                                    subListCore.appendChild(subElement);
+                                    
+                                }else{
+                                    label.appendChild(document.createTextNode(subClasses[i] ));
+                                    subListOther.appendChild(label);
+                                    subListOther.appendChild(subElement);
+                                    
+                                }
+
+                            }
+                            parentElement.appendChild(subListCore);
+                            parentElement.appendChild(subListOther);
+                        })     
+        }
+
         function ValidateConcentrationSelection()  
         {  
+            addSubElements();
             var checkboxes = document.getElementsByName("Concentration");  
             var numberOfCheckedItems = 0;  
             for(var i = 0; i < checkboxes.length; i++)  
@@ -168,23 +247,39 @@
 
     </p>
 
-   <Script>
+   <script>
     let data = document.getElementById("form");
     data.addEventListener("submit", function(e){
         e.preventDefault();
+        let data = document.getElementById("form");
         let year = data.elements.degree.value;
         let concentrations = [];
+        let subConcentrations = [];
         let coop = data.elements.coop.value;
         if (coop == "FW") {
             coop = false;
         } else {
             coop = true;
         }
+        console.log( data.elements.subConcentration.length);
         for (let i = 0; i < data.elements.Concentration.length; i++) {
             if (data.elements.Concentration[i].checked) {
                 concentrations.push(data.elements.Concentration[i].value);
             }
         }
+        for (let i = 0; i < concentrations.length; i++){
+            let temp = [];
+            for(let j = 0; j < data.elements.subConcentration.length; j++){
+                if(data.elements.subConcentration[j].checked && data.elements.subConcentration[j].id == concentrations[i]){
+                    temp.push(data.elements.subConcentration[j].value);
+                }
+                console.log(data.elements.subConcentration[j].id == concentrations[i]);
+            }
+            concentrations[i] = [concentrations[i], (temp)];
+            
+            
+        }
+    
         let form = {
             major: "CS",
             coop : coop,
@@ -256,8 +351,7 @@
         console.log(name);
 
     })
-
-   </Script>
+   </script>
 
 
 
