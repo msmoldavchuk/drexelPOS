@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title> Computer Science Major</title>
+<body>
 <nav>
     <ul>
         <li><a href = "{{ url_for('index') }}">Home</a></li>
@@ -8,12 +9,9 @@
 </nav>
 
     <h1> Welcome to Computer Science's Plan of Study Page</h1>
-<body>
     <form action='/csPOS/data' method="post" id="form">
-        <fieldset>
-            <legend> Your Selected Major  </legend>  
-            <option value = "CS" selected> COMPUTER SCIENCE </option>
-        </fieldset>
+        <div class="CSmajor">
+
         <fieldset>
             <legend>Please Select The Type Of Degree </legend>
             <input type="radio" name="degree" value="4">4 Year<br>
@@ -44,16 +42,105 @@
             <input type="checkbox" name="Concentration" value="Programming Languages and Systems" onclick="return ValidateConcentrationSelection();">Programming Languages and Systems<br>  
             <input type="checkbox" name="Concentration" value="Software Engineering" onclick="return ValidateConcentrationSelection();">Software Engineering<br>
             <br>  
-            <input type="submit" value="Submit now"> 
-        </div>
-        </fieldset>  
-       
-    
-    
-    </form> 
-</body>
+        </fieldset>
+        <fieldset>
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Please Choose The Minors </button> 
+            <div id="myDropdown" class="dropdown-content">
+              <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+              <div id="checkboxes">
+                <label class="checkbox"><input type="checkbox" name="minor" value="Accounting"> Accounting<br></label>
+                <label class="checkbox"><input type="checkbox" name="minor" value="Aerospace Engineering"> Aerospace Engineering<br></label>
+                <label class="checkbox"><input type="checkbox" name="minor" value="Agricultural and Biological Engineering"> Agricultural and Biological Engineering<br></label>
+                <label class="checkbox"><input type="checkbox" name="minor" value="Agricultural Education"> Agricultural Education<br></label>
+                <!-- Add more checkboxes for each major -->
+                <!-- You can copy and paste this code and modify it for each major -->
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        </body> 
+        <center><input type="submit" value="Submit now"> </center>
+      </div>
+      </form> 
+      <style>
+        .dropbtn {
+          background-color: #7c8bb7;
+          color: white;
+          padding: 16px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+        }
         
-        <script type="text/javascript">  
+        .dropbtn:hover, .dropbtn:focus {
+          background-color: #d7defe;
+        }
+        
+        #myInput {
+          box-sizing: border-box;
+          background-position: 14px 12px;
+          background-repeat: no-repeat;
+          font-size: 16px;
+          padding: 14px 20px 12px 45px;
+          border: none;
+          border-bottom: 1px solid #ddd;
+        }
+        
+        #myInput:focus {outline: 3px solid #ddd;}
+        
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f6f6f6;
+          min-width: 230px;
+          overflow: auto;
+          border: 1px solid #ddd;
+          z-index: 1;
+        }
+        
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+        
+        .dropdown a:hover {background-color: #ddd;}
+        
+        .show {display: block;}
+        </style>
+
+        <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+        
+        function filterFunction() {
+          var input, filter, checkboxes, labels, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          checkboxes = document.getElementById("checkboxes");
+          labels = checkboxes.getElementsByTagName("label");
+          for (i = 0; i < labels.length; i++) {
+            if (labels[i].textContent.toUpperCase().indexOf(filter) > -1) {
+              labels[i].style.display = "";
+            } else {
+              labels[i].style.display = "none";
+            }
+          }
+        }
+        </script>
+
+
+  <script type="text/javascript">  
         function ValidateConcentrationSelection()  
         {  
             var checkboxes = document.getElementsByName("Concentration");  
@@ -69,9 +156,8 @@
                 return false;  
             }  
         }
-
-        </script>
-    <p id="testing">
+        </script>  
+<p id="testing">
         This is where the data will be displayed
     <table id="pos">
         <tr>
@@ -87,7 +173,6 @@
     data.addEventListener("submit", function(e){
         e.preventDefault();
         let year = data.elements.degree.value;
-
         let concentrations = [];
         let coop = data.elements.coop.value;
         if (coop == "FW") {
@@ -106,7 +191,7 @@
             sequence : data.elements.sequence.value,
             concentration1 : concentrations[0],
             concentration2 : concentrations[1],
-            year : year
+            year : year,
 
         };
 
@@ -128,6 +213,7 @@
             table.deleteRow(0);
         }           
         console.log(table);
+        let isEven = false;
         for (let term in data) {
             temp = term
             if (temp.endsWith("15")) {
@@ -149,17 +235,28 @@
             row.appendChild(col1);
             row.appendChild(col2);
             table.appendChild(row);
-            table.style.border = "4px solid #002f6c";
             table.style.width = "100%";
-            col1.style.border = "3px solid  white";
-            col2.style.border = "3px solid  white";
-        }
-        }
+            table.style.border = "4px solid #99a6cc";
+            col1.style.border = "3px solid  #99a6cc";
+            col1.style.backgroundColor = "#d9e2ff";
+            col2.style.border = "3px solid #d9e2ff";
+
+
+    // Set background color for each cell based on row parity
+    if (isEven) {
+        col2.style.backgroundColor = "#f8fbf9";
+    } else {
+        col2.style.backgroundColor = "#e5ecff";
+    }
+    isEven = !isEven;  // Flip parity flag for the next row
+}
+
         
-    }).catch(err => console.log(err))
+      }).catch(err => console.log(err))
         console.log(name);
 
     })
+
    </Script>
 
 
@@ -248,79 +345,6 @@ nav a {
 nav a:hover {
   background-color: #d7defe;
   color: rgb(91, 84, 179);
-}   
-/* dropdown menu adding minors */
-
-.multiselect {
-  width: 200px;
-}
-
-.selectBox {
-  position: relative;
-}
-
-.selectBox select {
-  width: 100%;
-  font-weight: bold;
-}
-
-.overSelect {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
-#checkboxes {
-  display: none;
-  border: 1px solid #ccc;
-  max-height: 200px;
-  overflow-y: scroll;
-}
-
-#checkboxes input[type="checkbox"] {
-  display: block;
-  margin: 5px 0;
-}
-
-#checkboxes input[type="text"] {
-  display: block;
-  margin: 5px 0;
-  width: 100%;
-  padding: 5px;
-}
-
-#checkboxes input[type="checkbox"]:checked + label::before {
-  content: "\2714";
-  color: #666;
-  font-weight: bold;
-  font-size: 14px;
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-}
-
-#checkboxes label {
-  position: relative;
-  padding-left: 25px;
-}
-
-#checkboxes label::before {
-  content: "";
-  display: inline-block;
-  width: 17px;
-  height: 17px;
-  border: 1px solid #ccc;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#checkboxes input[type="checkbox"]:checked + label {
-  color: #0098d7;
-}
+}  
 
 </style>

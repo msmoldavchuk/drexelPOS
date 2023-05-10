@@ -10,12 +10,7 @@
     <body>
     <form action= '/sePOS/data' method="post" id="form">
         <div class="SEmajor">
-        <fieldset>
-           
-           <legend>Select Your Major</legend>  
-                <option value = "SE" selected> SOFTWARE ENGINEERING </option>
-             </select>
-        </fieldset>
+    
         <fieldset>
             
             <legend>Please Select The Type Of Degree </legend>
@@ -42,10 +37,11 @@
             <input type="checkbox" name="Business" value="ECON 201" onclick="return ValidateBusinessSelection();">ECON 201 - Principles of Microeconomics	<br>  
             <input type="checkbox" name="Business" value="ECON 202" onclick="return ValidateBusinessSelection();">ECON 202 - Principles of Macroeconomics	<br> 
             <br>  
-            <input type="submit" value="Submit now">  
+        </fieldset>
+        <center><input type="submit" value="Submit now"> </center>
     </div>
     </form> 
-
+</body>
         
         <script type="text/javascript">  
         function ValidateBusinessSelection()  
@@ -71,9 +67,18 @@
         </script>
     <p id="testing">
         This is where the data will be displayed
+
+        <table id="pos">
+            <tr>
+                <th>Quater</th>
+                <th>Courses</th>
+    
+            </tr>
+    
+       
     </p>
    <Script>
-    let data = document.getElementById("form");
+   let data = document.getElementById("form");
     data.addEventListener("submit", function(e){
         e.preventDefault();
         let business = [];
@@ -98,7 +103,7 @@
 
         };
 
-        fetch('{{url_for("sePOS")}}', {
+        fetch('/sePOS/data', {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -111,22 +116,61 @@
         text = document.getElementById("testing"); 
         console.log(data);
         text.innerHTML = "";
+        let table = document.getElementById("pos");
+        while(table.rows.length > 0) {
+            table.deleteRow(0);
+        }           
+        console.log(table);
+        let isEven = false;
         for (let term in data) {
-            text.innerHTML += term + ": " + data[term] + "<br>";
-        }
-        
-    })
-        .catch(err => console.log(err))
+            temp = term
+            if (temp.endsWith("15")) {
+                temp = temp.slice(0, -2) + " Fall";
+            } else if (temp.endsWith("25")) {
+                temp = temp.slice(0, -2) + " Winter";
+            } else if (temp.endsWith("35")) {
+                temp = temp.slice(0, -2) + " Spring";
+            } else if (temp.endsWith("45")) {
+                temp = temp.slice(0, -2) + " Summer";
+            }
+            text.innerHTML += term + ": " + data[term].join(" | ") + "<br>";
 
+            let row = document.createElement("tr");
+            let col1 = document.createElement("td");
+            let col2 = document.createElement("td");
+            col1.innerHTML = temp;
+            col2.innerHTML = data[term].join(" | ");
+            row.appendChild(col1);
+            row.appendChild(col2);
+            table.appendChild(row);
+            table.style.width = "100%";
+            table.style.border = "4px solid #99a6cc";
+            col1.style.border = "3px solid  #99a6cc";
+            col1.style.backgroundColor = "#d9e2ff";
+            col2.style.border = "3px solid #d9e2ff";
+
+
+    // Set background color for each cell based on row parity
+    if (isEven) {
+        col2.style.backgroundColor = "#f8fbf9";
+    } else {
+        col2.style.backgroundColor = "#e5ecff";
+    }
+    isEven = !isEven;  // Flip parity flag for the next row
+}
+
+        
+      }).catch(err => console.log(err))
         console.log(name);
 
     })
+       
    </Script>
 </body>
 
 <style>
     body{
-        background-color: #dee2f3;
+        background-color: #dee2f3;;
     }
     .SEmajor{
       margin: 10px 0;
