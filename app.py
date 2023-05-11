@@ -46,7 +46,7 @@ def csPOS():
         return jsonify(data)
 
 
-@app.route('/sePOS', methods=['GET', 'POST'])
+@app.route('/sePOS/data', methods=['GET', 'POST'])
 def sePOS():
     if request.method == 'POST':
         major = "SE"

@@ -1523,7 +1523,7 @@ if __name__ == "__main__":
     #print(degreeReq)
     #getPlanOfStudy(NAME = "CS", SEQUENCES=["CHEM"],SPRINGSUMMERCOOP=True)
 
-    
+    """
     degreeReq = d()
     degreeReq.convertCSVToDegree("CS")
     print(degreeReq.getDataForWebsite())
@@ -1539,6 +1539,7 @@ if __name__ == "__main__":
                 for line in range(len(concentration.index)):
                     print(concentration.loc[line,"Sequence"])
     
+    """
     """
     TEST = "https://catalog.drexel.edu/undergraduate/schoolofeconomics/economicsminor/index.html"
     course_catalog = requests.get(TEST).text
