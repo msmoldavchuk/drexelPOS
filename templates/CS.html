@@ -32,7 +32,8 @@
         </fieldset>
 
         <fieldset>  
-            <legend>Pick Two Concentrations</legend>  
+            <legend>Pick Two Concentrations</legend>
+            <p> Please pick one core class denoted by red and at least 2 other classes for each concentration</p>   
             <ul>
             <li><input type="checkbox"  name="Concentration" value="Algorithms and Theory" onclick="return ValidateConcentrationSelection();">Algorithms and Theory<br> </li>
             <li><input type="checkbox"  name="Concentration" value="Artificial Intelligence and Machine Learning" onclick="return ValidateConcentrationSelection();">Artificial Intelligence and Machine Learning<br> </li>
@@ -219,6 +220,7 @@
                                 subElement.value = subClasses[i];
                                 subElement.id = elementName;
                                 var label = document.createElement("label");
+
                                 label.htmlFor = subClasses[i];
                                 if(data.flags[i] == 7){
                                     subElement.classList.add("core");
