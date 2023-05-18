@@ -7,10 +7,10 @@
     </ul>
 </nav>
 
-    <h1> Welcome to Computing and Security Technology's Plan of Study Page</h1>
+    <h1> Welcome to Economics and Data Science's Plan of Study Page</h1>
 <body>
-    <form action='/cstPOS/data' method="post" id="form">
-    <div class="CSTmajor">
+    <form action='/edsPOS/data' method="post" id="form">
+    <div class="EDSmajor">
 
         <fieldset>
             <legend>Please Select The Type Of Degree </legend>
@@ -25,6 +25,16 @@
         </fieldset>
 
         <fieldset>  
+            <legend>Pick Two Concentrations in Data Science </legend>   
+            <input type="checkbox" name="Security" value="Mathematical Foundations of Computer Science" onclick="return ValidateSecSelection();">CS 270 - Mathematical Foundations of Computer Science	<br>  
+            <input type="checkbox" name="Security" value="Artificial Intelligence" onclick="return ValidateSecSelection();">CS 380 - Artificial Intelligence<br>  
+            <input type="checkbox" name="Security" value="Machine Learning" onclick="return ValidateSecSelection();">CS 383 - Machine Learning<br>  
+            <input type="checkbox" name="Security" value="Advanced Database Management Systems" onclick="return ValidateSecSelection();">INFO 315 - Advanced Database Management Systems<br>  
+            <input type="checkbox" name="Security" value="Data Mining Applications" onclick="return ValidateSecSelection();">INFO 371 - Data Mining Applications<br>  
+            <input type="checkbox" name="Security" value="Advanced Data Analytics" onclick="return ValidateSecSelection();">INFO 432 - Advanced Data Analytics<br>
+        </fieldset> 
+        
+        <fieldset>  
             <legend>Pick Economics Electives</legend>  
             <input type="checkbox" name="Technology" value="Survey of Economic Policy" onclick="return ValidateTechSelection();">ECON 203[WI] - Survey of Economic Policy<br>  
             <input type="checkbox" name="Technology" value="Mathematical Models in Economics" onclick="return ValidateTechSelection();">ECON 248 - Mathematical Models in Economics<br>  
@@ -35,39 +45,27 @@
             <input type="checkbox" name="Technology" value="International Macroeconomics" onclick="return ValidateTechSelection();">ECON 331 - International Macroeconomics<br>  
             <input type="checkbox" name="Technology" value="Economic Ideas" onclick="return ValidateTechSelection();">ECON 334 - Public Finance<br>
             <input type="checkbox" name="Technology" value="Economics of Small Business" onclick="return ValidateTechSelection();">ECON 336 - Labor Economics<br>  
-            <input type="checkbox" name="Technology" value="Economics of Happiness" onclick="return ValidateTechSelection();">ECON 324 - Economics of Happiness<br>  
-            <input type="checkbox" name="Technology" value="Economic Ideas" onclick="return ValidateTechSelection();">ECON 326[WI] - Economic Ideas<br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            <br>  
+            <input type="checkbox" name="Technology" value="Industrial Organization" onclick="return ValidateTechSelection();">ECON 338 - Industrial Organization<br>  
+            <input type="checkbox" name="Technology" value="Economic Development" onclick="return ValidateTechSelection();">ECON 342 - Economic Development<br>
+            <input type="checkbox" name="Technology" value="Comparative Economic Systems" onclick="return ValidateTechSelection();">ECON 344 - Comparative Economic Systems<br>
+            <input type="checkbox" name="Technology" value="Mathematical Economics" onclick="return ValidateTechSelection();">ECON 348 - Mathematical Economics<br>
+            <input type="checkbox" name="Technology" value="Resource and Environmental Economics" onclick="return ValidateTechSelection();">ECON 351 - Resource and Environmental Economics<br>  
+            <input type="checkbox" name="Technology" value="Money and Banking" onclick="return ValidateTechSelection();">ECON 354 - Money and Banking<br>  
+            <input type="checkbox" name="Technology" value="Time Series Econometricst" onclick="return ValidateTechSelection();">ECON 360 - Time Series Econometrics<br>
+            <input type="checkbox" name="Technology" value="Health Economics" onclick="return ValidateTechSelection();">ECON 361 - Health Economics<br>
+            <input type="checkbox" name="Technology" value="Behavioral Economics" onclick="return ValidateTechSelection();">ECON 365 - Behavioral Economics<br>
+            <input type="checkbox" name="Technology" value="Topics in Behavioral Economics" onclick="return ValidateTechSelection();">ECON 366 - Topics in Behavioral Economics<br>  
+            <input type="checkbox" name="Technology" value="Experiments and Causality in Economics" onclick="return ValidateTechSelection();">ECON 370 - Experiments and Causality in Economics<br>  
+            <input type="checkbox" name="Technology" value="Special Topics in ECON" onclick="return ValidateTechSelection();">ECON T480 - Special Topics in ECONs<br>
+            <input type="checkbox" name="Technology" value="Multinational Corporations" onclick="return ValidateTechSelection();">INTB 332 - Multinational Corporations<br>
+            <input type="checkbox" name="Technology" value="International Trade	" onclick="return ValidateTechSelection();">INTB 334 - International Trade<br>
+            <input type="checkbox" name="Technology" value="International Money and Finance" onclick="return ValidateTechSelection();">INTB 336 - International Money and Finance<br>
+            <input type="checkbox" name="Technology" value="Regional Studies in Economic Policies and International Business" onclick="return ValidateTechSelection();">INTB 338 - Regional Studies in Economic Policies and International Business<br>
+            <input type="checkbox" name="Technology" value="Seminar in International Business" onclick="return ValidateTechSelection();">INTB 340 - Seminar in International Business<br>
+            <input type="checkbox" name="Technology" value="Sport Economics" onclick="return ValidateTechSelection();">SMT 320 - Sport Economics<br>
         </fieldset> 
 
-        <fieldset>  
-            <legend>Pick Two Concentrations in Data Science </legend>   
-            <input type="checkbox" name="Security" value="Mathematical Foundations of Computer Science" onclick="return ValidateSecSelection();">CS 270 - Mathematical Foundations of Computer Science	<br>  
-            <input type="checkbox" name="Security" value="Artificial Intelligence" onclick="return ValidateSecSelection();">CS 380 - Artificial Intelligence<br>  
-            <input type="checkbox" name="Security" value="Machine Learning" onclick="return ValidateSecSelection();">CS 383 - Machine Learning<br>  
-            <input type="checkbox" name="Security" value="Advanced Database Management Systems" onclick="return ValidateSecSelection();">INFO 315 - Advanced Database Management Systems<br>  
-            <input type="checkbox" name="Security" value="Data Mining Applications" onclick="return ValidateSecSelection();">INFO 371 - Data Mining Applications<br>  
-            <input type="checkbox" name="Security" value="Advanced Data Analytics" onclick="return ValidateSecSelection();">INFO 432 - Advanced Data Analytics<br>
-        </fieldset> 
+      
         <center><input type="submit" value="Submit now"> </center>
         </div>
     </form> 
