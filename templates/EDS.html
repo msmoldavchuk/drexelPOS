@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<title> Economics and Data Science Major</title>
+<nav>
+    <ul>
+        <li><a href = "{{ url_for('index') }}">Home</a></li>
+        <li><a href = "{{ url_for('allmajor') }}">All Major</a></li>
+    </ul>
+</nav>
+
+    <h1> Welcome to Computing and Security Technology's Plan of Study Page</h1>
+<body>
+    <form action='/cstPOS/data' method="post" id="form">
+    <div class="CSTmajor">
+
+        <fieldset>
+            <legend>Please Select The Type Of Degree </legend>
+            <input type="radio" name="degree" value="4">4 Year<br>
+            <input type="radio" name="degree" value="5">5 Year<br>
+        </fieldset>
+        <fieldset>
+            
+            <legend>Please Select Co-op Cycle </legend>
+            <input type="radio" name="coop" value="FW">Fall - Winter<br>
+            <input type="radio" name="coop" value="SS">Spring - Summer<br>
+        </fieldset>
+
+        <fieldset>  
+            <legend>Pick Economics Electives</legend>  
+            <input type="checkbox" name="Technology" value="Survey of Economic Policy" onclick="return ValidateTechSelection();">ECON 203[WI] - Survey of Economic Policy<br>  
+            <input type="checkbox" name="Technology" value="Mathematical Models in Economics" onclick="return ValidateTechSelection();">ECON 248 - Mathematical Models in Economics<br>  
+            <input type="checkbox" name="Technology" value="Economics of Small Business" onclick="return ValidateTechSelection();">ECON 260 - Economics of Small Business<br>  
+            <input type="checkbox" name="Technology" value="Economics of Happiness" onclick="return ValidateTechSelection();">ECON 324 - Economics of Happiness<br>  
+            <input type="checkbox" name="Technology" value="Economic Ideas" onclick="return ValidateTechSelection();">ECON 326[WI] - Economic Ideas<br>  
+            <input type="checkbox" name="Technology" value="Managerial Economicss" onclick="return ValidateTechSelection();">ECON 330 - Managerial Economicss<br>  
+            <input type="checkbox" name="Technology" value="International Macroeconomics" onclick="return ValidateTechSelection();">ECON 331 - International Macroeconomics<br>  
+            <input type="checkbox" name="Technology" value="Economic Ideas" onclick="return ValidateTechSelection();">ECON 334 - Public Finance<br>
+            <input type="checkbox" name="Technology" value="Economics of Small Business" onclick="return ValidateTechSelection();">ECON 336 - Labor Economics<br>  
+            <input type="checkbox" name="Technology" value="Economics of Happiness" onclick="return ValidateTechSelection();">ECON 324 - Economics of Happiness<br>  
+            <input type="checkbox" name="Technology" value="Economic Ideas" onclick="return ValidateTechSelection();">ECON 326[WI] - Economic Ideas<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            <br>  
+        </fieldset> 
+
+        <fieldset>  
+            <legend>Pick Two Concentrations in Data Science </legend>   
+            <input type="checkbox" name="Security" value="Mathematical Foundations of Computer Science" onclick="return ValidateSecSelection();">CS 270 - Mathematical Foundations of Computer Science	<br>  
+            <input type="checkbox" name="Security" value="Artificial Intelligence" onclick="return ValidateSecSelection();">CS 380 - Artificial Intelligence<br>  
+            <input type="checkbox" name="Security" value="Machine Learning" onclick="return ValidateSecSelection();">CS 383 - Machine Learning<br>  
+            <input type="checkbox" name="Security" value="Advanced Database Management Systems" onclick="return ValidateSecSelection();">INFO 315 - Advanced Database Management Systems<br>  
+            <input type="checkbox" name="Security" value="Data Mining Applications" onclick="return ValidateSecSelection();">INFO 371 - Data Mining Applications<br>  
+            <input type="checkbox" name="Security" value="Advanced Data Analytics" onclick="return ValidateSecSelection();">INFO 432 - Advanced Data Analytics<br>
+        </fieldset> 
+        <center><input type="submit" value="Submit now"> </center>
+        </div>
+    </form> 
+</body>
+        
+        <script type="text/javascript">  
+        function ValidateTechSelection()  
+        {  
+            var checkboxes = document.getElementsByName("Technology");  
+            var numberOfCheckedItems = 0;  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                if(checkboxes[i].checked)  
+                    numberOfCheckedItems++;  
+            }  
+            if(numberOfCheckedItems > 2)  
+            {  
+                alert("You can't select more than two concentrations!");  
+                return false;  
+            }  
+        }
+        function ValidateSecSelection()  
+        {  
+            var checkboxes = document.getElementsByName("Security");  
+            var numberOfCheckedItems = 0;  
+            for(var i = 0; i < checkboxes.length; i++)  
+            {  
+                if(checkboxes[i].checked)  
+                    numberOfCheckedItems++;  
+            }  
+            if(numberOfCheckedItems > 2)  
+            {  
+                alert("You can't select more than two concentrations!");  
+                return false;  
+            }  
+        }
+        </script>
+    <p id="testing">
+        This is where the data will be displayed
+    <table id="pos">
+        <tr>
+            <th>Quater</th>
+            <th>Courses</th>
+
+        </tr>
+
+    </p>
+
+   <Script>
+    let data = document.getElementById("form");
+    data.addEventListener("submit", function(e){
+        e.preventDefault();
+        let year = data.elements.degree.value;
+
+        let concentrations = [];
+        let coop = data.elements.coop.value;
+        if (coop == "FW") {
+            coop = false;
+        } else {
+            coop = true;
+        }
+        for (let i = 0; i < data.elements.Concentration.length; i++) {
+            if (data.elements.Concentration[i].checked) {
+                concentrations.push(data.elements.Concentration[i].value);
+            }
+        }
+        let form = {
+            major: "EDS",
+            coop : coop,
+            sequence : data.elements.sequence.value,
+            concentration1 : concentrations[0],
+            concentration2 : concentrations[1],
+            year : year
+
+        };
+
+        fetch('/edsPOS/data', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json' 
+            },
+            method: 'POST',
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+    .then((data) => {
+        text = document.getElementById("testing"); 
+        console.log(data);
+        text.innerHTML = "";
+        let table = document.getElementById("pos");
+        while(table.rows.length > 0) {
+            table.deleteRow(0);
+        }           
+        console.log(table);
+        for (let term in data) {
+            temp = term
+            if (temp.endsWith("15")) {
+                temp = temp.slice(0, -2) + " Fall";
+            } else if (temp.endsWith("25")) {
+                temp = temp.slice(0, -2) + " Winter";
+            } else if (temp.endsWith("35")) {
+                temp = temp.slice(0, -2) + " Spring";
+            } else if (temp.endsWith("45")) {
+                temp = temp.slice(0, -2) + " Summer";
+            }
+            /*text.innerHTML += term + ": " + data[term].join(" | ") + "<br>";  */
+
+            let row = document.createElement("tr");
+            let col1 = document.createElement("td");
+            let col2 = document.createElement("td");
+            col1.innerHTML = temp;
+            col2.innerHTML = data[term].join(" | ");
+            row.appendChild(col1);
+            row.appendChild(col2);
+            table.appendChild(row);
+        }
+        
+    }).catch(err => console.log(err))
+        console.log(name);
+
+    })
+   </Script>
+
+
+
+<style>
+    body{
+        background-color: #dee2f3;
+    }
+    .CSTmajor{
+      margin: 10px 0;
+      padding: 10px;
+      
+    }
+    /* styles for legends */
+    legend {
+      font-weight: bold;
+      color: #4a5894;
+      font-size: 1.2em;
+    }
+    
+    /* styles for select and radio inputs */
+    select, input[type="radio"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for checkboxes */
+    input[type="checkbox"] {
+      margin: 5px 10px;
+    }
+    
+    /* styles for submit button */
+    input[type="submit"] {
+      background-color: #7c8bb7;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      
+    }
+    
+    /* styles for the form */
+    #form {
+      background-image: linear-gradient(#f8ecf7, #a5caf4) ;
+      padding: 20px;
+      border-radius: 5px;
+      width: 500px;
+      margin: auto;
+    }
+    
+    /* styles for the fieldset borders based on selection */
+    fieldset:focus-within {
+      border: 3px solid #bfbab5;
+    }
+    h1{
+        text-align: center;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #4a5894;
+    }
+nav {
+  overflow: hidden;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  display: block;
+  color: #7c8bb7;
+  text-align: right;
+  padding: 18px 20px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #d7defe;
+  color: rgb(91, 84, 179);
+}   
+</style>
