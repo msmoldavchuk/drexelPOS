@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CHE 211,4.0,,0,0,False
+CHE 212,4.0,,0,0,False
+CHE 220,3.0,,0,0,False
+CHE 230 | CHE 330,4.0,,6,0,False
+CHE 341 ^ CHE 342 ^ CHE 343,4.0,,6,0,False
+CHE 211 ^ CHE 220 ^ CHE 320 ^ CHE 331 ^ CHE 350 ^ CHE 351 [WI] ^ CHE 352 [WI] ^ CHE 360 ^ CHE 364 ^ CHE 371 ^ CHE 372 ^ CHE 430 ^ CHE 431 ^ CHE 453 [WI] ^ CHE 460 ^ CHE 464 ^ CHE 466 ^ CHE I399 ^ CHE T480,5.0,,6,0,False

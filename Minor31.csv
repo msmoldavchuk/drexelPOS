@@ -1,0 +1,6 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CJS 101,3.0,,0,0,False
+CJS 200,3.0,,0,0,False
+CJS 210,3.0,,0,0,False
+CJS 220,3.0,,0,0,False
+CJS 180 ^ CJS 230 ^ CJS 263 ^ CJS 266 ^ CJS 280 ^ CJS 290 ^ CJS 303 ^ CJS 330 ^ CJS 362 ^ CJS 372 ^ CJS 403,12.0,,6,0,False

@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+AE 220,3.5,,0,0,False
+AE 340,3.0,,0,0,False
+AE 390,4.0,,0,0,False
+CAEE 202,3.0,,0,0,False
+CIVE 302,4.0,,0,0,False
+AE 391 ^ ARCH 191 | ARCH 181 ^ CIVE 240 [WI] ^ CIVE 250 ^ CIVE 303 ^ MEM 310 ^ MEM 413,8.0,,6,2,False

@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ARCH 141,9.0,,0,0,False
+ARCH 142,9.0,,0,0,False
+ARCH 143,9.0,,0,0,False
+ARCH 144,9.0,,0,0,False
+ARCH 107 ^ ARCH 108 ^ ARCH 109 ^ ARCH 211 ^ ARCH 181 ^  ^ ARCH 181 ^ ARCH 182 ^ ARCH 183 ^  ^ ARCH 183 ^ ARCH 281 ^ ARCH 282,12.0,,3,0,False
+Elective,3.0-6.0,Elective Architecture Courses *,1,0,False

@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+SCL 101,3.0,,0,0,False
+SCL 102,3.0,,0,0,False
+SCL 203,3.0,,0,0,False
+SCL 210,3.0,,0,0,False
+SCL 495 | SCL 496,3.0,,4,0,False
+PSY 245 [WI] ^ SCL 201 ^ SCL 280 ^ SCL 314 ^ SCL 315 ^ SCL 325 ^ SCL 345 ^ SCL 401 ^ SCL 419,9.0,,6,0,False

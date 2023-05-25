@@ -1,0 +1,11 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CHE 350 ^ ENGR 361 ^ MATH 311 ^ MEM 361 ^ STAT 205,3.0-4.0,,6,1,False
+MATH 312 ^ STAT 206 ^ ENVE 750,3.0-4.0,,6,1,False
+MATH 300,3.0-4.0,,0,0,False
+MATH 305,3.0-4.0,,0,0,False
+MATH 318 [WI],3.0-4.0,,0,0,False
+OPR 320,3.0-4.0,,0,0,False
+OPR 330,3.0-4.0,,0,0,False
+CIVE 240 [WI] ^ ECON 201 ^ ECON 202,3.0,,3,0,False
+Elective ^ ECON 250 ^ ECON 301 ^ ECON 330 ^ ECON 334 ^ ECON 351 ^ ENVE 727,4.0,,3,0,False
+PSCI 110 ^ PSCI 220 ^ PSCI 372 ^ SOC 215 ^ SOC 240,6.0,,6,2,False

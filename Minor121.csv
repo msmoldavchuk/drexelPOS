@@ -1,0 +1,9 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CT 140,3.0,,0,0,False
+CT 201,3.0,,0,0,False
+CT 210,3.0,,0,0,False
+CT 301,3.0,,0,0,False
+CT 312,3.0,,0,0,False
+CT 412,3.0,,0,0,False
+INFO 101,3.0,,0,0,False
+CT 315 ^ CT 362 ^ CT 393 ^ CT 415,3.0,,6,0,False

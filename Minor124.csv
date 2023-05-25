@@ -1,0 +1,9 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CS 171 | CS 175 | ENGR 131 | ENGR 132,3.0,,4,0,False
+CS 172 | CS 176 | ECE 105,3.0,,4,0,False
+CS 260,3.0,,0,0,False
+CS 265,3.0,,0,0,False
+SE 181,3.0,,0,0,False
+SE 210,3.0,,0,0,False
+SE 310,3.0,,0,0,False
+INFO 420 ^ SE 211 ^ SE 311 ^ SE 320 ^ SE 410,3.0,,6,1,False

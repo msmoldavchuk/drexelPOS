@@ -1,0 +1,8 @@
+Sequence,Credits,Type,Flag,Num,Taken
+COM 181,3.0,,0,0,False
+COM 375 [WI],3.0,,0,0,False
+COM 376,3.0,,0,0,False
+COM 377,3.0,,0,0,False
+COM 378,3.0,,0,0,False
+COM I399,3.0,,0,0,False
+COM 160 [WI] ^ COM 222 ^ COM 247 ^ COM 265 ^ COM 270 [WI] ^ COM 282 [WI] ^ COM 330 ^ COM 363,6.0,,6,0,False

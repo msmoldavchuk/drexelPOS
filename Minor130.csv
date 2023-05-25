@@ -1,0 +1,10 @@
+Sequence,Credits,Type,Flag,Num,Taken
+FMTV 110,3.0,,0,0,False
+FMTV 115,3.0,,0,0,False
+FMTV 120,3.0,,0,0,False
+FMTV 355,3.0,,0,0,False
+SMT 110,4.0,,0,0,False
+SMT 290,4.0,,0,0,False
+TVIE 250,3.0,,0,0,False
+TVPR 100 | FMTV 131,3.0,,4,0,False
+SMT T280 ^ SMT T380 ^ SMT T480 ^ TVPR 200 | FMTV 230 ^ TVPR 242 ^ TVPR T280 ^ TVPR T380 ^ TVPR T480,3.0,,6,0,False

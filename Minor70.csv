@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+VSST 100 ^ VSST 102 ^ VSST 107 ^ VSST 109 ^ PHTO 110 ^ VSCM 230 ^ VSCM 231 ^ VSCM 232 ^ VSCM 240 ^ WEST 100,3.0,,6,1,False
+VSCM 200,3.0,,0,0,False
+VSCM 220,3.0,,0,0,False
+VSCM 242,3.0,,0,0,False
+VSCM 332,3.0,,0,0,False
+VSCM 350 [WI],3.0,,0,0,False

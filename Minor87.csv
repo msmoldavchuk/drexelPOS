@@ -1,0 +1,32 @@
+Sequence,Credits,Type,Flag,Num,Taken
+LING 101,3.0,,0,0,False
+LING 102,3.0,,0,0,False
+Elective,18.0,Elective Courses (Must equal a minimum of 18 credits,1,0,False
+Elective,18.0,"Students can use up to 8 credits of Modern Language Courses (ARBC, CHIN, FREN, GER, HBRW, ITAL, JAP, KOR, SPAN) to fulfill",1,0,False
+AFAS 301,18.0,,0,0,False
+ANTH 112,18.0,,0,0,False
+BACS 255,18.0,,0,0,False
+COM 342,18.0,,0,0,False
+COM 345,18.0,,0,0,False
+COM 355,18.0,,0,0,False
+COM 491,18.0,,0,0,False
+COM 492,18.0,,0,0,False
+COM I399,18.0,,0,0,False
+CS 171,18.0,,0,0,False
+CS 172,18.0,,0,0,False
+EDUC 216,18.0,,0,0,False
+EDUC 236,18.0,,0,0,False
+EDUC 326 [WI],18.0,,0,0,False
+EDUC 328,18.0,,0,0,False
+EDUC 365,18.0,,0,0,False
+GST 100,18.0,,0,0,False
+GST 101,18.0,,0,0,False
+JWST 214,18.0,,0,0,False
+LANG T180,18.0,,0,0,False
+PHIL 111,18.0,,0,0,False
+PHIL 121,18.0,,0,0,False
+PHIL 215,18.0,,0,0,False
+PSY 330,18.0,,0,0,False
+PSY 336,18.0,,0,0,False
+WRIT 200,18.0,,0,0,False
+WRIT 212,18.0,,0,0,False

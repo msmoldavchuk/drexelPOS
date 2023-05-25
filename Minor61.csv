@@ -1,0 +1,5 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ACCT 115 | ACCT 110,4.0,,4,0,False
+FIN 339,4.0,,0,0,False
+FIN 340,4.0,,0,0,False
+CT 140 ^ CT 201 ^ CT 382 ^ CT 393 ^ ENGR 131 | ENGR 132 ^ ECE 105 ^ ECE 200 ^ ECE 201 ^ FIN 325,12.0,,6,0,False

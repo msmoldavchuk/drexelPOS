@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CIVE 240 [WI],3.0,None?,0,0,False
+EGMT 462 | MEM 462,3.0,None?,4,0,False
+EGMT 465,3.0,None?,0,0,False
+INDE 362,3.0,None?,0,0,False
+SYSE 488,3.0,None?,0,0,False
+ECES 356 ^ ECES 444 ^ INDE 350 ^ INDE 365 ^ INDE 366 ^ MEM 355 ^ SYSE 530 ^ SYSE 531 ^ SYSE 532 ^ SYSE 533,9.0,None?,6,0,False

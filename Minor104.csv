@@ -1,0 +1,4 @@
+Sequence,Credits,Type,Flag,Num,Taken
+OPM 324,4.0,,0,0,False
+OPR 320,4.0,,0,0,False
+MGMT 301 ^ MGMT 364 ^ OPM 200 ^ OPM 315 ^ OPM 341 ^ OPM 342 ^ OPM 343 ^ OPM 344 ^ OPM 399 ^ OPR 330 ^ OPR 340 ^ STAT 325,16.0,,6,4,False

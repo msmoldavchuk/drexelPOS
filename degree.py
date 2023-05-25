@@ -194,8 +194,27 @@ class Degree():
                 if self.degreeFrame.loc[i,"Flag"] == 3:
                     if self.degreeFrame.loc[i,"Type"] == "SCI":
                         self.selectScienceSequence(selection, dictonary)
+                    else:
+                        self.sequenceNumberSystem(selection, dictonary)
                 elif self.degreeFrame.loc[i,"Flag"] == 6:
                     self.selectCourseList(selection)
+    
+    def sequenceNumberSystem(self, choice, dictonary):
+        if type(choice) == int: 
+            for i in range(len(self.degreeFrame)):
+                if self.degreeFrame.loc[i, "Flag"] == 3:
+                    
+                    seqs = self.degreeFrame.loc[i, "Sequence"].getSequence()
+                    self.degreeFrame.loc[i, "Sequence"] = s(seqs[choice])
+                    credits = 0.0
+                    seqsTwo = seqs[choice].iterateThroughArray()
+                    for seqTwo in seqsTwo:
+                        credits += dictonary[seqTwo.strip()].getCredits()
+                    self.degreeFrame.loc[i, "Credits"] = str(credits)
+                    self.degreeFrame.loc[i,"Flag"] = 9
+                    self.setPostCredits(i)
+                    break
+                    
 
     # MASON READ THIS
     # Returns an array containting arrays
@@ -367,4 +386,3 @@ class Degree():
             return any(char.isdigit() for char in inputString)
         return (identifier in inputString)
 
-    

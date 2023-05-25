@@ -250,6 +250,3 @@ class Sequence:
             course.iterateThroughPrint()
             print("or")
 
-
-
-

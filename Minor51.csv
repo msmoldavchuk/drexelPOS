@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CAEE 203,3.0,,0,0,False
+CIVE 330,4.0,,0,0,False
+ENVE 300,3.0,,0,0,False
+ENVE 302,3.0,,0,0,False
+ENVS 401,3.0,,0,0,False
+CIVE 430 ^ ENVE 410 ^ ENVE 460 ^ ENVE 486 ^ ENVE 487,8.0,,6,3,False

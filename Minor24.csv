@@ -1,0 +1,12 @@
+Sequence,Credits,Type,Flag,Num,Taken
+COM 101 | COM 111,3.0,,4,0,False
+COM 210,3.0,,6,0,False
+COM 160 [WI],6.0,,0,0,False
+COM 261 [WI],6.0,,0,0,False
+COM 181,6.0,,0,0,False
+COM 270 [WI] | COM 282 | COM 284,6.0,,4,0,False
+COM 310 [WI],"Public Relations Research, Measurement and Evaluation",,0,0,False
+COM 320 [WI] | COM 375,"Public Relations Research, Measurement and Evaluation",,4,0,False
+COM 316 | COM 318,Grant Writing,,4,0,False
+COM 317 [WI],"Film, Celebrity and the Environmental Movement",,0,0,False
+Elective,12.0,Four COM or LING,1,0,False

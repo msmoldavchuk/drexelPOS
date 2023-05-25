@@ -1,0 +1,5 @@
+Sequence,Credits,Type,Flag,Num,Taken
+MGMT 370,4.0,,0,0,False
+MGMT 371,4.0,,0,0,False
+MGMT 372,4.0,,0,0,False
+MGMT 301 ^ MGMT 364 ^ MGMT 380 ^ MIS 342 ^ MIS 347 ^ MIS 361 ^ ORGB 320 ^ ORGB 400 ^ ORGB 420 ^ SMT 372,12.0,,6,3,False

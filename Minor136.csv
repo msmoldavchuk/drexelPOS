@@ -1,0 +1,22 @@
+Sequence,Credits,Type,Flag,Num,Taken
+FMTV 282,3.0,,0,0,False
+FMTV 285,3.0,,0,0,False
+FMTV 293,3.0,,0,0,False
+TVIE 180 | FMTV 185,3.0,,4,0,False
+TVST 260,3.0,,0,0,False
+TVST 261 | TVST 361 | TVST 362,3.0,,4,0,False
+EAM 211,9.0,,0,0,False
+EAM 308,9.0,,0,0,False
+EAM 365,9.0,,0,0,False
+FMTV 110,9.0,,0,0,False
+FMTV 115,9.0,,0,0,False
+FMTV 120,9.0,,0,0,False
+FMTV 281,9.0,,0,0,False
+SCRP 270 [WI],9.0,,0,0,False
+TVIE T180,9.0,,0,0,False
+TVIE T280,9.0,,0,0,False
+TVIE T380,9.0,,0,0,False
+TVIE T480,9.0,,0,0,False
+TVPR 200 | FMTV 230,9.0,,4,0,False
+TVPR 201,Intermediate TV Studio,,0,0,False
+TVPR 205,Intermediate TV Studio,,0,0,False

@@ -1,0 +1,19 @@
+Sequence,Credits,Type,Flag,Num,Taken
+PHIL 105 | PHIL 111,3.0,,4,0,False
+PHIL 110,3.0,,0,0,False
+PHIL 121 ^ PHIL 151 ^ PHIL 201 ^ PHIL 211 ^ PHIL 221 ^ PHIL 231 ^ PHIL 241 ^ PHIL 251,9.0,,6,3,False
+PHIL 210,3.0,,0,0,False
+PHIL 216,3.0,,0,0,False
+PHIL 218,3.0,,0,0,False
+PHIL 255,3.0,,0,0,False
+PHIL 291,3.0,,0,0,False
+PHIL 341,3.0,,0,0,False
+PHIL 351,3.0,,0,0,False
+PHIL 355,3.0,,0,0,False
+PHIL 361,3.0,,0,0,False
+PHIL 381 [WI],3.0,,0,0,False
+PHIL 385,3.0,,0,0,False
+PHIL 391,3.0,,0,0,False
+PHIL 301 ^ PHIL 305 ^ PHIL 311 ^ PHIL 315 ^ PHIL 317 ^ PHIL 321 ^ PHIL 323 ^ PHIL 325 ^ PHIL 330 ^ PHIL 335 ^ PHIL 340,3.0,,6,1,False
+PHIL 481 [WI],3.0,,0,0,False
+PHIL 485 [WI],3.0,,0,0,False

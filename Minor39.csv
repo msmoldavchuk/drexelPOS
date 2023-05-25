@@ -1,0 +1,8 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ENVS 212,4.0,,0,0,False
+ENVS 230,3.0,,0,0,False
+ENVS 260,3.0,,0,0,False
+ENVS 284,3.0,,0,0,False
+ENVS 286,3.0,,0,0,False
+ENVS 328,3.0,,0,0,False
+ENVS 382 ^ ENVS 383 ^ ENVS 388,4.0,,6,0,False

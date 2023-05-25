@@ -1,0 +1,17 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ECON 201,4.0,,0,0,False
+ECON 202,4.0,,0,0,False
+INTB 200,4.0,,0,0,False
+INTB 334 | INTB 336,4.0,,4,0,False
+INTB 332 ^ INTB 334 ^ INTB 336 ^ INTB 338 ^ ECON 342,8.0,,6,1,False
+ECON 301,8.0,,0,0,False
+ECON 321,8.0,,0,0,False
+ECON 322 [WI],8.0,,0,0,False
+ECON 336,8.0,,0,0,False
+ECON 338,8.0,,0,0,False
+ECON 348,8.0,,0,0,False
+ECON 350 [WI],8.0,,0,0,False
+ECON 351,8.0,,0,0,False
+BLAW 340,8.0,,0,0,False
+FIN 346,8.0,,0,0,False
+MKTG 357,8.0,,0,0,False

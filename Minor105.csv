@@ -1,0 +1,6 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ORGB 300 [WI],4.0,,0,0,False
+ORGB 320,4.0,,0,0,False
+ORGB 400,4.0,,0,0,False
+ORGB 420,4.0,,0,0,False
+HRMT 323 ^ ORGB 430 ^ MGMT 364 ^ MGMT 370,8.0,,6,2,False

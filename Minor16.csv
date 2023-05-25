@@ -1,0 +1,5 @@
+Sequence,Credits,Type,Flag,Num,Taken
+BIO 100,3.0-4.0,,6,1,False
+BIO 101,3.0-4.0,,6,1,False
+ENVS 212,4.0,,0,0,False
+BIO 114 ^ BIO 116 ^ BIO 118 ^ BIO 264 ^ BIO 284 ^ ENVS 260,14.0,,6,4,False

@@ -1,0 +1,9 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CS 171 | INFO 151,3.0,,4,0,False
+CT 140,3.0,,0,0,False
+CT 200,3.0,,0,0,False
+CT 201,3.0,,0,0,False
+CT 210,3.0,,0,0,False
+INFO 101,3.0,,0,0,False
+INFO 210,3.0,,0,0,False
+CT 310 ^ CT 320 ^ CT 330 ^ INFO 365,3.0,,6,0,False

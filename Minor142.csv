@@ -1,0 +1,36 @@
+Sequence,Credits,Type,Flag,Num,Taken
+WGST 101,3.0,,0,0,False
+WGST 201,3.0,,0,0,False
+WGST 301 ^ WGST 308 ^ WGST 320,3.0,,6,0,False
+AFAS 255,15.0,,0,0,False
+ARTH 340,15.0,,0,0,False
+COM 246,15.0,,0,0,False
+CJS 274,15.0,,0,0,False
+CJS 362,15.0,,0,0,False
+ENGL 355 [WI],15.0,,0,0,False
+HIST 208,15.0,,0,0,False
+HIST 283,15.0,,0,0,False
+PBHL 305,15.0,,0,0,False
+PHIL 255,15.0,,0,0,False
+PSY 356,15.0,,0,0,False
+SMT 254,15.0,,0,0,False
+SMT 255,15.0,,0,0,False
+SOC 222,15.0,,0,0,False
+SOC 230,15.0,,0,0,False
+WGST 220,15.0,,0,0,False
+WGST 225,15.0,,0,0,False
+WGST 230,15.0,,0,0,False
+WGST 235,15.0,,0,0,False
+WGST 240,15.0,,0,0,False
+WGST 255,15.0,,0,0,False
+WGST 260,15.0,,0,0,False
+WGST 270,15.0,,0,0,False
+WGST 275,15.0,,0,0,False
+WGST T280,15.0,,0,0,False
+WGST I299,15.0,,0,0,False
+WGST 301,15.0,,0,0,False
+WGST 308,15.0,,0,0,False
+WGST 320,15.0,,0,0,False
+WGST 324,15.0,,0,0,False
+WGST T380,15.0,,0,0,False
+WGST T480,15.0,,0,0,False

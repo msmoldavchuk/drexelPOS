@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+MATH 250,11.0,,0,0,False
+MATH 311,11.0,,0,0,False
+MATH 312,11.0,,0,0,False
+MATH 313,11.0,,0,0,False
+ACCT 110 FIN 301 ^  ECON 201 | ECON 202,8.0,,3,0,False
+FIN 321 ^ MATH 318 [WI] ^ MATH 320 ^ MATH 449,6.0,,6,0,False

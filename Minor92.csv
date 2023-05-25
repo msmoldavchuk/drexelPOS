@@ -1,0 +1,22 @@
+Sequence,Credits,Type,Flag,Num,Taken
+MEM 220 ^ MEM 230 ^ MEM 238 ^ MEM 255 ^ MEM 310 ^ MEM 345 ^ MEM 355 ^ MEM 361 ^ MEM 435,16.0,,6,4,False
+MEM 311,8.0,,0,0,False
+MEM 331,8.0,,0,0,False
+MEM 351,8.0,,0,0,False
+Elective,8.0,Recommended,1,0,False
+MEM 320,8.0,,0,0,False
+MEM 330,8.0,,0,0,False
+MEM 361,8.0,,0,0,False
+MEM 410,8.0,,0,0,False
+MEM 420,8.0,,0,0,False
+MEM 423,8.0,,0,0,False
+MEM 425,8.0,,0,0,False
+MEM 430,8.0,,0,0,False
+MEM 437,8.0,,0,0,False
+MEM 438,8.0,,0,0,False
+MEM 440,8.0,,0,0,False
+MEM 453,8.0,,0,0,False
+MEM 455,8.0,,0,0,False
+MEM 458,8.0,,0,0,False
+MEM 459,8.0,,0,0,False
+MEM 462 [WI],8.0,,0,0,False

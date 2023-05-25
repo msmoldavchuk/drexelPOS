@@ -1,0 +1,41 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CT 140,3.0,IS,0,0,False
+CT 201,3.0,IS,0,0,False
+CT 250,3.0,IS,0,0,False
+INFO 101,3.0,IS,0,0,False
+INFO 102,3.0,IS,0,0,False
+INFO 103,3.0,IS,0,0,False
+INFO 150,3.0,IS,0,0,False
+INFO 200,3.0,IS,0,0,False
+INFO 210,3.0,IS,0,0,False
+INFO 215,3.0,IS,0,0,False
+INFO 310,3.0,IS,0,0,False
+INFO 315,3.0,IS,0,0,False
+INFO 324 [WI],3.0,IS,0,0,False
+INFO 355,3.0,IS,0,0,False
+INFO 371,3.0,IS,0,0,False
+INFO 375,3.0,IS,0,0,False
+INFO 405,3.0,IS,0,0,False
+INFO 420,3.0,IS,0,0,False
+Elective,12.0,INFO/CT,1,0,False
+INFO 151 & CS 171 & CS 172 ^ INFO 151 & INFO 152 & INFO 153,9.0,PRG,3,0,False
+CI 101,2.0,CI,0,0,False
+CI 102,2.0,CI,0,0,False
+CI 103,2.0,CI,0,0,False
+CI 491 [WI],3.0,CI,0,0,False
+CI 492 [WI],3.0,CI,0,0,False
+CI 493 [WI],3.0,CI,0,0,False
+MATH 171 & MATH 172 & MATH 173 ^ MATH 121 & MATH 122,9.0,MTH,3,0,False
+MATH 180,4.0,MTH,0,0,False
+STAT 201,4.0,MTH,0,0,False
+elective,8.0,Science,1,0,False
+COM 230 | COM 310,3.0,LS,4,0,False
+ENGL 101 | ENGL 111,3.0,LS,4,0,False
+ENGL 102 | ENGL 112,3.0,LS,4,0,False
+ENGL 103 | ENGL 113,3.0,LS,4,0,False
+elective,6.0,Liberal Studies,1,0,False
+CIVC 101,1.0,UNV,0,0,False
+COOP 101,1.0,UNV,0,0,False
+UNIV CI101 | CI 120,2.0,UNV,4,0,False
+Elective,24.0,Special,1,0,False
+Total,185.0,Special,1,0,False

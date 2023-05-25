@@ -1,0 +1,6 @@
+Sequence,Credits,Type,Flag,Num,Taken
+BSAN 360,4.0,,0,0,False
+BSAN 460,4.0,,0,0,False
+MIS 343,4.0,,0,0,False
+STAT 331,4.0,,0,0,False
+ECON 350 [WI] ^ ECON 360 ^ ECON 370 ^ MKTG 366 ^ MKTG 367 ^ OPR 320 ^ OPR 330 ^ OPR 350 ^ SMT 380 ^ STAT 335,8.0,,6,2,False

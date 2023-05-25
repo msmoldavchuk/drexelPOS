@@ -1,0 +1,10 @@
+Sequence,Credits,Type,Flag,Num,Taken
+SOC 235,4.0,,0,0,False
+SOC 207 ^ SOC 238 ^ SOC 271 ^ SOC 313 ^ SOC 318 ^ SOC 370 ^ SOC 405 ^ SOC 430,12.0,,6,3,False
+SOC 210,8.0,,0,0,False
+SOC 220,8.0,,0,0,False
+SOC 240,8.0,,0,0,False
+SOC 241,8.0,,0,0,False
+SOC 242,8.0,,0,0,False
+SOC 355 [WI],8.0,,0,0,False
+SOC 356 [WI],8.0,,0,0,False

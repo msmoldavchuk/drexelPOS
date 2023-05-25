@@ -1,0 +1,25 @@
+Sequence,Credits,Type,Flag,Num,Taken
+FMTV 110,3.0,,0,0,False
+FMTV 115,3.0,,0,0,False
+FMTV 120,3.0,,0,0,False
+SCRP 270 [WI],3.0,,0,0,False
+TVPR 100,3.0,,0,0,False
+TVPR 212 | FMTV 265,3.0,,4,0,False
+TVST 260 | TVST 105,3.0,,4,0,False
+FMTV 281,6.0,,0,0,False
+SCRP 241,6.0,,0,0,False
+SCRP 242,6.0,,0,0,False
+TVPR 200 | FMTV 230,6.0,,4,0,False
+TVPR 201,Intermediate TV Studio,,0,0,False
+TVPR 205,Intermediate TV Studio,,0,0,False
+TVPR 220,Intermediate TV Studio,,0,0,False
+TVPR 221,Intermediate TV Studio,,0,0,False
+TVPR 230,Intermediate TV Studio,,0,0,False
+TVPR 236,Intermediate TV Studio,,0,0,False
+TVPR 242,Intermediate TV Studio,,0,0,False
+TVPR T380,Intermediate TV Studio,,0,0,False
+TVPR T480,Intermediate TV Studio,,0,0,False
+TVST 361,Intermediate TV Studio,,0,0,False
+TVST 362,Intermediate TV Studio,,0,0,False
+TVST T380,Intermediate TV Studio,,0,0,False
+TVST T480,Intermediate TV Studio,,0,0,False

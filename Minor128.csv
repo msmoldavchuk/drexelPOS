@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+SMT 110,4.0,,0,0,False
+SMT 201,4.0,,0,0,False
+SMT 285,4.0,,0,0,False
+SMT 230,4.0,,0,0,False
+SMT 320,4.0,,0,0,False
+SMT 205 ^ SMT 270 ^ SMT 275 ^ SMT 290 ^ SMT 335 ^ SMT 340 [WI] ^ SMT 380,4.0,,6,0,False

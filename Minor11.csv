@@ -1,0 +1,5 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ECON 201,4.0,,0,0,False
+ECON 365,4.0,,0,0,False
+PSY 330,3.0,,0,0,False
+ECON 250 ^ ECON 350 [WI] ^ ECON 366 ^ ECON 370 ^ MKTG 326 | MKTG 365 ^ MKTG 356 ^ ORGB 320 | ORGB 400 ^ ORGB 420 ^ PSY 312,13.0,,6,0,False

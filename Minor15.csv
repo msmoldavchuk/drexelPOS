@@ -1,0 +1,14 @@
+Sequence,Credits,Type,Flag,Num,Taken
+PHYS 113 ^ PHYS 114 ^ PHYS 115 ^  ^ PHYS 101 ^ PHYS 102 ^ PHYS 201,,,3,0,False
+PHYS 217 | CHEM 253 | ENGR 210,3.0-4.0,None?,4,0,False
+PHYS 262,3.0,None?,0,0,False
+PHYS 317,3.0,None?,0,0,False
+PHYS 321,4.0,None?,0,0,False
+PHYS 461,3.0,None?,0,0,False
+PHYS 462,3.0,None?,0,0,False
+BIO 122,3.0,None?,0,0,False
+BIO 141,4.5,None?,0,0,False
+BIO 209,4.5,None?,0,0,False
+BIO 214,3.0-4.0,None?,0,0,False
+BIO 218,4.5,None?,0,0,False
+CHEM 371,3.0-4.0,None?,0,0,False

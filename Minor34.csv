@@ -1,0 +1,8 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CS 171,3.0,,0,0,False
+CS 172,3.0,,0,0,False
+INFO 103,3.0,,0,0,False
+INFO 212,3.0,,0,0,False
+STAT 201,4.0,,0,0,False
+STAT 202,4.0,,0,0,False
+CS 260 ^ CS 265 ^ CS 270 ^ CS 380 ^ CS 383 ^ CS 461 | INFO 210 ^ DSCI 351 ^ DSCI 471 ^ INFO 202 ^ INFO 213 ^ INFO 250 ^ INFO 323 ^ INFO 332 ^ INFO 350 ^ INFO 432 ^ INFO 440,6.0,,6,0,False

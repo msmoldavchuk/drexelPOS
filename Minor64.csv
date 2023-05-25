@@ -1,0 +1,13 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CULA 115,3.0,,0,0,False
+CULA 405 [WI],3.0,,0,0,False
+FDSC 120,3.0,,0,0,False
+CULA 125 ^ CULA 303 ^ CULA 410 ^ CULA 412 ^ ENTP 250 ^ ENTP 270 ^ ENTP 440 ^ HRM 160 ^ HRM 395,15.0,,6,0,False
+NFS 215,15.0,,0,0,False
+NFS 217,15.0,,0,0,False
+NFS 230,15.0,,0,0,False
+NFS 345,15.0,,0,0,False
+NFS 391,15.0,,0,0,False
+PBHL 101,15.0,,0,0,False
+PBHL 306,15.0,,0,0,False
+PSCI 369,15.0,,0,0,False

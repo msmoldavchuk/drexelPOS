@@ -1,0 +1,4 @@
+Sequence,Credits,Type,Flag,Num,Taken
+DSMR 231,3.0,,0,0,False
+DSMR 232,4.0,,0,0,False
+DSMR 103 ^ DSMR 201 ^ DSMR 215 ^ DSMR 233 [WI] ^ DSMR 310 ^ DSMR 311 ^ DSMR 324 ^ DSMR 333 ^ DSMR 464 ^ DSMR 477 [WI],18.0-19.0,,6,0,False

@@ -1,0 +1,9 @@
+Sequence,Credits,Type,Flag,Num,Taken
+BIO 218 | BIO 211,4.0,,4,0,False
+BIO 331,3.0,,0,0,False
+BIO 413,3.0,,0,0,False
+CS 171,3.0,,0,0,False
+CS 172,3.0,,0,0,False
+INFO 101,3.0,,0,0,False
+INFO 210,3.0,,0,0,False
+MATH 310 ^ MATH 311 ^ MATH 410,3.0-4.0,,6,0,False

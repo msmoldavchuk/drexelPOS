@@ -1,0 +1,5 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ACCT 115 | ACCT 110,4.0,,4,0,False
+ACCT 116,4.0,,0,0,False
+TAX 341 | TAX 342,4.0,,4,0,False
+ACCT 321 ^ ACCT 322 ^ ACCT 323 ^ ACCT 331 ^ ACCT 341 ^ TAX 360,12.0,,6,3,False

@@ -1,0 +1,9 @@
+Sequence,Credits,Type,Flag,Num,Taken
+DANC 102,3.0,None?,0,0,False
+DANC 108,2.0,None?,0,0,False
+DANC 116,3.0,None?,0,0,False
+DANC 117,3.0,None?,0,0,False
+DANC 216,3.0,None?,0,0,False
+DANC 316,3.0,None?,0,0,False
+DANC 416,3.0,None?,0,0,False
+DANC 104 ^ DANC 204 ^ DANC 304 ^ DANC 105 ^ DANC 205 ^ DANC 305 ^ DANC 106 ^ DANC 206 ^ DANC 306 ^ DANC 107 ^ DANC 207 ^ DANC 208 ^ DANC 109 ^ DANC 209,4.0-5.0,None?,6,0,False

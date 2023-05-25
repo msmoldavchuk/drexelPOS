@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+ARCH 315,3.0,,0,0,False
+ARCH 320,3.0,,0,0,False
+INTR 310,3.0,,0,0,False
+INTR 410,3.0,,0,0,False
+ENVS 260 ^ PHIL 341 ^ SOC 244,3.0,,6,1,False
+ARCH 348 [WI] ^ ARCH 463 ^ ARCH 465 ^ COM 317 [WI] ^ ENVS 260 ^ INTR T180 ^ INTR T280 ^ INTR T380 ^ INTR T480 ^ PHIL 341 ^ SOC 341,9.0,,6,3,False

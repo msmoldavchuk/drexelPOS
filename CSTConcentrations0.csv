@@ -1,0 +1,7 @@
+Sequence,Credits,Type,Flag,Num,Taken
+CT 335,3.0,Computing Technology,0,3,False
+CT 353,3.0,Computing Technology,0,3,False
+CT 355,3.0,Computing Technology,0,3,False
+CT 415,3.0,Computing Technology,0,3,False
+INFO 366,3.0,Computing Technology,0,3,False
+CT 362 | CT 393 | CT 412 | INFO 215 | INFO 315,21.0,Computing Technology,2,3,False

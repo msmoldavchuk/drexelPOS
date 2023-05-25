@@ -1,0 +1,4 @@
+Sequence,Credits,Type,Flag,Num,Taken
+MKTG 201,4.0,None?,0,0,False
+MKTG 380,4.0,None?,0,0,False
+MKTG 321 ^ MKTG 322 ^ MKTG 324 ^ MKTG 326 ^ MKTG 344 ^ MKTG 347 ^ MKTG 348 ^ MKTG 351 ^ MKTG 355 ^ MKTG 356 ^ MKTG 357 ^ MKTG 362 ^ MKTG 364 ^ MKTG 365 ^ MKTG 366,16.0,None?,6,4,False

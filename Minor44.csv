@@ -1,0 +1,8 @@
+Sequence,Credits,Type,Flag,Num,Taken
+BLAW 201,4.0,,0,0,False
+CIVE 240 [WI],3.0,,0,0,False
+PROJ 401,3.0,,0,0,False
+EGMT 404 [WI],3.0,,0,0,False
+EGMT 462 | MEM 462,3.0,,4,0,False
+EGMT 465,3.0,,0,0,False
+ECON 201 ^ ECON 202 ^ ENTP 329,7.0,,6,0,False

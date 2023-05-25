@@ -1,0 +1,3 @@
+Sequence,Credits,Type,Flag,Num,Taken
+PROD 101 ^ PROD 210 ^ PROD 215 ^ PROD 235,3.0,,3,0,False
+PROD 220 ^ PROD 230 ^ PROD 340 ^ PROD 205 ^ WEST 107,8.0,,3,0,False

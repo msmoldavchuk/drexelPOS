@@ -16,6 +16,9 @@ import random # test line
 import csv 
 from ast import literal_eval
 import re
+# html5lib
+
+
 # DATA CHANGES
 # MODIFY PHYS 101 SINCE DREXEL PREREQS ARE WRONG
 # MODIFY CI 492 and 493 aviability they are wrong
@@ -50,9 +53,16 @@ keyword_descriptor = {
         "Science": "SCI", 
         "Mathematics":"MTH",
         "Humanities": "HUM", 
-        "University": "Unv", 
-        "Statistics": "Stat",
-        "Programing": "Prg"
+        "University": "UNV", 
+        "Statistics": "STAT",
+        "Programming": "PRG",
+        "Business": "BSN",
+        "Liberal Studies": "LS",
+        "Economics": "ECON",
+        "General Education": "GED",
+        "English": "ENG",
+        "Communication": "COM",
+
     }
 
 #creditsInWrongPlaceBoolean = False
@@ -109,6 +119,48 @@ def process_requiremnt_html():
     #for sc in scrapperScraped:
    #     print(sc.text)
     return scrapperScraped[2].text
+
+
+def getMinors():
+    listUrl = getUrlsMinors()
+    listMinorsDf = [[],[]]
+    for url in listUrl:
+        try:
+            course_catalog = requests.get(url).text
+            parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+            title_parsed = parsed_course_catalog.find(class_='page-title').text
+            course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
+            df = pd.read_html(str(course_list))[0]   
+
+            df.columns = ['Courses', 'Label', 'Credits']
+            listMinorsDf[0].append(df)
+            listMinorsDf[1].append(title_parsed)
+        except:
+            print("*")
+            print(url)
+
+    return listMinorsDf
+
+def getMinorsTESTING(indexArray):
+    listUrl = getUrlsMinors()
+    listMinorsDf = []
+    while True:
+        for i in indexArray:
+            try:
+                course_catalog = requests.get(listUrl[i]).text
+                parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
+                title_parsed = parsed_course_catalog.find(class_='page-title').text
+                course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
+                df = pd.read_html(str(course_list))[0]   
+                df.columns = ['Courses', 'Label', 'Credits']
+                print(title_parsed)
+                listMinorsDf.append(df)
+            except:
+                print("*")
+                print(listUrl[i])
+        break
+
+    return listMinorsDf
 
 # scrapes a degree and gets a dataframe containing the requiremnts
 def parseDegreeRequiremnts(degreename)->list:
@@ -292,7 +344,328 @@ def filterDescription(string):
     return string
 
     
+def processMinors(listMinors):
+    minorsList = []
+    for minor in listMinors:
+        coursesUnproccesed = list(minor.loc[:,"Courses"])
+        credits = list(minor.loc[:,"Credits"])
+        courses = []
+        
+        for course in coursesUnproccesed:
+            if pd.notna(course):
+                courses.append(course.replace("\xa0", " "))
+            else:
+                pass
 
+
+        coursesParsed = []
+        creditsParsed = []
+        descriptionsParsed = []
+        flagParsed = [] # 0 = no problem, 1 = elective, 2 = mandatory
+        numParsed = []
+
+        electiveReqsDictonary = {}
+        
+        seqFlag = False
+        selectFlag = False
+        choseFlag = False
+        requirmentFlag = False
+        trackFlag = False
+        newTrack = True
+        track2 = True
+        prereqFlag = False
+
+
+        descriptorRequired = ""
+        numberNeeded = 0
+        inc = 1
+        strlength = 13
+
+
+
+        for i in range(0, len(courses)):
+            descriptorRequired = keyWordSearcher(courses[i], descriptorRequired) #step 1 check the type of course i.e cs or se
+            if checkForNoCredits(credits[i]) and i >= 1:   #step 2 check if the credits exist if not then get previous
+                credits[i] = credits[i-inc]
+            #courses[i] = cleanBrackets(courses[i])
+  
+            if selectFlag == True or choseFlag == True:
+                if(courses[i][0:2] == "or"):
+                    if len(courses[i]) > 5:
+                        ns = str(coursesParsed[len(coursesParsed)-1]) + " | " + str(courses[i])[3:]         #take previous parsed and add to the new line    
+                        coursesParsed[len(coursesParsed)-1] = ns
+                        descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                        flagParsed[len(flagParsed)-1] = 6 + 1
+                        numParsed[len(numParsed)-1] = numberNeeded
+                    else:
+                        pass #causes class \n or \n class to not process
+                elif ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"))): #step 5 look for courses
+                    try:
+                        if flagParsed[-1] == (6 + 1):
+                            ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
+                            coursesParsed[len(coursesParsed)-1] = ns
+                            descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                            flagParsed[len(flagParsed)-1] = 6 + 1
+                            numParsed[len(numParsed)-1] = numberNeeded
+                        elif flagParsed[-1] == 1:
+                            coursesParsed[-1] = courses[i]
+                            creditsParsed[-1] = credits[i]
+                            flagParsed[-1] = 6 + 1 # offset to not chain seq
+                            numParsed[-1] = numberNeeded
+                            descriptionsParsed[-1] = descriptorRequired
+                        else:
+                            coursesParsed.append(courses[i])
+                            creditsParsed.append(credits[i])
+                            numParsed.append(numberNeeded)
+                            flagParsed.append(6 + 1) # 6 = sel flag
+                            descriptionsParsed.append(descriptorRequired)
+                    except:
+                        coursesParsed.append(courses[i])
+                        creditsParsed.append(credits[i])
+                        numParsed.append(numberNeeded)
+                        flagParsed.append(6 + 1) # 6 = sel flag
+                        descriptionsParsed.append(descriptorRequired)
+                else:
+                    flagParsed[-1] = 6 # makes it 6
+                    selectFlag = False
+                    choseFlag = False
+            elif prereqFlag:
+                if(courses[i][0:2] == "or"):
+                   pass
+                elif ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"))): #step 5 look for courses
+                    pass
+                else:
+                    prereqFlag = False
+            elif not seqFlag and not selectFlag and not choseFlag and not requirmentFlag and not trackFlag: # step 3 check if sequence mode
+                # NOT A SEQUENCE
+
+                if courses[i][0:2] == "or": # step 4 check if the course contains or
+                    coursesParsed[len(coursesParsed)-1] = coursesParsed[len(coursesParsed)-1] + " | " + courses[i][3:len(courses[i])]
+                    descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                    flagParsed[len(flagParsed)-1] = 4 #adds 4 for or flag
+                    numParsed[len(numParsed)-1] = 0
+                elif (len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or ("&" in courses[i] and len(courses[i]) <= strlength): #step 5 check if the course is type ABC123
+                    if has_identifier(courses[i],"*"):
+                        coursesParsed.append(courses[i][:len(courses[i])])
+                        creditsParsed.append(credits[i])
+                        descriptionsParsed.append(descriptorRequired)
+                        flagParsed.append(2)
+                        numParsed.append(0)
+                    else:
+                        coursesParsed.append(courses[i])
+                        creditsParsed.append(credits[i])
+                        descriptionsParsed.append(descriptorRequired)
+                        flagParsed.append(0)
+                        numParsed.append(0)
+                elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
+                    seqFlag = True  # if yes change modes
+                elif ("Required" in courses[i] and not "Courses" in courses[i]) or "required" in courses[i]:
+                    requirmentFlag = True
+                    rFlip = False
+                elif ("select" in courses[i] or "Select" in courses[i]) and len(courses[i]) < 240:
+                    listExpression = re.findall("[A-Z][A-Z][A-Z][A-Z],|[A-Z][A-Z][A-Z],|[A-Z][A-Z],|[A-Z][A-Z][A-Z][A-Z]\)|[A-Z][A-Z][A-Z]\)|[A-Z][A-Z]\)|[A-Z][A-Z][A-Z][A-Z]\.|[A-Z][A-Z][A-Z]\.|[A-Z][A-Z]\.", courses[i])
+                    # SPECIAL CASE where an elective functions as a select
+                    if listExpression:
+                        for j in range(len(listExpression)):
+                            listExpression[j] = listExpression[j][0:len(listExpression[j])-1]
+                        numberNeeded = numFinder(courses[i])
+                        electiveReqsDictonary[descriptorRequired] = listExpression
+                        if flagParsed[-1] != 1:
+                            coursesParsed.append("elective")
+                            creditsParsed.append(credits[i])
+                            descriptionsParsed.append(reverseKeyWordSearcher(descriptorRequired))
+                            flagParsed.append(1)
+                            numParsed.append(0)
+                    else:
+                        numberNeeded = numFinder(courses[i])
+                        selectFlag = True
+                elif "track" in courses[i]:
+                    trackFlag = True
+                    newTrack = True
+                elif "choose" in courses[i] or "Choose" in courses[i]  or "Complete" in courses[i] or "Take" in courses[i]:
+                    choseFlag = True
+                elif has_identifier(courses[i], "elective") or has_identifier(courses[i], "Elective"): #step 6 check if the course has elective in it
+                        flagParsed.append(1) #elective flag
+                        numParsed.append(0)                        
+                        if has_identifier(courses[i], "elective"):
+                            specialString = courses[i][:courses[i].find("elective")-1]
+                        else:
+                            specialString = courses[i][:courses[i].find("Elective")-1]
+
+                        coursesParsed.append("Elective") 
+                        creditsParsed.append(credits[i])
+                        descriptionsParsed.append(specialString)
+                elif "Required Pre-requisites" in courses[i]:
+                    prereqFlag = False
+            elif seqFlag == True: #step 4 sequence procedure activated 
+                if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")): #step 5 look for courses
+                    if flagParsed[-1] == 3:
+                        ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
+                        coursesParsed[len(coursesParsed)-1] = ns
+                        descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                        flagParsed[len(flagParsed)-1] = 3
+                        numParsed[len(numParsed)-1] = 0
+                    else:
+                        coursesParsed.append(courses[i])
+                        creditsParsed.append(credits[i])
+                        flagParsed.append(3)
+                        descriptionsParsed.append(descriptorRequired)
+                        numParsed.append(0)
+
+                elif courses[i][0:2].lower() == "or": #step 6 look for or keyword *different than prior
+                    #Sequence ors get their own line
+                    i += 1 #skip current line and go to next one
+                    inc = 2  # ancounts for skip in line                                                    
+                    ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
+                    coursesParsed[len(coursesParsed)-1] = ns
+                    descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                    flagParsed[len(flagParsed)-1] = 3 # 3 = sequence flag 
+                    numParsed[len(numParsed)-1] = 0
+                                        
+                elif has_identifier(courses[i], "elective"): #step 7 looks for electives
+                    specialString = courses[i][:courses[i].find("elective")-1]
+                    coursesParsed.append("Elective")
+                    creditsParsed.append(credits[i])
+                    descriptionsParsed.append(specialString)
+                    flagParsed.append(1)
+                    numParsed.append(0)
+
+                    seqFlag = False       # elective marks end of sequence         
+                else:
+                    inc = 1
+                    seqFlag = False #emergancy way to end sequence
+            elif trackFlag == True:
+                if "track" in courses[i] or "Track" in courses[i]:
+                    if newTrack == False:
+                        track2 = True
+                elif ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"))):
+                    if newTrack: 
+                        print("!" + courses[i])
+                        coursesParsed.append(courses[i])
+                        creditsParsed.append(credits[i])
+                        flagParsed.append(3)
+                        descriptionsParsed.append(descriptorRequired)
+                        numParsed.append(0)
+                        newTrack = False
+                    elif track2:
+                        ns = str(coursesParsed[len(coursesParsed)-1]) + " " + str(courses[i])         #take previous parsed and add to the new line    
+                        coursesParsed[len(coursesParsed)-1] = ns
+                        descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                        flagParsed[len(flagParsed)-1] = 3
+                        numParsed[len(numParsed)-1] = 0
+                        track2 = False
+                    else:
+                        ns = str(coursesParsed[len(coursesParsed)-1]) + " | " + str(courses[i])         #take previous parsed and add to the new line    
+                        coursesParsed[len(coursesParsed)-1] = ns
+                        descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                        flagParsed[len(flagParsed)-1] = 3
+                        numParsed[len(numParsed)-1] = 0
+                elif courses[i][0:2].lower() == "or": #step 6 look for or keyword *different than prior
+                    #Sequence ors get their own line                                          
+                    ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ "       #take previous parsed and add to the new line    
+                    coursesParsed[len(coursesParsed)-1] = ns
+                    descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                    flagParsed[len(flagParsed)-1] = 3 # 3 = sequence flag 
+                    numParsed[len(numParsed)-1] = 0
+                else:
+                    trackFlag = False
+            elif requirmentFlag == True:
+                if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit")) or has_identifier(courses[i], "&")):
+                    if rFlip == False: 
+                        print("!" + courses[i])
+                        coursesParsed.append(courses[i])
+                        creditsParsed.append(credits[i])
+                        flagParsed.append(3)
+                        descriptionsParsed.append(descriptorRequired)
+                        numParsed.append(0)
+                        rFlip = True
+                    else:
+                        ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ " + str(courses[i])         #take previous parsed and add to the new line    
+                        coursesParsed[len(coursesParsed)-1] = ns
+                        descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                        flagParsed[len(flagParsed)-1] = 3
+                        numParsed[len(numParsed)-1] = 0
+                elif courses[i][0:2].lower() == "or": #step 6 look for or keyword *different than prior
+                    #Sequence ors get their own line
+                    i += 1 #skip current line and go to next one
+                    inc = 2  # ancounts for skip in line                                                    
+                    ns = str(coursesParsed[len(coursesParsed)-1]) + " ^ "       #take previous parsed and add to the new line    
+                    coursesParsed[len(coursesParsed)-1] = ns
+                    descriptionsParsed[len(descriptionsParsed)-1] = descriptorRequired
+                    flagParsed[len(flagParsed)-1] = 3 # 3 = sequence flag 
+                    numParsed[len(numParsed)-1] = 0
+                elif "select" in courses[i] or "Select" in courses[i]:
+                    listExpression = re.findall("[A-Z][A-Z][A-Z][A-Z],|[A-Z][A-Z][A-Z],|[A-Z][A-Z],|[A-Z][A-Z][A-Z][A-Z]\)|[A-Z][A-Z][A-Z]\)|[A-Z][A-Z]\)|[A-Z][A-Z][A-Z][A-Z]\.|[A-Z][A-Z][A-Z]\.|[A-Z][A-Z]\.", courses[i])
+                    # SPECIAL CASE where an elective functions as a select
+                    if listExpression:
+                        for j in range(len(listExpression)):
+                            listExpression[j] = listExpression[j][0:len(listExpression[j])-1]
+                        numberNeeded = numFinder(courses[i])
+                        electiveReqsDictonary[descriptorRequired] = listExpression
+                        if flagParsed[-1] != 1:
+                            coursesParsed.append("elective")
+                            creditsParsed.append(credits[i])
+                            descriptionsParsed.append(reverseKeyWordSearcher(descriptorRequired))
+                            flagParsed.append(1)
+                            numParsed.append(0)
+                    else:
+                        numberNeeded = numFinder(courses[i])
+                        selectFlag = True
+                elif "track" in courses[i]:
+                    trackFlag = True
+                    newTrack = True
+                elif "choose" in courses[i] or "Choose" in courses[i]:
+                    choseFlag = True
+                elif has_identifier(courses[i], "elective") or has_identifier(courses[i], "Elective"): #step 6 check if the course has elective in it
+                        flagParsed.append(1) #elective flag
+                        numParsed.append(0)                        
+                        if has_identifier(courses[i], "elective"):
+                            specialString = courses[i][:courses[i].find("elective")-1]
+                        else:
+                            specialString = courses[i][:courses[i].find("Elective")-1]
+
+                        coursesParsed.append("Elective") 
+                        creditsParsed.append(credits[i])
+                        descriptionsParsed.append(specialString)
+                elif "required" in courses[i]:
+                    requirmentFlag = True
+                    rFlip = False
+                else:
+                    requirmentFlag = False
+        seqArray = []
+        for course in coursesParsed:
+            seqArray.append(s(course))
+        minorsList.append(pd.DataFrame({"Sequence":seqArray, "Credits": creditsParsed, "Type": descriptionsParsed, "Flag": flagParsed, "Num": numParsed, "Taken": False}))
+        
+    return minorsList
+            
+def storeMinor(dfList, namesList):
+    nameDict = {}
+    for i in range(len(dfList)):
+        dfList[i].to_csv("Minor" + str(i)  + ".csv",index=False)
+        nameDict[namesList[i]] = i
+
+    csv_file = "NamesForMinors.csv"
+
+    with open(csv_file, "w", newline = "") as file:
+        writer = csv.writer(file)
+        for keyVal in enumerate(nameDict):
+            writer.writerow(keyVal)
+
+
+def spMinors():
+    output = getMinors()
+    
+    processedMinors = processMinors(output[0])
+    storeMinor(processedMinors, output[1])
+    
+
+def readMinors():
+    minorsDictonary = {}
+    with open('NamesForMinors.csv') as csvfile:
+        for number, minor in csv.reader(csvfile):
+            minorsDictonary[minor] = pd.read_csv("Minor" + number + ".csv")
+    return minorsDictonary
 
 #------------------------------------------METHODS TO CLEAN SCRAPPED DATA--------------------------------------
 
@@ -306,7 +679,7 @@ def parseThroughClasses(dfList, name = "CS")-> d:
     credits = dfList[0].loc[:,'Credits']
     courses = []
 
-
+    
     for course in coursesNotPrimary:
         courses.append(course.replace("\xa0", " "))
         
@@ -326,11 +699,13 @@ def parseThroughClasses(dfList, name = "CS")-> d:
     seqFlag = False
     selectFlag = False
     choseFlag = False
+    chooseSeqCounter = 2
+    decrementSeqFlag = False
     descriptorRequired = ""
     numberNeeded = 0
     inc = 1
     myiter = iter(range(0, len(courses)))
-    strlength = 12 #temp value
+    strlength = 15 #temp value
     
     # concentration vars
     concDF = pd.DataFrame()
@@ -346,6 +721,7 @@ def parseThroughClasses(dfList, name = "CS")-> d:
         #courses[i] = cleanBrackets(courses[i])
 
         if selectFlag == True:
+            print(""+courses[i])
             if ((len(courses[i]) <= strlength and has_identifier(courses[i], "Digit"))): #step 5 look for courses
                 if flagParsed[-1] == 6:
                     ns = str(coursesParsed[len(coursesParsed)-1]) + " | " + str(courses[i])         #take previous parsed and add to the new line    
@@ -354,7 +730,7 @@ def parseThroughClasses(dfList, name = "CS")-> d:
                     flagParsed[len(flagParsed)-1] = 6
                     numParsed[len(numParsed)-1] = numberNeeded
                 elif flagParsed[-1] == 1:
-                    coursesParsed[-1] = courses[1]
+                    coursesParsed[-1] = courses[i]
                     creditsParsed[-1] = credits[i]
                     flagParsed[-1] = 6
                     numParsed[-1] = numberNeeded
@@ -402,8 +778,9 @@ def parseThroughClasses(dfList, name = "CS")-> d:
                 concBoolean = True
                 concCredits = credits[i]
                 concList = getConcentration(dfList, name)
-            elif "sequences:" in courses[i]: #step 7 check if a sequence is comming up
+            elif "sequences" in courses[i] or "sequence" in courses[i] or "Sequence" in courses[i]: #step 7 check if a sequence is comming up
                 seqFlag = True  # if yes change modes
+                chooseSeqCounter = 2
             elif "select" in courses[i] or "Select" in courses[i]:
                 listExpression = re.findall("[A-Z][A-Z][A-Z][A-Z],|[A-Z][A-Z][A-Z],|[A-Z][A-Z],|[A-Z][A-Z][A-Z][A-Z]\)|[A-Z][A-Z][A-Z]\)|[A-Z][A-Z]\)|[A-Z][A-Z][A-Z][A-Z]\.|[A-Z][A-Z][A-Z]\.|[A-Z][A-Z]\.", courses[i])
                 # SPECIAL CASE where an elective functions as a select
@@ -483,6 +860,10 @@ def parseThroughClasses(dfList, name = "CS")-> d:
                 get to or and skip to chem 101
                 Take phys 101 and combine w/ "^" in between
                 """                                            
+            elif  "sequence" in courses[i]  or "sequences" in courses[i] or "seqence" in courses[i]:
+                       # won't pick up right number
+                print("HELLO")
+                decrementSeqFlag = True
             elif has_identifier(courses[i], "elective"): #step 7 looks for electives
                 specialString = courses[i][:courses[i].find("elective")-1]
                 coursesParsed.append("Elective")
@@ -491,11 +872,17 @@ def parseThroughClasses(dfList, name = "CS")-> d:
                 flagParsed.append(1)
                 numParsed.append(0)
 
-                seqFlag = False       # elective marks end of sequence         
+                seqFlag = False       # elective marks end of sequence  
+           
+                
             else:
                 inc = 1
                 seqFlag = False #emergancy way to end sequence
-       
+
+            if decrementSeqFlag and chooseSeqCounter != 0:
+                chooseSeqCounter -= 1
+            elif chooseSeqCounter == 0:
+                seqFlag = False
 
     # final step
 
@@ -544,6 +931,7 @@ def numFinder(string:str):
         if key in string.lower():
             return dictNumbers[key] 
     return 0
+
 def cleanBrackets(string)->str:
     while(has_identifier(string, "[") or has_identifier(string, "]")):
         x = string[string.index('['):string.index(']')+1]
@@ -1508,16 +1896,25 @@ def scrapingDegree(NAME)->d:
     degreeReq = parseThroughClasses(list_degree_frame)
     return degreeReq
 
+
 #------------------------------- EVERYTHING BELLOW IS "Main"----------------------------------------------
 if __name__ == "__main__":
     #electiveProcessing(process_requiremnt_html())
+   
+
+    #deg = scrapingDegree("EDS")
+   # deg.convertDegreeToCSV("EDS")
     
+    #print(deg.getConcentrationsTesting())
+    scrapingDegree("CST").convertDegreeToCSV("CST")
+    #print(scrapingDegree("CST").getConcentrationsTesting())
+
+   #getPlanOfStudy(NAME = "IS", SEQUENCES=[1,1], SPRINGSUMMERCOOP=False, CONCENTRATIONARRAY=[])
     #convertCSVToCourseObject()
     #list_degree_frame = parseDegreeRequiremnts("CS")
     #degreeReq = parseThroughClasses(list_degree_frame)
     #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq.getDataForWebsite())
-
 
     #degreeReq.convertDegreeToCSV("CS")
     #print(degreeReq)
@@ -1538,22 +1935,10 @@ if __name__ == "__main__":
                 print(concentration.loc[0,"Type"]) # line for visual clarity
                 for line in range(len(concentration.index)):
                     print(concentration.loc[line,"Sequence"])
-    
     """
-    """
-    TEST = "https://catalog.drexel.edu/undergraduate/schoolofeconomics/economicsminor/index.html"
-    course_catalog = requests.get(TEST).text
-    parsed_course_catalog = BeautifulSoup(course_catalog, 'html.parser')
-    course_list = parsed_course_catalog.find_all('table', class_='sc_courselist')
-    for url in getUrlsMinors():
-        print(url)
-    degreeReq = pd.read_html(str(course_list))
-    """
+    #spMinors()
+    #degreeReq = d()
+   # degreeReq.convertDegreeToCSV("CS")
+   # getPlanOfStudy(NAME = "SE", SEQUENCES=["BIO", ["ECON 201", "ECON 202"]] ,CONCENTRATIONARRAY=[],SPRINGSUMMERCOOP=True)
 
-    """
-    convertCSVToCourseObject()
-    correctSequences()
-    #-----SET UP DEGREE--------------------
-    degreeReq = getCustomDegree("SE", "CCI", "CHEM", CONCENTRATIONARRAY = [])
-    print(degreeReq)
-    """
+ 
