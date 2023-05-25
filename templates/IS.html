@@ -115,17 +115,55 @@
     .then((data) => {
         text = document.getElementById("testing"); 
         console.log(data);
-        text.innerHTML = "";
+        let table = document.getElementById("pos");
+        while(table.rows.length > 0) {
+            table.deleteRow(0);
+        }           
+        console.log(table);
+        let isEven = false;
         for (let term in data) {
-            text.innerHTML += term + ": " + data[term] + "<br>";
-        }
-        
-    })
-        .catch(err => console.log(err))
+            temp = term
+            if (temp.endsWith("15")) {
+                temp = temp.slice(0, -2) + " Fall";
+            } else if (temp.endsWith("25")) {
+                temp = temp.slice(0, -2) + " Winter";
+            } else if (temp.endsWith("35")) {
+                temp = temp.slice(0, -2) + " Spring";
+            } else if (temp.endsWith("45")) {
+                temp = temp.slice(0, -2) + " Summer";
+            }
+            
 
+            let row = document.createElement("tr");
+            let col1 = document.createElement("td");
+            let col2 = document.createElement("td");
+            col1.innerHTML = temp;
+            col2.innerHTML = data[term].join(" | ");
+            row.appendChild(col1);
+            row.appendChild(col2);
+            table.appendChild(row);
+            table.style.width = "100%";
+            table.style.border = "4px solid #99a6cc";
+            col1.style.border = "3px solid  #99a6cc";
+            col1.style.backgroundColor = "#d9e2ff";
+            col2.style.border = "3px solid #d9e2ff";
+
+
+    // Set background color for each cell based on row parity
+    if (isEven) {
+        col2.style.backgroundColor = "#f8fbf9";
+    } else {
+        col2.style.backgroundColor = "#e5ecff";
+    }
+    isEven = !isEven;  // Flip parity flag for the next row
+}
+
+        
+      }).catch(err => console.log(err))
         console.log(name);
-        console.log(major);
+
     })
+       
    </Script>
 
 
