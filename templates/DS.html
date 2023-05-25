@@ -67,13 +67,19 @@
         </script>
     <p id="testing">
         This is where the data will be displayed
+        <table id="pos">
+            <tr>
+                <th>Quater</th>
+                <th>Courses</th>
+    
+            </tr>
     </p>
    <Script>
     let data = document.getElementById("form");
     data.addEventListener("submit", function(e){
         e.preventDefault();
         let year = data.elements.degree.value;
-        let major = data.elements.dropdown.value;
+        
         let datascience = [];
         let coop = data.elements.coop.value;
         if (coop == "FW") {
@@ -87,11 +93,11 @@
             }
         }
         let form = {
-            major: major,
+            
             coop : coop,
-            sequence : data.elements.sequence.value,
-            datascience1 : datasciences[0],
-            datascience2 : datasciences[1],
+            
+            datascience1 : datascience[0],
+            datascience2 : datascience[1],
             year : year
 
         };
@@ -126,7 +132,7 @@
             } else if (temp.endsWith("45")) {
                 temp = temp.slice(0, -2) + " Summer";
             }
-            text.innerHTML += term + ": " + data[term].join(" | ") + "<br>";
+            
 
             let row = document.createElement("tr");
             let col1 = document.createElement("td");
