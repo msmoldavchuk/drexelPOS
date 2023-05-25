@@ -1626,7 +1626,7 @@ def displayPhantomConcentrations(degreeReq):
 # how many coops
 #Returns
 #Plan of study array
-def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
+def createPlan(name, degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMERCOOP =  True, CREDITGOAL = 15, COOPNUMBER = 3):
     if degreeReq.getDegreeCollege() == "CCI":
         #numberOfQuarters = 18
         #springSummerCoop = False
@@ -1664,8 +1664,12 @@ def createPlan(degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRINGSUMMER
         #predetiermendCourses3 = ["MATH 122", "ENGL 103", "CI 103", "CS 265","SE 181","CS 270", "UNIV CI101", "COOP 101"]
         # -------- pre decided terms -----------------
         firstTermPremade = True
-        predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
-        #predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        if name == "CS" or name == "SE":
+            predetiermendCourses = ["CS 164", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        elif name == "CST":
+            predetiermendCourses = ["INFO 151", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
+        else:
+            predetiermendCourses = ["INFO 101", "PSY 101", "MATH 121", "ENGL 101", "CI 101"]
 
         predetiermendCourseArray = [predetiermendCourses]
 
@@ -1868,7 +1872,7 @@ def getPlanOfStudy(NAME = "SE", COLLEGE = "CCI",  SEQUENCES = ["CHEM"], CONCENTR
     prereqDictionaryFill(tempDf, "Courses")
     filteredDataFrame = filterPrereqDictionary(tempDf, "Courses")
     #----Get Plan of Study-------   
-    posArray = createPlan(degreeReq, filteredDataFrame,  NUMBEROFQUARTERS, SPRINGSUMMERCOOP, CREDITGOAL, COOPNUMBER)
+    posArray = createPlan(NAME, degreeReq, filteredDataFrame,  NUMBEROFQUARTERS, SPRINGSUMMERCOOP, CREDITGOAL, COOPNUMBER)
     #------Display Play of Study
     testPlanOfStudy(posArray, filteredDataFrame, degreeReq)
     return convertToDictionary(posArray)
@@ -1906,10 +1910,11 @@ if __name__ == "__main__":
    # deg.convertDegreeToCSV("EDS")
     
     #print(deg.getConcentrationsTesting())
-    scrapingDegree("CST").convertDegreeToCSV("CST")
+   # scrapingDegree("CST").convertDegreeToCSV("CST")
     #print(scrapingDegree("CST").getConcentrationsTesting())
 
-   #getPlanOfStudy(NAME = "IS", SEQUENCES=[1,1], SPRINGSUMMERCOOP=False, CONCENTRATIONARRAY=[])
+    getPlanOfStudy(NAME = "DS", SEQUENCES=[["CS 380", "CS 383"]], SPRINGSUMMERCOOP=False, CONCENTRATIONARRAY=[])
+    
     #convertCSVToCourseObject()
     #list_degree_frame = parseDegreeRequiremnts("CS")
     #degreeReq = parseThroughClasses(list_degree_frame)
