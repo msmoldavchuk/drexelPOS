@@ -53,6 +53,13 @@ def sePOS():
         data = request.get_json()
         output = scrapper.getPlanOfStudy(major, SPRINGSUMMERCOOP=data.get('coop'), SEQUENCES=[data.get('sequence'),data.get('business')],CONCENTRATIONARRAY=[])
         return jsonify(output)
+@app.route('/dsPOS/data', methods=['GET', 'POST'])
+def dsPOS():
+    if request.method == 'POST':
+        major = "DS"
+        data = request.get_json()
+        output = scrapper.getPlanOfStudy(major, SPRINGSUMMERCOOP=data.get('coop'), SEQUENCES=[[data.get("datascience1"),data.get("datascience2")]],CONCENTRATIONARRAY=[])
+        return jsonify(output)
 #@app.route('/CS', methods=['GET', 'POST'])
 #def cs():
 #    return render_template('CS.html')
