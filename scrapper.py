@@ -643,7 +643,6 @@ def createPlan(name, degreeReq, filteredDataFrame, NUMBEROFQUARTERS = 18, SPRING
 
         for i in range(numTermsPremade, NUMBEROFQUARTERS+1):
             year = 1
-            totalQuarterAvail = calculateQuarterlyAvail(filteredDataFrame)
             #totalQuarterSingularAvail = calculateQuarterlySingularAvail(filteredDataFrame)
             term = i
             classification = getClassification(credits)
