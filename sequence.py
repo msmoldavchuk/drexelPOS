@@ -244,6 +244,7 @@ class Sequence:
             if i + 1 < len(self.courseArray):          
                 string += "OR"
         return string
+    
     # prints a formated version of the sequence
     def getFormatedSeqeuence(self):
         for course in self.courseArray:

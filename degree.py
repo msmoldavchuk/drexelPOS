@@ -386,3 +386,13 @@ class Degree():
             return any(char.isdigit() for char in inputString)
         return (identifier in inputString)
 
+
+
+
+
+
+
+
+
+
+
